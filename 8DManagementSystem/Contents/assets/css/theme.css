@@ -1,0 +1,12 @@
+body {
+    padding-top:70px;
+    padding-bottom:30px;
+}
+
+.toolbar-table{
+    margin-top:10px; 
+    background:#f5f5f5; 
+    border:1px solid #ddd; 
+    border-radius:4px 4px 0 0; 
+    padding:10px;
+}
