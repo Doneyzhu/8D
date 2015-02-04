@@ -39,7 +39,19 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Iesi.Collections">
+      <HintPath>..\Library\Iesi.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\Library\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="NHibernate">
+      <HintPath>..\Library\NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate.Mapping.Attributes">
+      <HintPath>..\Library\NHibernate.Mapping.Attributes.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -104,15 +116,21 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Code\BaseController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\UserCenterController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\MvcSiteMap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Content Include="App_Data\DataAccess\MSSQL.cfg.xml" />
+    <Content Include="App_Data\DataAccess\MSSQL_Read.cfg.xml" />
     <Content Include="Contents\assets\css\ace.min.css" />
     <Content Include="Contents\assets\css\bootstrap-datetimepicker.css" />
     <Content Include="Contents\assets\css\bootstrap-theme.css" />
@@ -262,9 +280,7 @@
     <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
-    <Folder Include="Controllers\" />
-    <Folder Include="Models\" />
+    <Content Include="Web_ZH_CN.sitemap" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -284,6 +300,35 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shared\_Layout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\8DManagementSystem.Common\8DManagementSystem.Common.csproj">
+      <Project>{837803d0-b06b-484b-a931-c079c4d46071}</Project>
+      <Name>8DManagementSystem.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\8DManagementSystem.DAL\8DManagementSystem.DAL.csproj">
+      <Project>{83e5dd21-661d-4712-b5c1-d2d3591a5185}</Project>
+      <Name>8DManagementSystem.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\8DManagementSystem.Model\8DManagementSystem.Model.csproj">
+      <Project>{1ca70275-3d06-41b9-959e-aac37ca32361}</Project>
+      <Name>8DManagementSystem.Model</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_Header.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_Footer.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Login\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\UserCenter\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Web_EN_US.sitemap" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

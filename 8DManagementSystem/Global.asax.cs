@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Routing;
+using _8DManagementSystem.DAL.DBHelper;
 
 namespace _8DManagementSystem
 {
@@ -14,6 +16,18 @@ namespace _8DManagementSystem
     {
         protected void Application_Start()
         {
+
+            string cfgFile = Server.MapPath(@"~\App_Data\DataAccess\MSSQL.cfg.xml");
+            NHibernateHelper.CreateSessionFactory(cfgFile);
+
+            string useReadonlyDatabase = ConfigurationManager.AppSettings["UseReadonlyDatabase"];
+            if (useReadonlyDatabase == "true")
+            {
+                string cfgReadonlyFile = Server.MapPath(@"~\App_Data\DataAccess\MSSQL_Read.cfg.xml");
+                NHibernateHelper.CreateReadonlySessionFactory(cfgReadonlyFile);
+            }
+
+
             AreaRegistration.RegisterAllAreas();
 
             WebApiConfig.Register(GlobalConfiguration.Configuration);

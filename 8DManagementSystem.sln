@@ -5,6 +5,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "8DManagementSystem.Web", "8
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "8DManagementSystem.Model", "8DManagementSystem.Model\8DManagementSystem.Model.csproj", "{1CA70275-3D06-41B9-959E-AAC37CA32361}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "8DManagementSystem.DAL", "8DManagementSystem.DAL\8DManagementSystem.DAL.csproj", "{83E5DD21-661D-4712-B5C1-D2D3591A5185}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "8DManagementSystem.Common", "8DManagementSystem.Common\8DManagementSystem.Common.csproj", "{837803D0-B06B-484B-A931-C079C4D46071}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +23,14 @@ Global
 		{1CA70275-3D06-41B9-959E-AAC37CA32361}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1CA70275-3D06-41B9-959E-AAC37CA32361}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1CA70275-3D06-41B9-959E-AAC37CA32361}.Release|Any CPU.Build.0 = Release|Any CPU
+		{83E5DD21-661D-4712-B5C1-D2D3591A5185}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83E5DD21-661D-4712-B5C1-D2D3591A5185}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83E5DD21-661D-4712-B5C1-D2D3591A5185}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83E5DD21-661D-4712-B5C1-D2D3591A5185}.Release|Any CPU.Build.0 = Release|Any CPU
+		{837803D0-B06B-484B-A931-C079C4D46071}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{837803D0-B06B-484B-A931-C079C4D46071}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{837803D0-B06B-484B-A931-C079C4D46071}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{837803D0-B06B-484B-A931-C079C4D46071}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
