@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--Generated from NHibernate.Mapping.Attributes on 2015-02-05 00:26:30Z.-->
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class name="_8DManagementSystem.Model.D_User_Model, 8DManagementSystem.Model" table="8D_User">
+    <id name="UserGuid">
+      <generator class="guid" />
+    </id>
+    <property name="UserCode" />
+    <property name="UserLoginName" />
+    <property name="UserName" />
+    <property name="PassWord" />
+    <property name="DepartmentName" />
+    <property name="IsAdmin" />
+    <property name="CreateUserGuid" />
+    <property name="CreateDateTime" />
+    <property name="CreateUserName" />
+    <property name="ModifyUserGuid" />
+    <property name="ModifyDateTime" />
+    <property name="ModifyUserName" />
+  </class>
+</hibernate-mapping>
