@@ -1,128 +1,158 @@
 ﻿@{
-  ViewBag.Title = "Index";
-  Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 
 <ol class="breadcrumb">
-  <li><a href="/8DReport/">Home</a></li>
-  <li><a href="/8DReport/Workflow">Administration</a></li>
-  <li class="active">User Center</li>
+    <li><a href="/8DReport/">Home</a></li>
+    <li><a href="/8DReport/Workflow">Administration</a></li>
+    <li class="active">User Center</li>
 </ol>
 
+<div class="alert alert-success" role="alert">
+    Well done! You successfully read this important alert message. 这是一个DEMO
+</div>
+
+<div class="panel panel-info">
+    <div class="panel-heading">
+        <button type="button" class="btn btn-primary" onclick="javascript:edit('');">
+            <span class="glyphicon glyphicon-plus-sign"></span>Create new user
+        </button>
+        <button type="button" class="btn btn-default collapsed" data-toggle="collapse" data-target="#help" aria-expanded="false" aria-controls="demo">
+            <span class="glyphicon glyphicon-question-sign"></span>Help <span class="caret"></span>
+        </button>
+    </div>
+    <div id="help" class="panel-body collapse" aria-expanded="false" style="height: 30px;">
+        <p class="lead">8D Report User Management：用于查询、创建、更新 8D User</p>
+        <p><strong>Create new report:</strong> 创建8D报告用户</p>
+        <p><strong>Filters:</strong> 提供一组筛选条件</p>
+        <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;Filters-Serial:</strong> 根据Report编号筛选</p>
+        <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;Filters-Subject:</strong> 根据Report标题筛选</p>
+        <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;Filters-Date created:</strong> 根据Report创建日期筛选</p>
+        <p><strong>Options:</strong> 提供查询选项</p>
+        <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;Options-Order by:</strong> 设置查询结果的排序规则</p>
+        <p><strong>Apply:</strong> 应用筛选条件</p>
+        <p><strong>Cancel:</strong> 将筛选条件重置为默认值</p>
+    </div>
+</div>
+
+
 <div class="panel panel-default">
-  <div class="panel-heading">User Center</div>
-  <div class="panel-body">
-    <form class="form-horizontal" role="form">
-      <button type="button" class="btn btn-default btn-sm collapsed" data-toggle="collapse" data-target="#filters" aria-expanded="true" aria-controls="demo">
-        Filters <span class="caret"></span>
-      </button>
-      <div id="filters" class="collapse" style="padding: 10px;">
-        <!--class="collapse in"-->
+    <div class="panel-heading">User Center</div>
+    <div class="panel-body">
+        <form class="form-horizontal" role="form">
+            <button type="button" class="btn btn-default btn-sm collapsed" data-toggle="collapse" data-target="#filters" aria-expanded="true" aria-controls="demo">
+                Filters <span class="caret"></span>
+            </button>
+            <div id="filters" class="collapse" style="padding: 10px;">
+                <!--class="collapse in"-->
 
-        <div class="form-group">
-          <div class="checkbox col-sm-2 col-xs-3">
-            <label>
-              <input type="checkbox">
-              Serial
-            </label>
-          </div>
-          <div class="col-sm-2 col-xs-4">
-            <select class="form-control">
-              <option>is</option>
-              <option>is not</option>
-              <option>&gt;=</option>
-              <option>&lt;=</option>
-            </select>
-          </div>
-          <div class="col-sm-3  col-xs-5">
-            <input type="number" class="form-control" placeholder="Serial">
-          </div>
-        </div>
+                <div class="form-group">
+                    <div class="checkbox col-sm-2 col-xs-3">
+                        <label>
+                            User No.
+                        </label>
+                    </div>
+                    <div class="col-sm-3  col-xs-5">
+                        <input id="userNo" type="text" class="form-control" placeholder="User No.">
+                    </div>
+                </div>
 
-        <div class="form-group">
-          <div class="checkbox col-sm-2 col-xs-3">
-            <label>
-              <input type="checkbox">
-              Subject
-            </label>
-          </div>
-          <div class="col-sm-2 col-xs-4">
-            <select class="form-control">
-              <option>contains</option>
-              <option>doesn't contains</option>
-            </select>
-          </div>
-          <div class="col-sm-3  col-xs-5">
-            <input type="text" class="form-control" placeholder="Subject">
-          </div>
-        </div>
+                <div class="form-group">
+                    <div class="checkbox col-sm-2 col-xs-3">
+                        <label>
+                            User Name
+                        </label>
+                    </div>
+                    <div class="col-sm-3  col-xs-5">
+                        <input id="txtName" type="text" class="form-control" placeholder="User Name">
+                    </div>
+                </div>
 
-        <div class="form-group">
-          <div class="checkbox col-sm-2 col-xs-3">
-            <label>
-              <input type="checkbox">
-              Date created
-            </label>
-          </div>
-          <div class="col-sm-2 col-xs-4">
-            <select class="form-control">
-              <option>in less then</option>
-              <option>in more then</option>
-              <option>in</option>
-            </select>
-          </div>
-          <div class="col-sm-3  col-xs-5">
-            <input type="datetime" class="form-control" placeholder="Date created">
-          </div>
-        </div>
+                <div class="form-group">
+                    <div class="checkbox col-sm-2 col-xs-3">
+                        <label>
+                            Login Name
+                        </label>
+                    </div>
+                    <div class="col-sm-3  col-xs-5">
+                        <input id="txtLoginName" type="text" class="form-control" placeholder="Login Name">
+                    </div>
+                </div>
 
-      </div>
+                <div class="form-group">
+                    <div class="checkbox col-sm-2 col-xs-3">
+                        <label>
+                            Department Name
+                        </label>
+                    </div>
+                    <div class="col-sm-3  col-xs-5">
+                        <input id="txtDepartmentName" type="text" class="form-control" placeholder="Department Name">
+                    </div>
+                </div>
 
-      <button type="button" class="btn btn-default btn-sm" data-toggle="collapse" data-target="#options" aria-expanded="true" aria-controls="demo">
-        Options <span class="caret"></span>
-      </button>
-      <div id="options" class="collapse" style="padding: 10px;">
-        <div class="form-group">
-          <label class="control-label col-sm-2 col-xs-3">Order by</label>
-          <div class="col-sm-2 col-xs-4">
-            <select class="form-control">
-              <option>Serial</option>
-              <option>Date created</option>
-              <option>Subject</option>
-            </select>
-          </div>
-        </div>
-      </div>
+                <div class="form-group">
+                    <div class="checkbox col-sm-2 col-xs-3">
+                        <label>
+                            Date created
+                        </label>
+                    </div>
+                    <div class="col-sm-3  col-xs-5">
+                        <input id="txtDateCreated" type="datetime" class="form-control" placeholder="Date Created">
+                    </div>
+                </div>
 
-      <button type="button" class="btn btn-sm btn-success"><span class="glyphicon glyphicon-ok"></span>Apply</button>
-      <button type="button" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-remove"></span>Cancel</button>
-    </form>
-  </div>
+            </div>
 
-  <div class="table-responsive">
-    <table id="gridTable" class="table table-striped table-bordered table-hover">
-      <thead>
-        <tr>
-          <th>Action</th>
-          <th>User No.</th>
-          <th>UserName</th>
-          <th>LoginName</th>
-          <th>Password</th>
-          <th>DepartmentName</th>
-          <th>IsAdmin</th>
-          <th>ModifyDate</th>
-          <th>Modify By</th>
-          <th>CreateDate</th>
-          <th>Create By</th>
-        </tr>
-      </thead>
-    </table>
-  </div>
+            @*<button type="button" class="btn btn-default btn-sm" data-toggle="collapse" data-target="#options" aria-expanded="true" aria-controls="demo">
+                Options <span class="caret"></span>
+            </button>
+            <div id="options" class="collapse" style="padding: 10px;">
+                <div class="form-group">
+                    <label class="control-label col-sm-2 col-xs-3">Order by</label>
+                    <div class="col-sm-2 col-xs-4">
+                        <select class="form-control">
+                            <option>Serial</option>
+                            <option>Date created</option>
+                            <option>Subject</option>
+                        </select>
+                    </div>
+                </div>
+            </div>*@
 
-  <div id="grid-pager"></div>
+            <button id="btnQuery" type="button" class="btn btn-sm btn-success"><span class="glyphicon glyphicon-ok"></span>Apply</button>
+            <button type="button" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-remove"></span>Cancel</button>
+        </form>
+    </div>
 
-  @*<div class="panel-footer text-center">
+    <div class="table-responsive">
+        <table id="gridTable" class="table table-striped table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>Action</th>
+                    <th>User No.</th>
+                    <th>UserName</th>
+                    <th>LoginName</th>
+                    <th>Password</th>
+                    <th>DepartmentName</th>
+                    <th>IsAdmin</th>
+                    <th>Modify By</th>
+                    <th>ModifyDate</th>
+                    <th>Create By</th>
+                    <th>CreateDate</th>
+
+                </tr>
+            </thead>
+        </table>
+    </div>
+
+    <div id="grid-pager" class="panel-footer text-center"></div>
+
+    <script type="text/javascript">
+        var $path_base = "..";//this will be used for editurl parameter
+    </script>
+    @*<div class="panel-footer text-center">
         <nav>
             <ul class="pagination">
                 <li><a href="#">«</a></li>
@@ -137,167 +167,198 @@
     </div>*@
 </div>
 
+<script src="~/Contents/assets/js/jquery.dataTables.min.js"></script>
+<script src="~/Contents/assets/js/jquery.dataTables.bootstrap.js"></script>
+<script src="~/Contents/assets/js/bootbox.min.js"></script>
+<script src="~/Contents/assets/js/fnReloadAjax.js"></script>
+
 <script type="text/javascript">
-  var gridTable = $('#gridTable');
-  jQuery(function ($) {
+    var gridTable = $('#gridTable');
+    jQuery(function ($) {
 
-    gridTable.dataTable({
-      "iDisplayStart": 0, //从第几条开始
-      "iDisplayLength": 6,//每页显示10条数据
+        gridTable.dataTable({
+            "iDisplayStart": 0, //从第几条开始
+            "iDisplayLength": 2,//每页显示10条数据
 
-      "oLanguage": {//下面是一些汉语翻译
-        "sUrl": "/Content/assets/js/language/jquery.dataTable.cn.js"
-      },
+            //"oLanguage": {//下面是一些汉语翻译
+            //    "sUrl": "/Content/assets/js/language/jquery.dataTable.cn.js"
+            //},
 
-      "bLengthChange": false, //关闭每页显示多少条数据
-      "bPaginate": true, //翻页功能
-      "bFilter": false, //过滤功能
-      "bAutoWidth": true,//自动宽度
-      "bInfo": true,//页脚信息
-      "bProcessing": true,
-      "bServerSide": true,
-      "sServerMethod": "POST",
-      "sAjaxSource": "@Url.Content("~/UserCenter/UserList")",
+            "bLengthChange": false, //关闭每页显示多少条数据
+            "bPaginate": true, //翻页功能
+            "bFilter": false, //过滤功能
+            "bAutoWidth": true,//自动宽度
+            "bInfo": true,//页脚信息
+            "bProcessing": true,
+            "bServerSide": true,
+            "sServerMethod": "POST",
+            "sAjaxSource": "@Url.Content("~/UserCenter/UserList")",
 
-      "aoColumns": [
-                        {
-                          "mDataProp": "ID",
-                          "bSearchable": false,
-                          "bSortable": false,
-                          "fnRender": function (oObj) {
-                            return '<a href=\"Details/' + oObj.aData[0] + '\">查看</a>';
-                          }                           //自定义列的样式
-                        },
-                        //{ "mDataProp": "SubCompanyId", bSortable: false },
-                        { "mDataProp": "UserCode", bSortable: false, bVisible: true },
-                        { "mDataProp": "UserName", bSortable: false },
-                        { "mDataProp": "LoginName", bSortable: false },
-                        { "mDataProp": "Password", bSortable: false },
-                        { "mDataProp": "DepartmentName", bSortable: false },
-                        { "mDataProp": "IsAdmin", bSortable: false },
-                        { "mDataProp": "ModifyUserName", bSortable: false },
-                        { "mDataProp": "ModifyDate", bSortable: false },
-                        { "mDataProp": "CreateUserName", bSortable: false },
-                        //{ "mDataProp": "OpUserName", bSortable: false },
-                        { "mDataProp": "CreateDate", bSortable: false },
-                        { "mDataProp": "Oper", bSortable: false }
-                        //,{ "sDefaultContent": '' }, // sDefaultContent 如果这一列不需要填充数据用这个属性，值可以不写，起占位作用
-                        //{ "sDefaultContent": '', "sClass": "action" },//sClass 表示给本列加class
-      ],
+            "aoColumns": [
+                              //{
+                              //    "mDataProp": "ID",
+                              //    "bSearchable": false,
+                              //    "bSortable": false,
+                              //    "fnRender": function (oObj) {
+                              //        //return '<a href=\"Details/' + oObj.aData[0] + '\">查看</a>';
+                              //        return '<div class="btn-group ">' +
+                              //      '<button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown">' +
+                              //          'Action <span class="caret"></span></button>' +
+                              //      '<ul class="dropdown-menu" role="menu">' +
+                              //          '<li><a href="#" onclick="javascript:edit(this)"><span class="glyphicon glyphicon-edit"></span>Edit</a></li>' +
+                              //          '<li><a href="#"><span class="glyphicon glyphicon-cog"></span>Configuration</a></li>' +
+                              //          '<li><a href="#"><span class="glyphicon glyphicon-export"></span>Export to Excel</a></li>' +
+                              //          '<li class="divider"></li>' +
+                              //        '<li><a href="#"><span class="glyphicon glyphicon-remove-circle"></span>Remove</a></li>' +
+                              //      '</ul></div>';
+                              //    }                           //自定义列的样式
+                              //},
+                              { "mDataProp": "Operation", bSortable: false },
+                              { "mDataProp": "UserCode", bSortable: false, bVisible: true },
+                              { "mDataProp": "UserName", bSortable: false },
+                              { "mDataProp": "LoginName", bSortable: false },
+                              { "mDataProp": "Password", bSortable: false },
+                              { "mDataProp": "DepartmentName", bSortable: false },
+                              { "mDataProp": "IsAdmin", bSortable: false },
+                              { "mDataProp": "ModifyUserName", bSortable: false },
+                              { "mDataProp": "ModifyDate", bSortable: false },
+                              { "mDataProp": "CreateUserName", bSortable: false },
+                              //{ "mDataProp": "OpUserName", bSortable: false },
+                              { "mDataProp": "CreateDate", bSortable: false }
+                              //{ "mDataProp": "Oper", bSortable: false }
+                              //,{ "sDefaultContent": '' }, // sDefaultContent 如果这一列不需要填充数据用这个属性，值可以不写，起占位作用
+                              //{ "sDefaultContent": '', "sClass": "action" },//sClass 表示给本列加class
+            ],
 
-      //"sAjaxDataProp": "",
-      "fnServerData": retrieveData           //获取数据的处理函数
-      //"fnDrawCallback": function (oSettings) {
-      //oSettings.sAjaxSource = "@Url.Content("~/MobileSlidePic/MobileSlidePicList")";
-      //alert(oSettings.sAjaxSource);
-      //$('#gridTable').fnClearTable(0);
-      //$('#gridTable').fnDraw();
-      //}
-      //,"fnServerParams": function (aoData) {
-      //  aoData.push({ "name": "more_data", "value": "my_value" });
-      //}
-    });
+            //"sAjaxDataProp": "",
+            "fnServerData": retrieveData           //获取数据的处理函数
+            //"fnDrawCallback": function (oSettings) {
+            //oSettings.sAjaxSource = "@Url.Content("~/MobileSlidePic/MobileSlidePicList")";
+            //alert(oSettings.sAjaxSource);
+            //$('#gridTable').fnClearTable(0);
+            //$('#gridTable').fnDraw();
+            //}
+            //,"fnServerParams": function (aoData) {
+            //  aoData.push({ "name": "more_data", "value": "my_value" });
+            //}
+        });
 
-    $("#btnQuery").click(function () {
-      gridTable.fnReloadAjax();
-    });
-
-  });
-
-  function retrieveData(sSource, aoData, fnCallback) {
-    var subcompany = $("#SubCompany").val();
-    var txtname = encodeURIComponent($("#txtName").val());
-    //将客户名称加入参数数组
-    aoData.push({ "name": "SubCompany", "value": subcompany });
-    aoData.push({ "name": "pictureName", "value": txtname });
-    //alert(JSON.stringify(aoData));
-    $.ajax({
-      "type": "get",
-      "contentType": "application/json",
-      "url": sSource,
-      "dataType": "json",
-      "data": JSON.stringify(aoData), //以json格式传递
-      "success": function (data) {
-        //alert(data.sEcho);
-        fnCallback(data); //服务器端返回的对象的returnObject部分是要求的格式
-      }
-    });
-  }
-
-  function del(e) {
-    $.ajax({
-      "type": "get",
-      "contentType": "application/json",
-      data: { id: e },
-      "url": "@Url.Content("~/MobileSlidePic/MobileSlidePicDel")",
-      "dataType": "json",
-      "async": false,
-      "success": function (response) {
-        if (response.success == true) {
-          alert("删除数据成功！");
-          gridTable.fnReloadAjax();
-        }
-        else
-          alert(response.msg);
-      }
-    });
-  }
-
-  function edit(e) {
-    var _url = "@Url.Content("~/MobileSlidePic/MobileSlidePicEdit")";
-    var data = { id: e };
-    var myform = getEditHtml(_url, data);
-    var title = "首页广告";
-    //_submit, _cancel
-    var submit = function () {
-      var flag = false;
-      var formobj = document.getElementById("form0");
-      var formdata = new FormData(formobj);
-      $("#form0").find('input[type=file]').each(function () {
-        var field_name = $(this).attr('name');
-        var files = $(this).data('ace_input_files');
-        if (files && files.length > 0) {
-          formdata.append(field_name, files[0]);
-        }
-      });
-
-      if ($("#PicName").val() == "") {
-        alert("图片标题不能为空！");
-        return flag;
-      }
-
-      $.ajax({
-        type: "post",
-        //dataType: "json",
-        url: "@Url.Content("~/MobileSlidePic/MobileSlidePicEdit")",
-        data: formdata,
-        processData: false,
-        contentType: false,
-        async: false,
-        //jsonp: 'callback',
-        //jsonpCallback: 'callbackReportCreate',
-        success: function (data) {
-          if (data.success == true) {
-            //var reports = data.data;
-            //location.reload();
+        $("#btnQuery").click(function () {
             gridTable.fnReloadAjax();
-            flag = true;
-          }
-          else {
-            alert(data.message);
-            return false;
-          }
-        },
-        error: function (data) {
-          alert(data.message);
-        }
-      });
-      return flag;
-    };
+        });
 
-    var options = { message: myform, title: title, width: 600, submit: submit };
-    opendialog(options);
+    });
 
-  }
+    function retrieveData(sSource, aoData, fnCallback) {
+        var userNo = $("#userNo").val();
+        var userName = encodeURIComponent($("#txtName").val());
+        var loginName = $("#txtLoginName").val();
+        var departmentName = $("#txtDepartmentName").val();
+        var dateCreated = $("#txtDateCreated").val();
+
+
+        //将客户名称加入参数数组
+        aoData.push({ "name": "UserNo", "value": userNo });
+        aoData.push({ "name": "UserName", "value": userName });
+        aoData.push({ "name": "LoginName", "value": loginName });
+        aoData.push({ "name": "DepartmentName", "value": departmentName });
+        aoData.push({ "name": "DateCreated", "value": dateCreated });
+
+        //alert(JSON.stringify(aoData));
+        $.ajax({
+            "type": "get",
+            "contentType": "application/json",
+            "url": sSource,
+            "dataType": "json",
+            "data": JSON.stringify(aoData), //以json格式传递
+            "success": function (data) {
+                //alert(data.sEcho);
+                fnCallback(data); //服务器端返回的对象的returnObject部分是要求的格式
+            }
+        });
+    }
+
+    function del(e) {
+        alert(e);
+        debugger;
+        $.ajax({
+            "type": "get",
+            "contentType": "application/json",
+            data: { id: e.id },
+            "url": "@Url.Content("~/UserCenter/UserDel")",
+            "dataType": "json",
+            "async": false,
+            "success": function (response) {
+                if (response.success == true) {
+                    alert("删除数据成功！");
+                    gridTable.fnReloadAjax();
+                }
+                else
+                    alert(response.msg);
+            }
+        });
+    }
+
+    function edit(e) {
+        var _url = "@Url.Content("~/UserCenter/UserEdit/")";
+        window.location.href = _url + e;
+    }
+
+    @*function edit(e) {
+        var _url = "@Url.Content("~/UserCenter/UserEdit")";
+        var data = { id: e };
+        var myform = getEditHtml(_url, data);
+        var title = "首页广告";
+        //_submit, _cancel
+        var submit = function () {
+            var flag = false;
+            var formobj = document.getElementById("form0");
+            var formdata = new FormData(formobj);
+            $("#form0").find('input[type=file]').each(function () {
+                var field_name = $(this).attr('name');
+                var files = $(this).data('ace_input_files');
+                if (files && files.length > 0) {
+                    formdata.append(field_name, files[0]);
+                }
+            });
+
+            if ($("#PicName").val() == "") {
+                alert("图片标题不能为空！");
+                return flag;
+            }
+
+            $.ajax({
+                type: "post",
+                //dataType: "json",
+                url: "@Url.Content("~/MobileSlidePic/MobileSlidePicEdit")",
+                data: formdata,
+                processData: false,
+                contentType: false,
+                async: false,
+                //jsonp: 'callback',
+                //jsonpCallback: 'callbackReportCreate',
+                success: function (data) {
+                    if (data.success == true) {
+                        //var reports = data.data;
+                        //location.reload();
+                        gridTable.fnReloadAjax();
+                        flag = true;
+                    }
+                    else {
+                        alert(data.message);
+                        return false;
+                    }
+                },
+                error: function (data) {
+                    alert(data.message);
+                }
+            });
+            return flag;
+        };
+
+        var options = { message: myform, title: title, width: 600, submit: submit };
+        opendialog(options);
+
+    }*@
 
 </script>

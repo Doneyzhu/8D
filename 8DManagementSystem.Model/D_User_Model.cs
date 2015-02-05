@@ -11,7 +11,7 @@ namespace _8DManagementSystem.Model
     /// 8D Report 报表用户表
     /// </summary>
     [Serializable]
-    [Class(Table = "8D_User")]
+    [Class(Table = "EightD_User")]
     public class D_User_Model
     {
         /// <summary>
@@ -94,5 +94,10 @@ namespace _8DManagementSystem.Model
         [Property()]
         virtual public string ModifyUserName { get; set; }
 
+        /// <summary>
+        /// 是否已删除
+        /// </summary>
+        [Property()]
+        virtual public bool DataStatus { get; set; }
     }
 }

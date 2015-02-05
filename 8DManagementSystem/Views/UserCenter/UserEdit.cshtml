@@ -1,0 +1,169 @@
+﻿@model _8DManagementSystem.Model.D_User_Model
+
+@{
+    ViewBag.Title = "Edit User";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<ol class="breadcrumb">
+    <li><a href="/8DReport/">Home</a></li>
+    <li><a href="/8DReport/Workflow">Administration</a></li>
+    <li><a href="~/UserCenter">User Center</a></li>
+    <li class="active">Edit User</li>
+</ol>
+
+<div class="alert alert-success" role="alert">
+    Well done! You successfully read this important alert message. 这是一个DEMO
+</div>
+
+
+<div class="panel panel-info">
+    <div class="panel-heading">
+        @*<button type="button" class="btn btn-primary">
+                <span class="glyphicon glyphicon-plus-sign"></span>Create new user
+            </button>*@
+        <button type="button" class="btn btn-default collapsed" data-toggle="collapse" data-target="#help" aria-expanded="false" aria-controls="demo">
+            <span class="glyphicon glyphicon-question-sign"></span>Help <span class="caret"></span>
+        </button>
+    </div>
+    <div id="help" class="panel-body collapse" aria-expanded="false" style="height: 30px;">
+        <p class="lead">8D Report Edit User ：用于编辑 8D User</p>
+        <p><strong>Create new report:</strong> 创建8D报告用户</p>
+    </div>
+</div>
+<script src="@Url.Content("~/Contents/assets/js/jquery.form.js")"></script>
+<script src="@Url.Content("~/Contents/assets/js/jquery.unobtrusive-ajax.min.js")"></script>
+<script type="text/javascript">
+    function Submitt() {
+        $('#form0').ajaxSubmit({
+            success: function (data) {
+                if (data.success) {
+                    var url = "../../UserCenter";
+                    //alert(url);
+                    window.location.href = url;
+                } else {
+                    alert(data.message);
+                }
+            }
+        });
+    }
+
+</script>
+
+<div class="panel panel-default">
+    <div class="panel-heading">Edit User</div>
+    <div class="panel-body">
+        @using (Ajax.BeginForm("UserEdit", "UserCenter", null, new AjaxOptions() { HttpMethod = "Post", OnSuccess = "Back", OnComplete = "Back" }, new { id = "form0", enctype = "multipart/form-data", @class = "form-horizontal", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(m => m.UserGuid)
+            <!-- #section:elements.form -->
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right" for="form-input-readonly">User No.</label>
+
+                <div class="col-sm-9">
+                    <input disabled="disabled" type="text" class="text-box single-line" id="txtUserCode" value="Generate By System" />
+
+                    <!--<span class="help-inline col-xs-12 col-sm-7"> class="col-xs-10 col-sm-3"
+                                    <label class="middle">
+                                        <input class="ace" type="checkbox" id="id-disable-check" />
+                                        <span class="lbl">Disable it!</span>
+                                    </label>
+                                </span>-->
+                </div>
+            </div>
+
+            <div class="space-4"></div>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">User LoginName</label>
+
+                <div class="col-sm-9">
+                    @Html.EditorFor(model => model.UserLoginName)
+                    @Html.ValidationMessageFor(model => model.UserLoginName)
+                    @*<input type="text" id="txtLoginName" placeholder="User LoginName" class="col-xs-10 col-sm-5" />*@
+                </div>
+            </div>
+
+            <div class="space-4"></div>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Name</label>
+
+                <div class="col-sm-9">
+                    @Html.EditorFor(model => model.UserName)
+                    @Html.ValidationMessageFor(model => model.UserName)
+                    @*<input type="text" id="txtUserName" placeholder="Username" class="col-xs-10 col-sm-5" />*@
+                </div>
+            </div>
+
+            <!--<div class="form-group">
+									<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1"> Full Length </label>
+
+									<div class="col-sm-9">
+										<input type="text" id="form-field-1-1" placeholder="Text Field" class="form-control" />
+									</div>
+								</div>-->
+
+            <!-- /section:elements.form -->
+            <div class="space-4"></div>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right" for="form-field-2">Password Field </label>
+
+                <div class="col-sm-9">
+                    @Html.PasswordFor(model => model.PassWord)
+                    @Html.ValidationMessageFor(model => model.PassWord)
+                    @*<input type="password" id="txtPassWord" placeholder="Password" class="col-xs-10 col-sm-5" />*@
+                </div>
+            </div>
+
+            <div class="form-group">
+
+                <label class="col-sm-3 control-label no-padding-right" for="form-field-select-1">Department Name</label>
+                <div class="col-sm-9">
+                    @Html.EditorFor(model => model.DepartmentName)
+                    @Html.ValidationMessageFor(model => model.DepartmentName)
+                    @*<input type="text" id="txtDepartment" placeholder="Department Name" class="col-xs-10 col-sm-5" />*@
+                </div>
+            </div>
+
+            <div class="space-4"></div>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right" for="form-field-2">IS Admin</label>
+
+                <div class="col-sm-8">
+                    <div class="col-xs-3">
+                        @Html.CheckBoxFor(model => model.IsAdmin)
+                        @Html.ValidationMessageFor(model => model.IsAdmin)
+                        @*<label>
+                                <input id="IsAdmin" name="switch-field-1" class="ace ace-switch" type="checkbox" />
+                                <span class="lbl"></span>
+                            </label>*@
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="clearfix form-actions">
+                <div class="col-md-offset-3 col-md-9">
+                    <button class="btn btn-info" type="button" id="submit" onclick="Submitt()">
+                        <i class="ace-icon fa fa-check bigger-110"></i>
+                        Submit
+                    </button>
+
+                    &nbsp; &nbsp; &nbsp;
+										<button class="btn" type="reset">
+                                            <i class="ace-icon fa fa-undo bigger-110"></i>
+                                            Reset
+                                        </button>
+                </div>
+            </div>
+
+            <div class="hr hr-24"></div>
+
+        }
+    </div>
+</div>
+
