@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using _8DManagementSystem.DAL.DBHelper;
 using _8DManagementSystem.Model;
 using NHibernate;
+using NHibernate.Criterion;
 
 namespace _8DManagementSystem.DAL
 {
@@ -56,6 +57,27 @@ namespace _8DManagementSystem.DAL
                 if (!tran.WasCommitted && !tran.WasRolledBack)
                     tran.Rollback();
             }
+        }
+
+        public IList<D_User_Model> GetAllByPage(int page, int rowCount, string userName, string userCode, string departmentName, out int totalCount)
+        {
+            ICriteria ic = NhSession.CreateCriteria(typeof(D_User_Model));
+            if (!string.IsNullOrEmpty(userName))
+                ic.Add(Restrictions.Like("UserName", userName, MatchMode.Anywhere));
+
+            if (!string.IsNullOrEmpty(userCode))
+                ic.Add(Restrictions.Like("UserCode", userCode, MatchMode.Anywhere));
+
+            if (!string.IsNullOrEmpty(departmentName))
+                ic.Add(Restrictions.Like("DepartmentName", departmentName, MatchMode.Anywhere));
+
+            ICriteria pageCrit = CriteriaTransformer.Clone(ic);
+
+            totalCount = Convert.ToInt32(pageCrit.SetProjection(Projections.RowCount()).UniqueResult());
+
+            IList<D_User_Model> list = ic.SetFirstResult(page * rowCount).SetMaxResults(rowCount).List<D_User_Model>();
+
+            return list;
         }
 
     }
