@@ -13,6 +13,23 @@
     Well done! You successfully read this important alert message. 这是一个DEMO
 </div>
 
+<div class="panel panel-info">
+    <div class="panel-heading">
+        <button type="button" class="btn btn-primary" onclick="javascript:edit('');">
+            <span class="glyphicon glyphicon-plus-sign"></span>Create New Role
+        </button>
+        <button type="button" class="btn btn-default collapsed" data-toggle="collapse" data-target="#help" aria-expanded="false" aria-controls="demo">
+            <span class="glyphicon glyphicon-question-sign"></span>Help <span class="caret"></span>
+        </button>
+    </div>
+    <div id="help" class="panel-body collapse" aria-expanded="false" style="height: 30px;">
+        <p class="lead">8D Report Role Management：用于查询、创建、更新 8D Role</p>
+        <p><strong>Create new Role:</strong> 创建8D报告角色</p>
+        <p><strong>Apply:</strong> 应用筛选条件</p>
+        <p><strong>Cancel:</strong> 将筛选条件重置为默认值</p>
+    </div>
+</div>
+
 <div class="panel panel-default">
     <div class="panel-heading">Rolemanage</div>
     <div class="panel-body">
@@ -26,57 +43,22 @@
                 <div class="form-group">
                     <div class="checkbox col-sm-2 col-xs-3">
                         <label>
-                            <input type="checkbox">
-                            Serial
+                            Role Name
                         </label>
                     </div>
-                    <div class="col-sm-2 col-xs-4">
-                        <select class="form-control">
-                            <option>is</option>
-                            <option>is not</option>
-                            <option>&gt;=</option>
-                            <option>&lt;=</option>
-                        </select>
-                    </div>
                     <div class="col-sm-3  col-xs-5">
-                        <input type="number" class="form-control" placeholder="Serial">
+                        <input id="txtRoleName" type="text" class="form-control" placeholder="Role Name">
                     </div>
                 </div>
 
                 <div class="form-group">
                     <div class="checkbox col-sm-2 col-xs-3">
                         <label>
-                            <input type="checkbox">
-                            Subject
-                        </label>
-                    </div>
-                    <div class="col-sm-2 col-xs-4">
-                        <select class="form-control">
-                            <option>contains</option>
-                            <option>doesn't contains</option>
-                        </select>
-                    </div>
-                    <div class="col-sm-3  col-xs-5">
-                        <input type="text" class="form-control" placeholder="Subject">
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="checkbox col-sm-2 col-xs-3">
-                        <label>
-                            <input type="checkbox">
                             Date created
                         </label>
                     </div>
-                    <div class="col-sm-2 col-xs-4">
-                        <select class="form-control">
-                            <option>in less then</option>
-                            <option>in more then</option>
-                            <option>in</option>
-                        </select>
-                    </div>
                     <div class="col-sm-3  col-xs-5">
-                        <input type="datetime" class="form-control" placeholder="Date created">
+                        <input id="txtDateCreated" type="datetime" class="form-control" placeholder="Date Created">
                     </div>
                 </div>
 
@@ -104,229 +86,17 @@
     </div>
 
     <div class="table-responsive">
-        <table class="table table-striped table-bordered table-hover">
+        <table id="gridTable" class="table table-striped table-bordered table-hover">
             <thead>
                 <tr>
                     <th>Action</th>
-                    <th>RoleID</th>
                     <th>Role Name</th>
+                    <th>Modify By</th>
+                    <th>ModifyDate</th>
                     <th>CreateDate</th>
                     <th>Create By</th>
-                    <th>DataStatus</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr>
-                    <td>
-                        <div class="btn-group ">
-                            <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown">
-                                Action <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="role_permissions_edit.html"><span class="glyphicon glyphicon-edit"></span>Show Detail</a></li>
-                                <li><a href="#"><span class="glyphicon glyphicon-cog"></span>Configuration</a></li>
-                                <li><a href="#"><span class="glyphicon glyphicon-export"></span>Export to Excel</a></li>
-                                <li class="divider"></li>
-                                <li><a href="#"><span class="glyphicon glyphicon-remove-circle"></span>Remove</a></li>
-                            </ul>
-                        </div>
-                    </td>
-                    <td>R0001</td>
-                    <td>General User</td>
-                    <td>2008/8/29</td>
-                    <td>Duan Ying</td>
-                    <td>Active</td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="btn-group ">
-                            <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown">
-                                Action <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="#"><span class="glyphicon glyphicon-edit"></span>Show Detail</a></li>
-                                <li><a href="#"><span class="glyphicon glyphicon-cog"></span>Configuration</a></li>
-                                <li><a href="#"><span class="glyphicon glyphicon-export"></span>Export to Excel</a></li>
-                                <li class="divider"></li>
-                                <li><a href="#"><span class="glyphicon glyphicon-remove-circle"></span>Remove</a></li>
-                            </ul>
-                        </div>
-                    </td>
-                    <td>R0002</td>
-                    <td>Administrator</td>
-                    <td>2008/8/29</td>
-                    <td>Duan Ying</td>
-                    <td>Active</td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="btn-group ">
-                            <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown">
-                                Action <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="#"><span class="glyphicon glyphicon-edit"></span>Show Detail</a></li>
-                                <li><a href="#"><span class="glyphicon glyphicon-cog"></span>Configuration</a></li>
-                                <li><a href="#"><span class="glyphicon glyphicon-export"></span>Export to Excel</a></li>
-                                <li class="divider"></li>
-                                <li><a href="#"><span class="glyphicon glyphicon-remove-circle"></span>Remove</a></li>
-                            </ul>
-                        </div>
-                    </td>
-                    <td>R0003</td>
-                    <td>Team Leader</td>
-                    <td>2008/8/29</td>
-                    <td>Duan Ying</td>
-                    <td>Active</td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="btn-group ">
-                            <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown">
-                                Action <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="#"><span class="glyphicon glyphicon-edit"></span>Show Detail</a></li>
-                                <li><a href="#"><span class="glyphicon glyphicon-cog"></span>Configuration</a></li>
-                                <li><a href="#"><span class="glyphicon glyphicon-export"></span>Export to Excel</a></li>
-                                <li class="divider"></li>
-                                <li><a href="#"><span class="glyphicon glyphicon-remove-circle"></span>Remove</a></li>
-                            </ul>
-                        </div>
-                    </td>
-                    <td>R0004</td>
-                    <td>Team Member</td>
-                    <td>2008/8/29</td>
-                    <td>Duan Ying</td>
-                    <td>Active</td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="btn-group ">
-                            <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown">
-                                Action <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="#"><span class="glyphicon glyphicon-edit"></span>Show Detail</a></li>
-                                <li><a href="#"><span class="glyphicon glyphicon-cog"></span>Configuration</a></li>
-                                <li><a href="#"><span class="glyphicon glyphicon-export"></span>Export to Excel</a></li>
-                                <li class="divider"></li>
-                                <li><a href="#"><span class="glyphicon glyphicon-remove-circle"></span>Remove</a></li>
-                            </ul>
-                        </div>
-                    </td>
-                    <td>R0005</td>
-                    <td>Sponsor</td>
-                    <td>2008/8/29</td>
-                    <td>Duan Ying</td>
-                    <td>Active</td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="btn-group ">
-                            <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown">
-                                Action <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="#"><span class="glyphicon glyphicon-edit"></span>Show Detail</a></li>
-                                <li><a href="#"><span class="glyphicon glyphicon-cog"></span>Configuration</a></li>
-                                <li><a href="#"><span class="glyphicon glyphicon-export"></span>Export to Excel</a></li>
-                                <li class="divider"></li>
-                                <li><a href="#"><span class="glyphicon glyphicon-remove-circle"></span>Remove</a></li>
-                            </ul>
-                        </div>
-                    </td>
-                    <td>R0006</td>
-                    <td>Coordinator</td>
-                    <td>2008/8/29</td>
-                    <td>Duan Ying</td>
-                    <td>Active</td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="btn-group ">
-                            <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown">
-                                Action <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="#"><span class="glyphicon glyphicon-edit"></span>Show Detail</a></li>
-                                <li><a href="#"><span class="glyphicon glyphicon-cog"></span>Configuration</a></li>
-                                <li><a href="#"><span class="glyphicon glyphicon-export"></span>Export to Excel</a></li>
-                                <li class="divider"></li>
-                                <li><a href="#"><span class="glyphicon glyphicon-remove-circle"></span>Remove</a></li>
-                            </ul>
-                        </div>
-                    </td>
-                    <td>R0007</td>
-                    <td>Quality Engineer(QE)</td>
-                    <td>2008/8/29</td>
-                    <td>Duan Ying</td>
-                    <td>Active</td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="btn-group ">
-                            <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown">
-                                Action <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="#"><span class="glyphicon glyphicon-edit"></span>Show Detail</a></li>
-                                <li><a href="#"><span class="glyphicon glyphicon-cog"></span>Configuration</a></li>
-                                <li><a href="#"><span class="glyphicon glyphicon-export"></span>Export to Excel</a></li>
-                                <li class="divider"></li>
-                                <li><a href="#"><span class="glyphicon glyphicon-remove-circle"></span>Remove</a></li>
-                            </ul>
-                        </div>
-                    </td>
-                    <td>R0008</td>
-                    <td>New Role One</td>
-                    <td>2008/8/29</td>
-                    <td>Duan Ying</td>
-                    <td>Active</td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="btn-group ">
-                            <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown">
-                                Action <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="#"><span class="glyphicon glyphicon-edit"></span>Show Detail</a></li>
-                                <li><a href="#"><span class="glyphicon glyphicon-cog"></span>Configuration</a></li>
-                                <li><a href="#"><span class="glyphicon glyphicon-export"></span>Export to Excel</a></li>
-                                <li class="divider"></li>
-                                <li><a href="#"><span class="glyphicon glyphicon-remove-circle"></span>Remove</a></li>
-                            </ul>
-                        </div>
-                    </td>
-                    <td>R0009</td>
-                    <td>New Role Two</td>
-                    <td>2008/8/29</td>
-                    <td>Duan Ying</td>
-                    <td>Active</td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="btn-group ">
-                            <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown">
-                                Action <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="#"><span class="glyphicon glyphicon-edit"></span>Show Detail</a></li>
-                                <li><a href="#"><span class="glyphicon glyphicon-cog"></span>Configuration</a></li>
-                                <li><a href="#"><span class="glyphicon glyphicon-export"></span>Export to Excel</a></li>
-                                <li class="divider"></li>
-                                <li><a href="#"><span class="glyphicon glyphicon-remove-circle"></span>Remove</a></li>
-                            </ul>
-                        </div>
-                    </td>
-                    <td>R0010</td>
-                    <td>New Role Three</td>
-                    <td>2008/8/29</td>
-                    <td>Duan Ying</td>
-                    <td>Active</td>
-                </tr>
-            </tbody>
             <!-- <tfoot>
                         <tr>
                             <td colspan="15">Status Example：
@@ -340,18 +110,132 @@
         </table>
     </div>
 
-    <div class="panel-footer text-center">
-        <nav>
-            <ul class="pagination">
-                <li><a href="#">«</a></li>
-                <li class="active"><a href="#">1</a></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">4</a></li>
-                <li><a href="#">5</a></li>
-                <li><a href="#">»</a></li>
-            </ul>
-        </nav>
-    </div>
+    <div id="grid-pager" class="panel-footer text-center"></div>
 </div>
-</div>
+
+<script src="~/Contents/assets/js/jquery.dataTables.min.js"></script>
+<script src="~/Contents/assets/js/jquery.dataTables.bootstrap.js"></script>
+<script src="~/Contents/assets/js/bootbox.min.js"></script>
+<script src="~/Contents/assets/js/fnReloadAjax.js"></script>
+
+<script type="text/javascript">
+    var gridTable = $('#gridTable');
+    jQuery(function ($) {
+
+        gridTable.dataTable({
+            "iDisplayStart": 0, //从第几条开始
+            "iDisplayLength": 2,//每页显示10条数据
+
+            //"oLanguage": {//下面是一些汉语翻译
+            //    "sUrl": "/Content/assets/js/language/jquery.dataTable.cn.js"
+            //},
+
+            "bLengthChange": false, //关闭每页显示多少条数据
+            "bPaginate": true, //翻页功能
+            "bFilter": false, //过滤功能
+            "bAutoWidth": true,//自动宽度
+            "bInfo": true,//页脚信息
+            "bProcessing": true,
+            "bServerSide": true,
+            "sServerMethod": "POST",
+            "sAjaxSource": "@Url.Content("~/Role/RoleList")",
+
+            "aoColumns": [
+                              //{
+                              //    "mDataProp": "ID",
+                              //    "bSearchable": false,
+                              //    "bSortable": false,
+                              //    "fnRender": function (oObj) {
+                              //        //return '<a href=\"Details/' + oObj.aData[0] + '\">查看</a>';
+                              //        return '<div class="btn-group ">' +
+                              //      '<button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown">' +
+                              //          'Action <span class="caret"></span></button>' +
+                              //      '<ul class="dropdown-menu" role="menu">' +
+                              //          '<li><a href="#" onclick="javascript:edit(this)"><span class="glyphicon glyphicon-edit"></span>Edit</a></li>' +
+                              //          '<li><a href="#"><span class="glyphicon glyphicon-cog"></span>Configuration</a></li>' +
+                              //          '<li><a href="#"><span class="glyphicon glyphicon-export"></span>Export to Excel</a></li>' +
+                              //          '<li class="divider"></li>' +
+                              //        '<li><a href="#"><span class="glyphicon glyphicon-remove-circle"></span>Remove</a></li>' +
+                              //      '</ul></div>';
+                              //    }                           //自定义列的样式
+                              //},
+                              { "mDataProp": "Operation", bSortable: false },
+                              { "mDataProp": "RoleName", bSortable: false },
+                              { "mDataProp": "ModifyUserName", bSortable: false },
+                              { "mDataProp": "ModifyDate", bSortable: false },
+                              { "mDataProp": "CreateUserName", bSortable: false },
+                              //{ "mDataProp": "OpUserName", bSortable: false },
+                              { "mDataProp": "CreateDate", bSortable: false }
+                              //{ "mDataProp": "Oper", bSortable: false }
+                              //,{ "sDefaultContent": '' }, // sDefaultContent 如果这一列不需要填充数据用这个属性，值可以不写，起占位作用
+                              //{ "sDefaultContent": '', "sClass": "action" },//sClass 表示给本列加class
+            ],
+
+            //"sAjaxDataProp": "",
+            "fnServerData": retrieveData           //获取数据的处理函数
+            //"fnDrawCallback": function (oSettings) {
+            //oSettings.sAjaxSource = "@Url.Content("~/Role/RoleList")";
+            //alert(oSettings.sAjaxSource);
+            //$('#gridTable').fnClearTable(0);
+            //$('#gridTable').fnDraw();
+            //}
+            //,"fnServerParams": function (aoData) {
+            //  aoData.push({ "name": "more_data", "value": "my_value" });
+            //}
+        });
+
+        $("#btnQuery").click(function () {
+            gridTable.fnReloadAjax();
+        });
+
+    });
+
+    function retrieveData(sSource, aoData, fnCallback) {
+
+        var roleName = encodeURIComponent($("#txtRoleName").val());
+        var dateCreated = $("#txtDateCreated").val();
+
+
+        //将客户名称加入参数数组
+        aoData.push({ "name": "RoleName", "value": roleName });
+        aoData.push({ "name": "DateCreated", "value": dateCreated });
+
+        //alert(JSON.stringify(aoData));
+        $.ajax({
+            "type": "get",
+            "contentType": "application/json",
+            "url": sSource,
+            "dataType": "json",
+            "data": JSON.stringify(aoData), //以json格式传递
+            "success": function (data) {
+                //alert(data.sEcho);
+                fnCallback(data); //服务器端返回的对象的returnObject部分是要求的格式
+            }
+        });
+    }
+
+    function del(e) {
+        $.ajax({
+            "type": "get",
+            "contentType": "application/json",
+            data: { id: e.id },
+            "url": "@Url.Content("~/Role/RoleDel")",
+            "dataType": "json",
+            "async": false,
+            "success": function (response) {
+                if (response.success == true) {
+                    alert("删除数据成功！");
+                    gridTable.fnReloadAjax();
+                }
+                else
+                    alert(response.msg);
+            }
+        });
+    }
+
+    function edit(e) {
+        var _url = "@Url.Content("~/Role/RoleEdit/")";
+        window.location.href = _url + e;
+    }
+
+</script>

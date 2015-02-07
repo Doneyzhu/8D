@@ -12,6 +12,11 @@ namespace _8DManagementSystem.DAL
 {
     public class D_User_DAL : DbSession
     {
+        /// <summary>
+        /// 删除用户
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         public bool Delete(D_User_Model model)
         {
             NHibernate.ITransaction tran = NhSession.BeginTransaction();

@@ -134,6 +134,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Content Include="App_Data\DataAccess\MSSQL.cfg.xml" />
     <Content Include="App_Data\DataAccess\MSSQL_Read.cfg.xml" />
+    <Content Include="App_Data\SqlScript.txt" />
     <Content Include="Contents\assets\css\ace.min.css" />
     <Content Include="Contents\assets\css\bootstrap-datetimepicker.css" />
     <Content Include="Contents\assets\css\bootstrap-theme.css" />
