@@ -7,11 +7,35 @@ using _8DManagementSystem.DAL.DBHelper;
 using _8DManagementSystem.Model;
 using NHibernate;
 using NHibernate.Criterion;
+using System.Security.Cryptography;
 
 namespace _8DManagementSystem.DAL
 {
     public class D_User_DAL : DbSession
     {
+
+        public string PassWordMD5(string pwd)
+        {
+            MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
+            byte[] encryptedBytes = md5.ComputeHash(Encoding.ASCII.GetBytes(pwd));
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < encryptedBytes.Length; i++)
+            {
+                sb.AppendFormat("{0:x2}", encryptedBytes[i]);
+            }
+            return sb.ToString();
+
+        }
+
+        public D_User_Model GetUserByUserLoginName(string userLoginName)
+        {
+            ICriteria ic = NhSession.CreateCriteria(typeof(D_User_Model));
+            ic.Add(Restrictions.Eq("UserLoginName", userLoginName));
+            ic.Add(Restrictions.Eq("DataStatus", false));
+            D_User_Model model = ic.UniqueResult<D_User_Model>();
+            return model;
+        }
+
         /// <summary>
         /// 删除用户
         /// </summary>

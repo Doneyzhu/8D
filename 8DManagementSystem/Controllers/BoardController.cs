@@ -122,7 +122,7 @@ namespace _8DManagementSystem.Controllers
         /// <returns></returns>
         [HttpPost]
         //[AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult UserEdit(Model.D_Board_Model model)
+        public ActionResult BoardEdit(Model.D_Board_Model model)
         {
             bool success = false;
 

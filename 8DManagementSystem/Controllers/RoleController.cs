@@ -122,7 +122,7 @@ namespace _8DManagementSystem.Controllers
         /// <returns></returns>
         [HttpPost]
         //[AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult UserEdit(Model.D_Role_Model model)
+        public ActionResult RoleEdit(Model.D_Role_Model model)
         {
             bool success = false;
 

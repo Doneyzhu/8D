@@ -119,6 +119,7 @@
     <Compile Include="App_Code\BaseController.cs" />
     <Compile Include="Controllers\BoardController.cs" />
     <Compile Include="Controllers\DepartmentController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\UserCenterController.cs" />
@@ -294,6 +295,8 @@
     <Content Include="Views\Role\Index.cshtml" />
     <Content Include="Views\Department\Index.cshtml" />
     <Content Include="Views\Board\Index.cshtml" />
+    <Content Include="Views\Role\RoleEdit.cshtml" />
+    <Content Include="Views\Board\BoardEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Web_ZH_CN.sitemap" />
