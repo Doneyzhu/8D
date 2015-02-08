@@ -1,0 +1,54 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<ol class="breadcrumb">
+  <li><a href="/8DReport/">Home</a></li>
+  <li><a href="~/UserCenter">Administration</a></li>
+  <li><a href="~/Board">Board</a></li>
+  <li class="active">Edit Board</li>
+</ol>
+
+<div class="alert alert-success" role="alert">
+  Well done! You successfully read this important alert message. 这是一个DEMO
+</div>
+
+<div class="panel panel-info">
+  <div class="panel-heading">
+    @*<button type="button" class="btn btn-primary">
+          <span class="glyphicon glyphicon-plus-sign"></span>Create new user
+      </button>*@
+    <button type="button" class="btn btn-default collapsed" data-toggle="collapse" data-target="#help" aria-expanded="false" aria-controls="demo">
+      <span class="glyphicon glyphicon-question-sign"></span>Help <span class="caret"></span>
+    </button>
+  </div>
+  <div id="help" class="panel-body collapse" aria-expanded="false" style="height: 30px;">
+    <p class="lead">8D Report Edit Board ：用于编辑 8D Board</p>
+    <p><strong>Create new report:</strong> 创建8D报告Board</p>
+  </div>
+</div>
+<script src="@Url.Content("~/Contents/assets/js/jquery.form.js")"></script>
+<script src="@Url.Content("~/Contents/assets/js/jquery.unobtrusive-ajax.min.js")"></script>
+<script type="text/javascript">
+  function Submitt() {
+    $('#form0').ajaxSubmit({
+      success: function (data) {
+        if (data.success) {
+          var url = "../../Board";
+          //alert(url);
+          window.location.href = url;
+        } else {
+          alert(data.message);
+        }
+      }
+    });
+  }
+
+</script>
+<div class="panel panel-default">
+  <div class="panel-heading">Edit Role</div>
+
+</div>
+

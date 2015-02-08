@@ -158,6 +158,7 @@ namespace _8DManagementSystem.Controllers
 
                 dataModel.UserLoginName = model.UserLoginName;
                 dataModel.UserName = model.UserName;
+                dataModel.PassWord = new DAL.D_User_DAL().PassWordMD5(model.PassWord);
                 dataModel.IsAdmin = model.IsAdmin;
                 dataModel.DepartmentName = model.DepartmentName;
                 dataModel.ModifyDateTime = DateTime.Now;

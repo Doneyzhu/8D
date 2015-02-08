@@ -35,6 +35,25 @@
 <script src="@Url.Content("~/Contents/assets/js/jquery.unobtrusive-ajax.min.js")"></script>
 <script type="text/javascript">
     function Submitt() {
+
+        if ($("#UserLoginName").val() == "") {
+            alert("UserLoginName Can't be Empty");
+            $("#UserLoginName").focus();
+            return false;
+        }
+
+        if ($("#UserName").val() == "") {
+            alert("UserName Can't be Empty");
+            $("#UserName").focus();
+            return false;
+        }
+
+        if ($("#PassWord").val() == "") {
+            alert("PassWord Can't be Empty");
+            $("#PassWord").focus();
+            return false;
+        }
+
         $('#form0').ajaxSubmit({
             success: function (data) {
                 if (data.success) {

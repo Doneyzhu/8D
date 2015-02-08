@@ -5,7 +5,7 @@
     <property name="current_session_context_class">web</property>
     <property name="connection.driver_class">NHibernate.Driver.SqlClientDriver</property>
     <property name="connection.connection_string">
-      Server=ZHUDONGJIE-PC\SQLEXPRESS;initial catalog=8DReport;uid=sa;pwd=123qwe!@#QWE
+      Server=.\sqlexpress;initial catalog=8DReport;uid=sa;pwd=zhudongjie
     </property>
     <property name="adonet.batch_size">10</property>
     <property name="show_sql">false</property>

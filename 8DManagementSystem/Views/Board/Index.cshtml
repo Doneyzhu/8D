@@ -14,7 +14,7 @@
 <div class="panel panel-info">
   <div class="panel-heading">
     <button type="button" class="btn btn-primary" onclick="javascript:edit('');">
-      <span class="glyphicon glyphicon-plus-sign"></span>Create new user
+      <span class="glyphicon glyphicon-plus-sign"></span>Create new Board
     </button>
     <button type="button" class="btn btn-default collapsed" data-toggle="collapse" data-target="#help" aria-expanded="false" aria-controls="demo">
       <span class="glyphicon glyphicon-question-sign"></span>Help <span class="caret"></span>
@@ -29,7 +29,7 @@
 </div>
 <div class="panel panel-default">
 
-  <div class="panel-heading">Rolemanage</div>
+  <div class="panel-heading">BoardManage</div>
   <div class="panel-body">
     <form class="form-horizontal" role="form">
       <button type="button" class="btn btn-default btn-sm collapsed" data-toggle="collapse" data-target="#filters" aria-expanded="true" aria-controls="demo">
@@ -79,7 +79,7 @@
   </div>
 
   <div class="table-responsive">
-    <table id="sample-table-2" class="table table-striped table-bordered table-hover">
+    <table id="gridTable" class="table table-striped table-bordered table-hover">
       <thead>
         <tr>
           <th>Action</th>
@@ -158,7 +158,7 @@
       //"sAjaxDataProp": "",
       "fnServerData": retrieveData           //获取数据的处理函数
       //"fnDrawCallback": function (oSettings) {
-      //oSettings.sAjaxSource = "@Url.Content("~/Role/RoleList")";
+      //oSettings.sAjaxSource = "@Url.Content("~/Board/BoardList")";
       //alert(oSettings.sAjaxSource);
       //$('#gridTable').fnClearTable(0);
       //$('#gridTable').fnDraw();
@@ -181,7 +181,7 @@
 
 
     //将客户名称加入参数数组
-    aoData.push({ "name": "BoardName", "value": roleName });
+    aoData.push({ "name": "BoardName", "value": boardName });
     aoData.push({ "name": "DateCreated", "value": dateCreated });
 
     //alert(JSON.stringify(aoData));

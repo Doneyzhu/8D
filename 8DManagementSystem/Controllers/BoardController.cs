@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using Newtonsoft.Json.Linq;
 using _8DManagementSystem.Common;
 using System.Collections;
+using _8DManagementSystem.Filter;
 
 namespace _8DManagementSystem.Controllers
 {
@@ -15,11 +16,13 @@ namespace _8DManagementSystem.Controllers
         // GET: /Board/
 
         #region 查询
+        //[LoginFilter()]
         public ActionResult Index()
         {
             return View();
         }
 
+        //[LoginFilter()]
         public ActionResult BoardList()
         {
 
@@ -104,6 +107,7 @@ namespace _8DManagementSystem.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [OutputCache(Duration = 0)]
+        //[LoginFilter()]
         public ActionResult BoardEdit(Guid? id)
         {
             Model.D_Board_Model model = new Model.D_Board_Model();
@@ -121,6 +125,7 @@ namespace _8DManagementSystem.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
+        //[LoginFilter()]
         //[AcceptVerbs(HttpVerbs.Post)]
         public ActionResult BoardEdit(Model.D_Board_Model model)
         {
@@ -156,6 +161,7 @@ namespace _8DManagementSystem.Controllers
         #endregion
 
         #region 删除
+        //[LoginFilter()]
         public ActionResult BoardDel(Guid? id)
         {
             bool success = false;

@@ -21,10 +21,10 @@ namespace _8DManagementSystem.Controllers
                 return Json(new { success = success, message = "成功" }, JsonRequestBehavior.AllowGet);
             }
 
-            if (!string.IsNullOrEmpty(Request.Form["loginName"]) && !string.IsNullOrEmpty(Request.Form["pwd"]))
+            if (!string.IsNullOrEmpty(Request.Form["loginName"]) && !string.IsNullOrEmpty(Request.Form["passWord"]))
             {
                 string userName = Request.Form["loginName"];
-                string pwd = Request.Form["pwd"];
+                string pwd = Request.Form["passWord"];
 
                 if (!string.IsNullOrEmpty(Request.Form["keeping"]))
                 {
@@ -51,7 +51,12 @@ namespace _8DManagementSystem.Controllers
             return View();
         }
 
-
+        public ActionResult LogOut()
+        {
+            ClearCookie();
+            Response.Redirect(Url.Action("Index", "Login"));
+            return Content("");
+        }
 
     }
 }

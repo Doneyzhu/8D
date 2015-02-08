@@ -1,0 +1,538 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<ol class="breadcrumb">
+    <li><a href="/8DReport/">Home</a></li>
+    <li><a href="/8DReport/Workflow">8D Workflow</a></li>
+    <li><a href="/8DReport/Workflow/MSE1">MSE1</a></li>
+    <li class="active">8D ReportList</li>
+</ol>
+
+<div class="alert alert-success" role="alert">
+    Well done! You successfully read this important alert message. 这是一个DEMO
+</div>
+
+<div class="panel panel-info">
+    <div class="panel-heading">
+        <button type="button" class="btn btn-primary">
+            <a href="~/EightDReport/Assign8DReport" style="color: white;"><span class="glyphicon glyphicon-plus-sign"></span>Create new report</a>
+        </button>
+        <button type="button" class="btn btn-default collapsed" data-toggle="collapse" data-target="#help" aria-expanded="false" aria-controls="demo">
+            <span class="glyphicon glyphicon-question-sign"></span>Help <span class="caret"></span>
+        </button>
+    </div>
+    <div id="help" class="panel-body collapse" aria-expanded="false" style="height: 30px;">
+        <p class="lead">8D Report Edit Board ：用于编辑 8D Board</p>
+        <p><strong>Create new report:</strong> 创建8D报告Board</p>
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">8D Report List</div>
+    <div class="panel-body">
+        <form class="form-horizontal" role="form">
+            <button type="button" class="btn btn-default btn-sm collapsed" data-toggle="collapse" data-target="#filters" aria-expanded="true" aria-controls="demo">
+                Filters <span class="caret"></span>
+            </button>
+            <div id="filters" class="collapse" style="padding: 10px;">
+                <!--class="collapse in"-->
+
+                <div class="form-group">
+                    <div class="checkbox col-sm-2 col-xs-3">
+                        <label>
+                            Role Name
+                        </label>
+                    </div>
+                    <div class="col-sm-3  col-xs-5">
+                        <input id="txtRoleName" type="text" class="form-control" placeholder="Role Name">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="checkbox col-sm-2 col-xs-3">
+                        <label>
+                            Date created
+                        </label>
+                    </div>
+                    <div class="col-sm-3  col-xs-5">
+                        <input id="txtDateCreated" type="datetime" class="form-control" placeholder="Date Created">
+                    </div>
+                </div>
+
+            </div>
+
+            <button type="button" class="btn btn-default btn-sm" data-toggle="collapse" data-target="#options" aria-expanded="true" aria-controls="demo">
+                Options <span class="caret"></span>
+            </button>
+            <div id="options" class="collapse" style="padding: 10px;">
+                <div class="form-group">
+                    <label class="control-label col-sm-2 col-xs-3">Order by</label>
+                    <div class="col-sm-2 col-xs-4">
+                        <select class="form-control">
+                            <option>Serial</option>
+                            <option>Date created</option>
+                            <option>Subject</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <button type="button" class="btn btn-sm btn-success"><span class="glyphicon glyphicon-ok"></span>Apply</button>
+            <button type="button" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-remove"></span>Cancel</button>
+        </form>
+    </div>
+</div>
+
+<div class="table-responsive">
+    <table id="sample-table-2" class="table table-striped table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Action</th>
+                <th>8D No</th>
+                <th>Dept</th>
+                <th class="hidden-480">8D Title</th>
+                <th>TeamLeader</th>
+                <th>Sponsor</th>
+                <th>Status</th>
+                <th>
+                    <i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>
+                    AssignDate
+                </th>
+                <th>
+                    <i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>
+                    DataIssu
+                </th>
+                <th>
+                    <i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>
+                    DateCompleted
+                </th>
+                <th class="hidden-480">Scorce</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr>
+                <td class="center">
+                    <div class="btn-group ">
+                        <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown">
+                            Action <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="8DReport.html"><span class="glyphicon glyphicon-edit"></span>Show Detail</a></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-cog"></span>Configuration</a></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-export"></span>Export to Excel</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-remove-circle"></span>Remove</a></li>
+                        </ul>
+                    </div>
+                </td>
+
+                <td>111</td>
+                <td>AE</td>
+                <td>
+                    <a href="#">Title</a>
+                </td>
+                <td>liuquan</td>
+                <td>aa</td>
+                <td>Assigned</td>
+                <td class="hidden-480">2015-01-01</td>
+                <td>2015-02-01</td>
+                <td>2015-03-01</td>
+                <td class="hidden-480">
+                    <span class="label label-sm label-warning">90</span>
+                </td>
+
+            </tr>
+
+            <tr>
+                <td class="center">
+                    <div class="btn-group ">
+                        <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown">
+                            Action <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="#"><span class="glyphicon glyphicon-edit"></span>Show Detail</a></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-cog"></span>Configuration</a></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-export"></span>Export to Excel</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-remove-circle"></span>Remove</a></li>
+                        </ul>
+                    </div>
+                </td>
+
+                <td>111</td>
+                <td>AE</td>
+                <td>
+                    <a href="#">Title</a>
+                </td>
+                <td>liuquan</td>
+                <td>aa</td>
+                <td>Assigned</td>
+                <td class="hidden-480">2015-01-01</td>
+                <td>2015-02-01</td>
+                <td>2015-03-01</td>
+                <td class="hidden-480">
+                    <span class="label label-sm label-warning">90</span>
+                </td>
+
+            </tr>
+
+            <tr>
+                <td class="center">
+                    <div class="btn-group ">
+                        <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown">
+                            Action <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="#"><span class="glyphicon glyphicon-edit"></span>Show Detail</a></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-cog"></span>Configuration</a></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-export"></span>Export to Excel</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-remove-circle"></span>Remove</a></li>
+                        </ul>
+                    </div>
+                </td>
+
+                <td>111</td>
+                <td>AE</td>
+                <td>
+                    <a href="#">Title</a>
+                </td>
+                <td>liuquan</td>
+                <td>aa</td>
+                <td>Assigned</td>
+                <td class="hidden-480">2015-01-01</td>
+                <td>2015-02-01</td>
+                <td>2015-03-01</td>
+                <td class="hidden-480">
+                    <span class="label label-sm label-warning">90</span>
+                </td>
+
+            </tr>
+
+            <tr>
+                <td class="center">
+                    <div class="btn-group ">
+                        <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown">
+                            Action <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="#"><span class="glyphicon glyphicon-edit"></span>Show Detail</a></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-cog"></span>Configuration</a></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-export"></span>Export to Excel</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-remove-circle"></span>Remove</a></li>
+                        </ul>
+                    </div>
+                </td>
+
+                <td>111</td>
+                <td>AE</td>
+                <td>
+                    <a href="#">Title</a>
+                </td>
+                <td>liuquan</td>
+                <td>aa</td>
+                <td>Assigned</td>
+                <td class="hidden-480">2015-01-01</td>
+                <td>2015-02-01</td>
+                <td>2015-03-01</td>
+                <td class="hidden-480">
+                    <span class="label label-sm label-warning">90</span>
+                </td>
+
+            </tr>
+
+            <tr>
+                <td class="center">
+                    <div class="btn-group ">
+                        <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown">
+                            Action <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="#"><span class="glyphicon glyphicon-edit"></span>Show Detail</a></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-cog"></span>Configuration</a></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-export"></span>Export to Excel</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-remove-circle"></span>Remove</a></li>
+                        </ul>
+                    </div>
+                </td>
+
+                <td>111</td>
+                <td>AE</td>
+                <td>
+                    <a href="#">Title</a>
+                </td>
+                <td>liuquan</td>
+                <td>aa</td>
+                <td>Assigned</td>
+                <td class="hidden-480">2015-01-01</td>
+                <td>2015-02-01</td>
+                <td>2015-03-01</td>
+                <td class="hidden-480">
+                    <span class="label label-sm label-warning">90</span>
+                </td>
+
+            </tr>
+
+            <tr>
+                <td class="center">
+                    <div class="btn-group ">
+                        <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown">
+                            Action <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="#"><span class="glyphicon glyphicon-edit"></span>Show Detail</a></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-cog"></span>Configuration</a></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-export"></span>Export to Excel</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-remove-circle"></span>Remove</a></li>
+                        </ul>
+                    </div>
+                </td>
+
+                <td>111</td>
+                <td>AE</td>
+                <td>
+                    <a href="#">Title</a>
+                </td>
+                <td>liuquan</td>
+                <td>aa</td>
+                <td>Assigned</td>
+                <td class="hidden-480">2015-01-01</td>
+                <td>2015-02-01</td>
+                <td>2015-03-01</td>
+                <td class="hidden-480">
+                    <span class="label label-sm label-warning">90</span>
+                </td>
+
+            </tr>
+
+            <tr>
+                <td class="center">
+                    <div class="btn-group ">
+                        <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown">
+                            Action <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="#"><span class="glyphicon glyphicon-edit"></span>Show Detail</a></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-cog"></span>Configuration</a></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-export"></span>Export to Excel</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-remove-circle"></span>Remove</a></li>
+                        </ul>
+                    </div>
+                </td>
+
+                <td>111</td>
+                <td>AE</td>
+                <td>
+                    <a href="#">Title</a>
+                </td>
+                <td>liuquan</td>
+                <td>aa</td>
+                <td>Assigned</td>
+                <td class="hidden-480">2015-01-01</td>
+                <td>2015-02-01</td>
+                <td>2015-03-01</td>
+                <td class="hidden-480">
+                    <span class="label label-sm label-warning">90</span>
+                </td>
+
+            </tr>
+
+            <tr>
+                <td class="center">
+                    <div class="btn-group ">
+                        <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown">
+                            Action <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="#"><span class="glyphicon glyphicon-edit"></span>Show Detail</a></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-cog"></span>Configuration</a></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-export"></span>Export to Excel</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-remove-circle"></span>Remove</a></li>
+                        </ul>
+                    </div>
+                </td>
+
+                <td>111</td>
+                <td>AE</td>
+                <td>
+                    <a href="#">Title</a>
+                </td>
+                <td>liuquan</td>
+                <td>aa</td>
+                <td>Assigned</td>
+                <td class="hidden-480">2015-01-01</td>
+                <td>2015-02-01</td>
+                <td>2015-03-01</td>
+                <td class="hidden-480">
+                    <span class="label label-sm label-warning">90</span>
+                </td>
+
+            </tr>
+
+            <tr>
+                <td class="center">
+                    <div class="btn-group ">
+                        <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown">
+                            Action <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="#"><span class="glyphicon glyphicon-edit"></span>Show Detail</a></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-cog"></span>Configuration</a></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-export"></span>Export to Excel</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-remove-circle"></span>Remove</a></li>
+                        </ul>
+                    </div>
+                </td>
+
+                <td>111</td>
+                <td>AE</td>
+                <td>
+                    <a href="#">Title</a>
+                </td>
+                <td>liuquan</td>
+                <td>aa</td>
+                <td>Assigned</td>
+                <td class="hidden-480">2015-01-01</td>
+                <td>2015-02-01</td>
+                <td>2015-03-01</td>
+                <td class="hidden-480">
+                    <span class="label label-sm label-warning">90</span>
+                </td>
+
+            </tr>
+
+            <tr>
+                <td class="center">
+                    <div class="btn-group ">
+                        <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown">
+                            Action <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="#"><span class="glyphicon glyphicon-edit"></span>Show Detail</a></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-cog"></span>Configuration</a></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-export"></span>Export to Excel</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-remove-circle"></span>Remove</a></li>
+                        </ul>
+                    </div>
+                </td>
+
+                <td>111</td>
+                <td>AE</td>
+                <td>
+                    <a href="#">Title</a>
+                </td>
+                <td>liuquan</td>
+                <td>aa</td>
+                <td>Assigned</td>
+                <td class="hidden-480">2015-01-01</td>
+                <td>2015-02-01</td>
+                <td>2015-03-01</td>
+                <td class="hidden-480">
+                    <span class="label label-sm label-warning">90</span>
+                </td>
+
+            </tr>
+
+            <tr>
+                <td class="center">
+                    <div class="btn-group ">
+                        <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown">
+                            Action <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="#"><span class="glyphicon glyphicon-edit"></span>Show Detail</a></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-cog"></span>Configuration</a></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-export"></span>Export to Excel</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-remove-circle"></span>Remove</a></li>
+                        </ul>
+                    </div>
+                </td>
+
+                <td>111</td>
+                <td>AE</td>
+                <td>
+                    <a href="#">Title</a>
+                </td>
+                <td>liuquan</td>
+                <td>aa</td>
+                <td>Assigned</td>
+                <td class="hidden-480">2015-01-01</td>
+                <td>2015-02-01</td>
+                <td>2015-03-01</td>
+                <td class="hidden-480">
+                    <span class="label label-sm label-warning">90</span>
+                </td>
+
+            </tr>
+
+            <tr>
+                <td class="center">
+                    <div class="btn-group ">
+                        <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown">
+                            Action <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="#"><span class="glyphicon glyphicon-edit"></span>Show Detail</a></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-cog"></span>Configuration</a></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-export"></span>Export to Excel</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-remove-circle"></span>Remove</a></li>
+                        </ul>
+                    </div>
+                </td>
+
+                <td>111</td>
+                <td>AE</td>
+                <td>
+                    <a href="#">Title</a>
+                </td>
+                <td>liuquan</td>
+                <td>aa</td>
+                <td>Assigned</td>
+                <td class="hidden-480">2015-01-01</td>
+                <td>2015-02-01</td>
+                <td>2015-03-01</td>
+                <td class="hidden-480">
+                    <span class="label label-sm label-warning">90</span>
+                </td>
+
+            </tr>
+
+        </tbody>
+    </table>
+
+</div>
+
+<script src="../../assets/js/jquery.min.js"></script>
+<script src="../../assets/js/bootstrap.min.js"></script>
+
+<script src="../../assets/js/jquery.dataTables.min.js"></script>
+<script src="../../assets/js/jquery.dataTables.bootstrap.js"></script>
+
+<script type="text/javascript">
+    jQuery(function () {
+        var oTable1 = $('#sample-table-2').dataTable({
+            bAutoWidth: false,
+            bLengthChange: false, //关闭每页显示多少条数据
+            bFilter: false, //过滤功能
+            "aoColumns": [
+              { "bSortable": false },
+              null, null, null, null, null, null, null, null, null,
+              { "bSortable": false }
+            ]
+        })
+
+
+    });
+</script>

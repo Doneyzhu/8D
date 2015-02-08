@@ -1,0 +1,146 @@
+﻿@{
+    ViewBag.Title = "Assign8DReport";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<ol class="breadcrumb">
+    <li><a href="/8DReport/">Home</a></li>
+    <li><a href="/8DReport/Workflow">8D Workflow</a></li>
+    <li><a href="/8DReport/Workflow/MSE1">MSE1</a></li>
+    <li class="active">Assign 8D Report</li>
+</ol>
+
+<div class="alert alert-success" role="alert">
+    Well done! You successfully read this important alert message. 这是一个DEMO
+</div>
+
+<div class="panel panel-info">
+    <div class="panel-heading">
+        @*<button type="button" class="btn btn-primary">
+          <span class="glyphicon glyphicon-plus-sign"></span>Create new user
+      </button>*@
+        <button type="button" class="btn btn-default collapsed" data-toggle="collapse" data-target="#help" aria-expanded="false" aria-controls="demo">
+            <span class="glyphicon glyphicon-question-sign"></span>Help <span class="caret"></span>
+        </button>
+    </div>
+    <div id="help" class="panel-body collapse" aria-expanded="false" style="height: 30px;">
+        <p class="lead">8D Edit Report Header ：用于编辑 8D Report Header</p>
+        <p><strong>Create new report:</strong> 创建8D报告Header</p>
+    </div>
+</div>
+<script src="@Url.Content("~/Contents/assets/js/jquery.form.js")"></script>
+<script src="@Url.Content("~/Contents/assets/js/jquery.unobtrusive-ajax.min.js")"></script>
+<script type="text/javascript">
+    function Submitt() {
+        $('#form0').ajaxSubmit({
+            success: function (data) {
+                if (data.success) {
+                    var url = "../../Board";
+                    //alert(url);
+                    window.location.href = url;
+                } else {
+                    alert(data.message);
+                }
+            }
+        });
+    }
+
+</script>
+
+<div class="panel panel-default">
+    <div class="panel-heading">Assign 8D Report</div>
+
+    <div class="table-responsive">
+        <div class="row">
+            <div class="col-xs-12">
+                <!-- PAGE CONTENT BEGINS -->
+                <form class="form-horizontal" role="form">
+                    <div class="space-4"></div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">8D Title </label>
+
+                        <div class="col-sm-7">
+                            <input type="text" id="form-field-1-1" placeholder="Text Field" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Report Type</label>
+
+                        <div class="col-sm-7">
+                            <div>
+                                <select class="form-control" id="form-field-select-1">
+                                    <option value="">Plant</option>
+                                    <option value="AL">Alabama</option>
+                                    <option value="AK">Alaska</option>
+                                    <option value="AZ">Arizona</option>
+                                    <option value="AR">Arkansas</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Department</label>
+
+                        <div class="col-sm-7">
+                            <div>
+                                <select class="form-control" id="Select1">
+                                    <option value="">Dept1</option>
+                                    <option value="AL">Dept2</option>
+                                    <option value="AK">Dept3</option>
+                                    <option value="AZ">Dept4</option>
+                                    <option value="AR">Dept5</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Report Owner</label>
+
+                        <div class="col-sm-7">
+                            <input type="text" id="Text1" placeholder="Text Field" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Responsible QE</label>
+
+                        <div class="col-sm-7">
+                            <input type="text" id="Text2" placeholder="Text Field" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Responsible QE</label>
+
+                        <div class="col-sm-7">
+                            <input readonly="" type="text" class="form-control" id="form-input-readonly" value="This text field is readonly!" />
+                        </div>
+                    </div>
+
+                    <hr />
+
+                    <div class="clearfix form-actions">
+                        <div class="col-md-offset-3 col-md-9">
+                            <button class="btn btn-info" type="button">
+                                <i class="ace-icon fa fa-check bigger-110"></i>
+                                Submit
+                            </button>
+
+                            &nbsp; &nbsp; &nbsp;
+										<button class="btn" type="reset">
+                                            <i class="ace-icon fa fa-undo bigger-110"></i>
+                                            Reset
+                                        </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+    </div>
+</div>

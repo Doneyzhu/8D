@@ -45,23 +45,23 @@ namespace _8DManagementSystem
                         {
                             //MemberLogin(memberName, memberPassword, keeping == "1");
 
-                            bool result = UserLogin(memberName, memberPassword, keeping == "1");
+                            //bool result = UserLogin(memberName, memberPassword, keeping == "1");
                             #region 用户登录
-                            //Model.D_User_Model model = ManageBll.GetByUserName(memberName);
-                            //if (manage != null)
-                            //{
-                            //    if (ManageBll.PassWordMD5(memberPassword).Equals(manage.UserPass.ToLower()))
-                            //    {
-                            //        ManageView = manage;
-                            //        ViewBag.ManageView = manage;
+                            Model.D_User_Model model = new DAL.D_User_DAL().GetUserByUserLoginName(memberName);
+                            if (model != null)
+                            {
+                                if (new DAL.D_User_DAL().PassWordMD5(memberPassword).Equals(model.PassWord.ToLower()))
+                                {
+                                    UserView = model;
+                                    ViewBag.ManageView = model;
 
-                            //        if (Request.Cookies["LoginCookie"] == null)
-                            //        {
-                            //            SetLoginCookies(memberName, memberPassword, keeping == "1");
-                            //        }
+                                    if (Request.Cookies["LoginCookie"] == null)
+                                    {
+                                        SetLoginCookies(memberName, memberPassword, keeping == "1");
+                                    }
 
-                            //    }
-                            //}
+                                }
+                            }
                             #endregion
                         }
                     }
