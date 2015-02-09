@@ -16,13 +16,13 @@ namespace _8DManagementSystem.Controllers
         // GET: /Board/
 
         #region 查询
-        //[LoginFilter()]
+        [LoginFilter()]
         public ActionResult Index()
         {
             return View();
         }
 
-        //[LoginFilter()]
+        [LoginFilter()]
         public ActionResult BoardList()
         {
 
@@ -107,7 +107,7 @@ namespace _8DManagementSystem.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [OutputCache(Duration = 0)]
-        //[LoginFilter()]
+        [LoginFilter()]
         public ActionResult BoardEdit(Guid? id)
         {
             Model.D_Board_Model model = new Model.D_Board_Model();
@@ -125,7 +125,7 @@ namespace _8DManagementSystem.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
-        //[LoginFilter()]
+        [LoginFilter()]
         //[AcceptVerbs(HttpVerbs.Post)]
         public ActionResult BoardEdit(Model.D_Board_Model model)
         {
@@ -161,7 +161,7 @@ namespace _8DManagementSystem.Controllers
         #endregion
 
         #region 删除
-        //[LoginFilter()]
+        [LoginFilter()]
         public ActionResult BoardDel(Guid? id)
         {
             bool success = false;

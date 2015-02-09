@@ -1,60 +1,51 @@
 ﻿<!DOCTYPE html>
 <html lang="zh-cn">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="renderer" content="webkit">
-    <title>8D Report System</title>
-    <!-- ace styles -->
- @*   <link href="@Url.Content("~/Contents/assets/css/ace.min.css")" rel="stylesheet" />*@
-    <link href="@Url.Content("~/Contents/assets/css/bootstrap.min.css")" rel="stylesheet" />
-    <link href="@Url.Content("~/Contents/assets/css/bootstrap-theme.min.css")" rel="stylesheet" />
-    <link href="@Url.Content("~/Contents/assets/css/theme.css")" rel="stylesheet" />
-     <link href="@Url.Content("~/Contents/assets/css/font-awesome.min.css")" rel="stylesheet">
-    <!--[if lt IE 9]>
-      <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="renderer" content="webkit">
+  <title>8D Report System</title>
+  <!-- ace styles -->
+  @*   <link href="@Url.Content("~/Contents/assets/css/ace.min.css")" rel="stylesheet" />*@
+  <link href="@Url.Content("~/Contents/assets/css/bootstrap.min.css")" rel="stylesheet" />
+  <link href="@Url.Content("~/Contents/assets/css/bootstrap-theme.min.css")" rel="stylesheet" />
+  <link href="@Url.Content("~/Contents/assets/css/theme.css")" rel="stylesheet" />
+  <link href="@Url.Content("~/Contents/assets/css/font-awesome.min.css")" rel="stylesheet">
+  <!--[if lt IE 9]>
+    <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+  <script src="@Url.Content("~/Contents/assets/js/jquery.min.js")"></script>
+  <script src="@Url.Content("~/Contents/assets/js/bootstrap.min.js")"></script>
 
-    <script src="@Url.Content("~/Contents/assets/js/jquery.min.js")"></script>
-    <script src="@Url.Content("~/Contents/assets/js/bootstrap.min.js")"></script>
-    <script src="@Url.Content("~/Contents/assets/js/jquery.validate-vsdoc.js")"></script>
-    <script src="@Url.Content("~/Contents/assets/js/jquery.validate.js")"></script>
-    <script src="@Url.Content("~/Contents/assets/js/jquery.validate.min.js")"></script>
-    <script src="@Url.Content("~/Contents/assets/js/jquery.validate.unobtrusive.min.js")"></script>
+  @*<script src="@Url.Content("~/Contents/assets/js/jquery.validate-vsdoc.js")"></script>
+  <script src="@Url.Content("~/Contents/assets/js/jquery.validate.js")"></script>
+  <script src="@Url.Content("~/Contents/assets/js/jquery.validate.min.js")"></script>
+  <script src="@Url.Content("~/Contents/assets/js/jquery.validate.unobtrusive.min.js")"></script>*@
+ 
 </head>
 <body role="document" id="Top">
+  @Html.Partial("_Header")
+  <style type="text/css">
+    body {
+      background: url('assets/images/signup-bg.jpg') center center fixed no-repeat;
+      background-size: cover;
+      -moz-background-size: cover;
+      -webkit-background-size: cover;
+      -o-background-size: cover;
+    }
 
-    @Html.Partial("_Header")
-
-    <style type="text/css">
-        body
-        {
-            background: url('assets/images/signup-bg.jpg') center center fixed no-repeat;
-            background-size: cover;
-            -moz-background-size: cover;
-            -webkit-background-size: cover;
-            -o-background-size: cover;
-        }
-
-        footer
-        {
-            color: #fff;
-            text-shadow: 0px -1px 0px rgba(0,0,0,0.25);
-        }
-    </style>
-
-    <div class="container" role="main">
-        @RenderBody()
-    </div>
-
-    @Html.Partial("_Footer")
-
-
+    footer {
+      color: #fff;
+      text-shadow: 0px -1px 0px rgba(0,0,0,0.25);
+    }
+  </style>
+  <div class="container" role="main">
+    @RenderBody()
+  </div>
+  @Html.Partial("_Footer")
 
 </body>
 </html>
-
-
 

@@ -13,6 +13,12 @@ namespace _8DManagementSystem.Controllers
 
         public ActionResult Index()
         {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Login()
+        {
             bool success = false;
             bool keeping = false;
             if (Request.Cookies["LoginCookies"] != null)
@@ -48,7 +54,7 @@ namespace _8DManagementSystem.Controllers
                 else
                     return Json(new { success = success, message = "用户名或密码错误！" }, JsonRequestBehavior.AllowGet);
             }
-            return View();
+            return Json(new { success = success, message = "用户不存在！" }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult LogOut()
