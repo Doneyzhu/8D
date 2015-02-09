@@ -276,13 +276,6 @@
     <Content Include="Contents\assets\js\jquery.dataTables.min.js" />
     <Content Include="Contents\assets\js\jquery.js" />
     <Content Include="Contents\assets\js\jquery.min.js" />
-    <None Include="Contents\assets\js\jquery.validate-vsdoc.js" />
-    <Content Include="Contents\assets\js\jquery.unobtrusive-ajax.js" />
-    <Content Include="Contents\assets\js\jquery.unobtrusive-ajax.min.js" />
-    <Content Include="Contents\assets\js\jquery.validate.js" />
-    <Content Include="Contents\assets\js\jquery.validate.min.js" />
-    <Content Include="Contents\assets\js\jquery.validate.unobtrusive.js" />
-    <Content Include="Contents\assets\js\jquery.validate.unobtrusive.min.js" />
     <Content Include="Contents\assets\js\site.min.js" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\bootstrap.js" />
