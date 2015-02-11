@@ -25,7 +25,7 @@ namespace _8DManagementSystem.Filter
 
             if (!accept)
             {
-                filterContext.Result = new RedirectResult("~/Login/Index?" + Convert.ToBase64String(System.Text.Encoding.Unicode.GetBytes(HttpContext.Current.Request.Url.ToString())));
+                filterContext.Result = new RedirectResult("~/Login/LoginIndex?" + Convert.ToBase64String(System.Text.Encoding.Unicode.GetBytes(HttpContext.Current.Request.Url.ToString())));
             }
         }
     }

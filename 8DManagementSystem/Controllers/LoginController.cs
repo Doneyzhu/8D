@@ -16,7 +16,13 @@ namespace _8DManagementSystem.Controllers
             return View();
         }
 
+        public ActionResult LoginIndex()
+        {
+            return View();
+        }
+
         [HttpPost]
+        [OutputCache(Duration = 0)]
         public ActionResult Login()
         {
             bool success = false;

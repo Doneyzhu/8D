@@ -73,6 +73,7 @@ namespace _8DManagementSystem
             {
                 HttpContextWrite(filterContext, ex.Message);
             }
+            Session.Add("User", User);
             HttpContext.Items["User"] = UserView;
         }
 
