@@ -118,6 +118,7 @@
   <ItemGroup>
     <Compile Include="App_Code\BaseController.cs" />
     <Compile Include="Controllers\BoardController.cs" />
+    <Compile Include="Controllers\DataDictionaryController.cs" />
     <Compile Include="Controllers\DepartmentController.cs" />
     <Compile Include="Controllers\EightDReportController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
