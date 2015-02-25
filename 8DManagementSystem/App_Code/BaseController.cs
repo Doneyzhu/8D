@@ -154,7 +154,7 @@ namespace _8DManagementSystem
             ck.Values.Add("memberpassword", DESEncrypt.Encrypt(HttpUtility.UrlEncode(passWord), "memberpassword"));
             ck.Values.Add("keeping", keeping ? "1" : "0");
             ck.Expires = DateTime.Now.AddDays(keeping ? 7 : 1);
-            //ck.Domain = Request.ApplicationPath;
+            ck.Domain = Request.ApplicationPath;
             Response.Cookies.Add(ck); //添加,使Cookies生效
         }
 
@@ -170,7 +170,7 @@ namespace _8DManagementSystem
                 ck.Values.Add("memberpassword", string.Empty);
                 ck.Values.Add("keeping", string.Empty);
                 ck.Expires = DateTime.Now.AddDays(-1);
-                //ck.Domain = Request.ApplicationPath;
+                ck.Domain = Request.ApplicationPath;
                 Response.Cookies.Set(ck);
             }
         }

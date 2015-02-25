@@ -28,19 +28,19 @@
         });
     });
 
-    //function success(data) {
-    //  alert(data);
-    //  debugger;
-    //  if (data.success) {
-    //    window.location.href = data.url;
-    //  } else {
-    //    alert(data.message);
-    //  }
-    //}
+    function success(data) {
+        alert(data.url);
+        debugger;
+        if (data.success) {
+            window.location.href = data.url;
+        } else {
+            alert(data.message);
+        }
+    }
 </script>
 
-@*<script src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.min.js")"></script>
-  <script src="@Url.Content("~/Scripts/jquery.form.js")"></script>*@
+<script src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.min.js")"></script>
+@* <script src="@Url.Content("~/Scripts/jquery.form.js")"></script>*@
 @*<div class="jumbotron" style="opacity: 0.6;">
     <h1>Welcome to 8D Report Tracker!</h1>
     <p>

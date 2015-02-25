@@ -1,4 +1,5 @@
-﻿@{
+﻿@model _8DManagementSystem.Models.UserLanguageModel
+@{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -48,17 +49,17 @@
 <div class="panel panel-default">
     <div class="panel-heading">Setting Language</div>
     <div class="panel-body">
-        @using (Ajax.BeginForm("BoardEdit", "Board", null, new AjaxOptions() { HttpMethod = "Post", OnSuccess = "Back", OnComplete = "Back" }, new { id = "form0", enctype = "multipart/form-data", @class = "form-horizontal", role = "form" }))
+        @using (Ajax.BeginForm("SetLanguage", "Language", null, new AjaxOptions() { HttpMethod = "Post", OnSuccess = "Back", OnComplete = "Back" }, new { id = "form0", enctype = "multipart/form-data", @class = "form-horizontal", role = "form" }))
         {
             @Html.AntiForgeryToken()
-            @Html.HiddenFor(m => m.BoardGuid)
+            @Html.HiddenFor(m => m.UserGuid)
             <!-- #section:elements.form -->
 
             <div class="form-group">
                 <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Board Name</label>
                 <div class="col-sm-9">
-                    @Html.EditorFor(model => model.BoardName)
-                    @Html.ValidationMessageFor(model => model.BoardName)
+                    @Html.DropDownListFor(model => model.Language, Model.LanguageList)
+                    @Html.ValidationMessageFor(model => model.Language)
                     @*<input type="text" id="txtUserName" placeholder="Username" class="col-xs-10 col-sm-5" />*@
                 </div>
             </div>

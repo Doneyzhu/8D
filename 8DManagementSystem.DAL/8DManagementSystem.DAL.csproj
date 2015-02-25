@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="D_Board_DAL.cs" />
+    <Compile Include="D_Dictionary_DAL.cs" />
     <Compile Include="D_Role_DAL.cs" />
     <Compile Include="D_User_DAL.cs" />
     <Compile Include="DBHelper\DbSession.cs" />

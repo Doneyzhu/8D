@@ -37,10 +37,11 @@
                         <li><a href="@Url.Content("~/UserCenter/")">Users</a></li>
                         <li><a href="@Url.Content("~/Board/")">8D Board Manage</a></li>
                         <li><a href="@Url.Content("~/Role/")">Roles Manage</a></li>
-                        <li><a href="@Url.Content("~/Department/")">Departments</a></li>
+                        @*<li><a href="@Url.Content("~/Department/")">Departments</a></li>*@
                         <li class="divider"></li>
                         <li class="dropdown-header">Configuration</li>
-                        <li><a href="#">Enumerations</a></li>
+                        @*<li><a href="#">Enumerations</a></li>*@
+                        <li><a href="@Url.Content("~/DataDictionary/")">Dictionary</a></li>
                         <li><a href="@Url.Content("~/Language/")">Languages</a></li>
                         <li><a href="#">Settings</a></li>
                     </ul>
@@ -54,11 +55,11 @@
                         @if (ViewBag.UserView == null)
                         {
                             <li><a href="#">My account</a></li>
-                            <li><a href="#">Sign In</a></li>
+                            <li><a href="@Url.Content("~/Login")">Sign In</a></li>
                         }
                         else
                         {
-                            <li><a href="#">Sign Out</a></li>
+                            <li><a href="@Url.Content("~/Login/LogOut")">Sign Out</a></li>
                         }
                     </ul>
                 </li>

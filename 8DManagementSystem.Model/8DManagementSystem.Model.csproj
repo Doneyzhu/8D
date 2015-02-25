@@ -43,8 +43,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="D_Board_Model.cs" />
+    <Compile Include="D_Dictionary_Model.cs" />
     <Compile Include="D_Role_Model.cs" />
     <Compile Include="D_User_Model.cs" />
+    <Compile Include="Enum.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
