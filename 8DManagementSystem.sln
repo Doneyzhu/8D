@@ -1,8 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
-MinimumVisualStudioVersion = 10.0.40219.1
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "8DManagementSystem.Web", "8DManagementSystem\8DManagementSystem.Web.csproj", "{D60AFF24-088D-4CF2-BF70-07ABE0B5B3A0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "8DManagementSystem.Model", "8DManagementSystem.Model\8DManagementSystem.Model.csproj", "{1CA70275-3D06-41B9-959E-AAC37CA32361}"

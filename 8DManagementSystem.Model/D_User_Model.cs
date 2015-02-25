@@ -99,5 +99,11 @@ namespace _8DManagementSystem.Model
         /// </summary>
         [Property()]
         virtual public bool DataStatus { get; set; }
+
+        /// <summary>
+        /// 用户语言
+        /// </summary>
+        [Property()]
+        virtual public string Languages { get; set; }
     }
 }

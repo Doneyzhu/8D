@@ -10,7 +10,7 @@ namespace _8DManagementSystem.Controllers
     {
         //
         // GET: /Home/
-
+        
         public ActionResult Index()
         {
             return View();

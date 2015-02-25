@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using Newtonsoft.Json.Linq;
 using _8DManagementSystem.Common;
 using System.Collections;
+using _8DManagementSystem.Filter;
 
 namespace _8DManagementSystem.Controllers
 {
@@ -15,11 +16,13 @@ namespace _8DManagementSystem.Controllers
         // GET: /Role/
 
         #region 查询
+        [LoginFilter()]
         public ActionResult Index()
         {
             return View();
         }
 
+        [LoginFilter()]
         public ActionResult RoleList()
         {
 
@@ -103,6 +106,7 @@ namespace _8DManagementSystem.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [LoginFilter()]
         [OutputCache(Duration = 0)]
         public ActionResult RoleEdit(Guid? id)
         {
@@ -121,6 +125,7 @@ namespace _8DManagementSystem.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
+        [LoginFilter()]
         //[AcceptVerbs(HttpVerbs.Post)]
         public ActionResult RoleEdit(Model.D_Role_Model model)
         {
@@ -134,6 +139,9 @@ namespace _8DManagementSystem.Controllers
                     dataModel = new Model.D_Role_Model();
 
                     dataModel.CreateDateTime = DateTime.Now;
+                    dataModel.CreateUserGuid = UserView.UserGuid;
+                    dataModel.CreateUserName = UserView.UserName;
+
                     dataModel.DataStatus = false;
                 }
                 else
@@ -143,6 +151,9 @@ namespace _8DManagementSystem.Controllers
 
                 dataModel.RoleName = model.RoleName;
                 dataModel.ModifyDateTime = DateTime.Now;
+                dataModel.ModifyUserGuid = UserView.UserGuid;
+                dataModel.ModifyUserName = UserView.UserName;
+
 
                 success = new DAL.D_Role_DAL().Save(dataModel);
                 return Json(new { success = success, message = "成功" }, JsonRequestBehavior.AllowGet);
@@ -156,6 +167,7 @@ namespace _8DManagementSystem.Controllers
         #endregion
 
         #region 删除
+        [LoginFilter()]
         public ActionResult RoleDel(Guid? id)
         {
             bool success = false;

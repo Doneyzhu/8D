@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using Newtonsoft.Json.Linq;
 using _8DManagementSystem.Common;
+using _8DManagementSystem.Filter;
 
 namespace _8DManagementSystem.Controllers
 {
@@ -15,11 +16,13 @@ namespace _8DManagementSystem.Controllers
         // GET: /UserCenter/
 
         #region 查询
+        [LoginFilter()]
         public ActionResult Index()
         {
             return View();
         }
 
+        [LoginFilter()]
         public ActionResult UserList()
         {
 
@@ -119,6 +122,7 @@ namespace _8DManagementSystem.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [OutputCache(Duration = 0)]
+        [LoginFilter()]
         public ActionResult UserEdit(Guid? id)
         {
             Model.D_User_Model model = new Model.D_User_Model();
@@ -136,6 +140,7 @@ namespace _8DManagementSystem.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
+        [LoginFilter()]
         //[AcceptVerbs(HttpVerbs.Post)]
         public ActionResult UserEdit(Model.D_User_Model model)
         {
@@ -149,7 +154,11 @@ namespace _8DManagementSystem.Controllers
                     dataModel = new Model.D_User_Model();
 
                     dataModel.CreateDateTime = DateTime.Now;
+                    dataModel.CreateUserGuid = UserView.UserGuid;
+                    dataModel.CreateUserName = UserView.UserName;
+
                     dataModel.DataStatus = false;
+
                 }
                 else
                 {
@@ -162,6 +171,8 @@ namespace _8DManagementSystem.Controllers
                 dataModel.IsAdmin = model.IsAdmin;
                 dataModel.DepartmentName = model.DepartmentName;
                 dataModel.ModifyDateTime = DateTime.Now;
+                dataModel.ModifyUserGuid = UserView.UserGuid;
+                dataModel.ModifyUserName = UserView.UserName;
 
                 success = new DAL.D_User_DAL().Save(dataModel);
                 return Json(new { success = success, message = "成功" }, JsonRequestBehavior.AllowGet);
@@ -176,6 +187,7 @@ namespace _8DManagementSystem.Controllers
         #endregion
 
         #region 删除
+        [LoginFilter()]
         public ActionResult UserDel(Guid? id)
         {
             bool success = false;
