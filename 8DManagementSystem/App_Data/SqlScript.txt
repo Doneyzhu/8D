@@ -164,6 +164,87 @@ CREATE TABLE [dbo].[EightD_Board](
 
 GO
 
+--用户表增加语言列
+Alter Table dbo.EightD_User 
+ Add Languages nvarchar(20) null
+go 
+
+
+USE [8DReport]
+GO
+
+/****** Object:  Table [dbo].[EightD_Dictionary]    Script Date: 02/27/2015 02:36:07 ******/
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[EightD_Dictionary]') AND type in (N'U'))
+DROP TABLE [dbo].[EightD_Dictionary]
+GO
+
+USE [8DReport]
+GO
+
+/****** Object:  Table [dbo].[EightD_Dictionary]    Script Date: 02/27/2015 02:36:07 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[EightD_Dictionary](
+	[DicGuid] [uniqueidentifier] NOT NULL,
+	[DicType] [int] NULL,
+	[DicName] [nvarchar](50) NULL,
+	[Ord] [int] NULL,
+	[CreateUserGuid] [uniqueidentifier] NULL,
+	[CreateDateTime] [datetime] NULL,
+	[CreateUserName] [nvarchar](50) NULL,
+	[ModifyUserGuid] [uniqueidentifier] NULL,
+	[ModifyDateTime] [datetime] NULL,
+	[ModifyUserName] [nvarchar](50) NULL,
+	[DataStatus] [bit] NULL,
+ CONSTRAINT [PK_EightD_Dictionary] PRIMARY KEY CLUSTERED 
+(
+	[DicGuid] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+
+USE [8DReport]
+GO
+
+/****** Object:  Table [dbo].[EightD_Role_Permissions]    Script Date: 02/27/2015 02:36:38 ******/
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[EightD_Role_Permissions]') AND type in (N'U'))
+DROP TABLE [dbo].[EightD_Role_Permissions]
+GO
+
+USE [8DReport]
+GO
+
+/****** Object:  Table [dbo].[EightD_Role_Permissions]    Script Date: 02/27/2015 02:36:38 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[EightD_Role_Permissions](
+	[Role_Permissions_Guid] [uniqueidentifier] NOT NULL,
+	[RoleGuid] [uniqueidentifier] NULL,
+	[Permissions] [nvarchar](50) NULL,
+	[CreateUserGuid] [uniqueidentifier] NULL,
+	[CreateDateTime] [datetime] NULL,
+	[CreateUserName] [nvarchar](50) NULL,
+	[ModifyUserGuid] [uniqueidentifier] NULL,
+	[ModifyDateTime] [datetime] NULL,
+	[ModifyUserName] [nvarchar](50) NULL,
+	[DataStatus] [bit] NULL,
+ CONSTRAINT [PK_EightD_Role_Permissions] PRIMARY KEY CLUSTERED 
+(
+	[Role_Permissions_Guid] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
 
 
 

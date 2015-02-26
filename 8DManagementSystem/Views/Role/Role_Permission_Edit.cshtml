@@ -1,0 +1,137 @@
+﻿@model _8DManagementSystem.Models.RolePermissionModel
+
+@{
+    ViewBag.Title = "Role_Permission_Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<!--[if lt IE 9]>
+      <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+<ol class="breadcrumb">
+    <li><a href="/8DReport/">Home</a></li>
+    <li><a href="/8DReport/Workflow">Administration</a></li>
+    <li><a href="~/Role">Role</a></li>
+    <li class="active">Role Permission</li>
+</ol>
+
+<div class="alert alert-success" role="alert">
+    Well done! You successfully read this important alert message. 这是一个DEMO
+</div>
+
+<div class="panel panel-info">
+    <div class="panel-heading">
+        @*<button type="button" class="btn btn-primary">
+          <span class="glyphicon glyphicon-plus-sign"></span>Create new user
+      </button>*@
+        <button type="button" class="btn btn-default collapsed" data-toggle="collapse" data-target="#help" aria-expanded="false" aria-controls="demo">
+            <span class="glyphicon glyphicon-question-sign"></span>Help <span class="caret"></span>
+        </button>
+    </div>
+    <div id="help" class="panel-body collapse" aria-expanded="false" style="height: 30px;">
+        <p class="lead">8D Report Edit Role ：用于编辑 8D User</p>
+        <p><strong>Create new report:</strong> 创建8D报告角色</p>
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">Edit Role Permission</div>
+    <div class="panel-body">
+        @using (Ajax.BeginForm("Role_Permission_Edit", "Role", null, new AjaxOptions() { HttpMethod = "Post", OnSuccess = "Back", OnComplete = "Back" }, new { id = "form0", enctype = "multipart/form-data", @class = "form-horizontal", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(m => m.RoleGuid)
+            <!-- #section:elements.form -->
+
+            <div>
+                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Role Name :</label>
+                @Html.Raw(Model.RoleName)
+            </div>
+            
+            <div class="form-group">
+                <div class="col-sm-9">
+                    <div class="col-sm-5">
+                        <div class="widget-box">
+                            <div class="widget-header">
+                                <h4 class="widget-title">Permission</h4>
+                            </div>
+
+                            <div class="widget-body">
+                                <div class="widget-main no-padding">
+                                    <div class="control-group">
+                                        <label class="control-label bolder blue">操作</label>
+                                        <!-- #section:custom/checkbox -->
+                                        @foreach (var item in Model.PermissionSelectList)
+                                        {
+                                            <div class="checkbox">
+                                                <label>
+                                                    @if (Model.SelectedPermissions.Contains(item.Value))
+                                                    {
+                                                        <input name="form-field-checkbox" type="checkbox" class="ace ace-checkbox-2" checked="checked" value="@item.Value"/>
+                                                    }
+                                                    else
+                                                    {
+                                                        <input name="form-field-checkbox" type="checkbox" class="ace ace-checkbox-2" value="@item.Value"/>
+                                                    }
+
+                                                    <span class="lbl">@item.Text</span>
+                                                </label>
+                                            </div>
+                                        }
+
+
+                                        @*<div class="checkbox">
+                                        <label class="block">
+                                            <input name="form-field-checkbox" disabled="" type="checkbox" class="ace" />
+                                            <span class="lbl">disabled</span>
+                                        </label>
+                                    </div>*@
+
+                                        <!-- /section:custom/checkbox -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="clearfix form-actions">
+                <div class="col-md-offset-3 col-md-9">
+                    <button class="btn btn-info" type="button" id="submit" onclick="Submitt()">
+                        <i class="ace-icon fa fa-check bigger-110"></i>
+                        Submit
+                    </button>
+                    &nbsp; &nbsp; &nbsp;
+          <button class="btn" type="reset">
+              <i class="ace-icon fa fa-undo bigger-110"></i>
+              Reset
+          </button>
+                </div>
+            </div>
+
+            <div class="hr hr-24"></div>
+        }
+    </div>
+</div>
+<script src="@Url.Content("~/Scripts/jquery.form.js")"></script>
+<script type="text/javascript">
+    function Submitt() {
+
+        $('#form0').ajaxSubmit({
+            success: function (data) {
+                if (data.success) {
+                    var url = "../../Role";
+                    //alert(url);
+                    window.location.href = url;
+                } else {
+                    alert(data.message);
+                }
+            }
+        });
+    }
+
+</script>

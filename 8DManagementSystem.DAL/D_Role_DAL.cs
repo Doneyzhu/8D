@@ -103,15 +103,16 @@ namespace _8DManagementSystem.DAL
                 ic.Add(Restrictions.Le("CreateDateTime", createDate));
 
             ic.Add(Restrictions.Eq("DataStatus", false));
-
             ICriteria pageCrit = CriteriaTransformer.Clone(ic);
 
             totalCount = Convert.ToInt32(pageCrit.SetProjection(Projections.RowCount()).UniqueResult());
 
+            ic.AddOrder(Order.Desc("ModifyDateTime"));
             IList<D_Role_Model> list = ic.SetFirstResult(page * rowCount).SetMaxResults(rowCount).List<D_Role_Model>();
 
             return list;
         }
+
 
     }
 }

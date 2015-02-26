@@ -7,6 +7,10 @@ using Newtonsoft.Json.Linq;
 using _8DManagementSystem.Common;
 using System.Collections;
 using _8DManagementSystem.Filter;
+using _8DManagementSystem.Models;
+using NHibernate;
+using NHibernate.Criterion;
+//using _8DManagementSystem.DAL.DBHelper;
 
 namespace _8DManagementSystem.Controllers
 {
@@ -80,7 +84,7 @@ namespace _8DManagementSystem.Controllers
                                 "Action <span class=\"caret\"></span></button>" +
                             "<ul class=\"dropdown-menu\" role=\"menu\">" +
                                 "<li><a href=\"" + Url.Content("~/Role/RoleEdit") + "/" + item.RoleGuid + "\"><span class=\"glyphicon glyphicon-edit\"></span> Show Detail</a></li>" +
-                                "<li><a href=\"#\"><span class=\"glyphicon glyphicon-cog\"></span> Configuration</a></li>" +
+                                "<li><a href=\"" + Url.Content("~/Role/Role_Permission_Edit") + "/" + item.RoleGuid + "\"><span class=\"glyphicon glyphicon-cog\"></span> Configuration</a></li>" +
                                 "<li><a href=\"#\"><span class=\"glyphicon glyphicon-export\"></span> Export to Excel</a></li>" +
                                 "<li class=\"divider\"></li>" +
                                 "<li><a href=\"#\" id=\"" + item.RoleGuid + "\" onclick=\"del(this)\"><span class=\"glyphicon glyphicon-remove-circle\"></span> Remove</a></li>" +
@@ -196,5 +200,94 @@ namespace _8DManagementSystem.Controllers
         }
         #endregion
 
+        #region 角色权限编辑
+        [LoginFilter()]
+        public ActionResult Role_Permission_Edit(Guid? id)
+        {
+            RolePermissionModel model = new RolePermissionModel();
+            model.LoadPermission();
+            if (id.HasValue)
+            {
+                Model.D_Role_Model modelData = new DAL.D_Role_DAL().GetModel(id.Value);
+                model.RoleGuid = modelData.RoleGuid;
+                model.RoleName = modelData.RoleName;
+
+                IList<Model.D_Role_Permissions_Model> permissionList = new DAL.D_Role_Permissions_DAL().GetRole_Permissions_ByRole(modelData);
+                List<string> permissions = new List<string>();
+                foreach (var item in permissionList)
+                {
+                    permissions.Add(item.Permissions);
+                }
+
+                model.SelectedPermissions = permissions;
+            }
+
+            return View(model);
+        }
+
+        [LoginFilter()]
+        [HttpPost]
+        public ActionResult Role_Permission_Edit()
+        {
+            bool success = false;
+            string roleGuid = Request.Form["RoleGuid"];
+            string permissions = Request.Form[2].ToString();
+            string[] permission = permissions.Split(',');
+            using (NHibernate.ITransaction tran = NhSession.BeginTransaction())
+            {
+                try
+                {
+                    Guid RoleGuid = new Guid(roleGuid);
+                    Model.D_Role_Model role = NhSession.Get<Model.D_Role_Model>(RoleGuid);
+                    ICriteria ic = NhSession.CreateCriteria(typeof(Model.D_Role_Permissions_Model));
+                    ic.Add(Restrictions.Eq("RoleGuid", role));
+                    IList<Model.D_Role_Permissions_Model> rolePermissionList = ic.List<Model.D_Role_Permissions_Model>();
+
+                    foreach (var item in rolePermissionList)
+                    {
+                        item.DataStatus = true;
+                        item.ModifyDateTime = DateTime.Now;
+                        item.ModifyUserGuid = UserView.UserGuid;
+                        item.ModifyUserName = UserView.UserName;
+                        NhSession.Update(item);
+                    }
+
+                    foreach (var item in permission)
+                    {
+                        Model.D_Role_Permissions_Model rolePermission = rolePermissionList.SingleOrDefault(m => m.Permissions == item);
+                        if (rolePermission == null)
+                        {
+                            rolePermission = new Model.D_Role_Permissions_Model();
+                            rolePermission.CreateDateTime = DateTime.Now;
+                            rolePermission.CreateUserGuid = UserView.UserGuid;
+                            rolePermission.CreateUserName = UserView.UserName;
+                            rolePermission.RoleGuid = role;
+                            rolePermission.Permissions = item;
+                        }
+
+                        rolePermission.DataStatus = false;
+                        rolePermission.ModifyDateTime = DateTime.Now;
+                        rolePermission.ModifyUserGuid = UserView.UserGuid;
+                        rolePermission.ModifyUserName = UserView.UserName;
+
+                        NhSession.SaveOrUpdate(rolePermission);
+                    }
+                    tran.Commit();
+                    return Json(new { success = success, message = "成功" }, JsonRequestBehavior.AllowGet);
+                }
+                catch (Exception ex)
+                {
+                    return Json(new { success = success, message = ex.Message });
+                }
+                finally
+                {
+                    if (!tran.WasCommitted && !tran.WasRolledBack)
+                        tran.Rollback();
+                }
+            }
+
+
+        }
+        #endregion
     }
 }

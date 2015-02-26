@@ -131,6 +131,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\MvcSiteMap.cs" />
+    <Compile Include="Models\RolePermissionModel.cs" />
     <Compile Include="Models\UserLanguageModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -322,6 +323,7 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Login\LoginIndex.cshtml" />
     <Content Include="Views\DataDictionary\Index.cshtml" />
+    <Content Include="Views\Role\Role_Permission_Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Web_ZH_CN.sitemap" />
