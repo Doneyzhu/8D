@@ -32,8 +32,8 @@ namespace _8DManagementSystem.Controllers
             String jsondata = HttpUtility.UrlDecode(Request.Params[0], System.Text.Encoding.UTF8);
 
             int sEcho = 0;
+            int startCount = 0;
             string boardName = string.Empty;
-
             string dateCreated = string.Empty;
 
             JArray jsonarray = Newtonsoft.Json.JsonConvert.DeserializeObject<JArray>(jsondata);
@@ -45,7 +45,7 @@ namespace _8DManagementSystem.Controllers
                     sEcho = jobj.Property("value").Value.EToInt();
 
                 if (jobj.Property("name").Value.ToString().Equals("iDisplayStart"))
-                    page = jobj.Property("value").Value.EToInt();
+                    startCount = jobj.Property("value").Value.EToInt();
 
                 if (jobj.Property("name").Value.ToString().Equals("iDisplayLength"))
                     rowCount = jobj.Property("value").Value.EToInt();
@@ -63,7 +63,7 @@ namespace _8DManagementSystem.Controllers
             //总条数
             int totalCount = 0;
 
-            IList<Model.D_Board_Model> list = new DAL.D_Board_DAL().GetAllByPage(page - 1, rowCount, boardName, dateCreated, out totalCount);
+            IList<Model.D_Board_Model> list = new DAL.D_Board_DAL().GetAllByPage(startCount, rowCount, boardName, dateCreated, out totalCount);
 
             int totalPage = totalCount % rowCount == 0 ? totalCount / rowCount : totalCount / rowCount + 1;
 

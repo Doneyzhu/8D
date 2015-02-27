@@ -1,0 +1,145 @@
+﻿@model _8DManagementSystem.Models.DictionaryModel
+@{
+    ViewBag.Title = "DictionaryEdit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<ol class="breadcrumb">
+    <li><a href="/8DReport/">Home</a></li>
+    <li><a href="~/UserCenter">Administration</a></li>
+    <li><a href="~/DataDictionary">Dictionary</a></li>
+    <li class="active">Edit Dictionary</li>
+</ol>
+
+<div class="alert alert-success" role="alert">
+    Well done! You successfully read this important alert message. 这是一个DEMO
+</div>
+
+<div class="panel panel-info">
+    <div class="panel-heading">
+        @*<button type="button" class="btn btn-primary">
+          <span class="glyphicon glyphicon-plus-sign"></span>Create new user
+      </button>*@
+        <button type="button" class="btn btn-default collapsed" data-toggle="collapse" data-target="#help" aria-expanded="false" aria-controls="demo">
+            <span class="glyphicon glyphicon-question-sign"></span>Help <span class="caret"></span>
+        </button>
+    </div>
+    <div id="help" class="panel-body collapse" aria-expanded="false" style="height: 30px;">
+        <p class="lead">8D Report Edit Dictionary ：用于编辑 8D Dictionary</p>
+        <p><strong>Create new Dictionary:</strong> 创建8D报告 Dictionary</p>
+    </div>
+</div>
+<script src="@Url.Content("~/Scripts/jquery.form.js")"></script>
+<script type="text/javascript">
+    function Submitt() {
+        var flag = false;
+        if ($("#DicName").val() == "") {
+            alert("Dictionary Name Can't be Empty");
+            $("#DicName").focus();
+            return flag;
+        }
+
+        if ($("#DicType").val() == "0") {
+            alert("Please Choose Dictionary Type");
+            $("#DicType").focus();
+            return flag;
+        }
+
+        var formobj = document.getElementById("form0");
+        var formdata = new FormData(formobj);
+
+        $.ajax({
+            type: "post",
+            //dataType: "json",
+            "url": "@Url.Content("~/DataDictionary/DictionaryEdit/")",
+            data: formdata,
+            processData: false,
+            contentType: false,
+            async: false,
+            //jsonp: 'callback',
+            //jsonpCallback: 'callbackReportCreate',
+            success: function (data) {
+                if (data.success == true) {
+                    flag = true;
+                    var url = "../../DataDictionary";
+                    //alert(url);
+                    window.location.href = url;
+                }
+                else {
+                    alert(data.message);
+                }
+            },
+            error: function (data) {
+                alert(data.message);
+            }
+        });
+        return flag;
+        //$('#form0').ajaxSubmit({
+        //    success: function (data) {
+        //        if (data.success) {
+        //            var url = "../../DataDictionary";
+        //            //alert(url);
+        //            window.location.href = url;
+        //        } else {
+        //            alert(data.message);
+        //        }
+        //    }
+        //});
+    }
+
+</script>
+<div class="panel panel-default">
+    <div class="panel-heading">Edit Dictionary</div>
+    <div class="panel-body">
+        @using (Ajax.BeginForm("DictionaryEdit", "DataDictionary", null, new AjaxOptions() { HttpMethod = "Post", OnSuccess = "Back", OnComplete = "Back" }, new { id = "form0", enctype = "multipart/form-data", @class = "form-horizontal", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(m => m.DicGuid)
+            <!-- #section:elements.form -->
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Dictionary Name</label>
+                <div class="col-sm-9">
+                    @Html.EditorFor(model => model.DicName)
+                    @Html.ValidationMessageFor(model => model.DicName)
+                    @*<input type="text" id="txtUserName" placeholder="Username" class="col-xs-10 col-sm-5" />*@
+                </div>
+            </div>
+            
+          
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Dictionary Type</label>
+                <div class="col-sm-9">
+                    @Html.DropDownListFor(model => model.DicType, Model.DicTypeSelectList)
+                    @Html.ValidationMessageFor(model => model.DicType)
+                    @*<input type="text" id="txtUserName" placeholder="Username" class="col-xs-10 col-sm-5" />*@
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Ord</label>
+                <div class="col-sm-9">
+                    @Html.EditorFor(model => model.Ord)
+                    @Html.ValidationMessageFor(model => model.Ord)
+                    @*<input type="text" id="txtUserName" placeholder="Username" class="col-xs-10 col-sm-5" />*@
+                </div>
+            </div>
+
+            <div class="clearfix form-actions">
+                <div class="col-md-offset-3 col-md-9">
+                    <button class="btn btn-info" type="button" id="submit" onclick="Submitt()">
+                        <i class="ace-icon fa fa-check bigger-110"></i>
+                        Submit
+                    </button>
+                    &nbsp; &nbsp; &nbsp;
+          <button class="btn" type="reset">
+              <i class="ace-icon fa fa-undo bigger-110"></i>
+              Reset
+          </button>
+                </div>
+            </div>
+
+            <div class="hr hr-24"></div>
+        }
+    </div>
+</div>

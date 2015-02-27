@@ -13,8 +13,11 @@ namespace _8DManagementSystem.Model
 
     public enum DicTypeEnum
     {
+        [Description("Language")]
         Language = 1,
 
+        [Description("ReportType")]
+        ReportType = 2,
     }
 
     public enum PermissionEnum

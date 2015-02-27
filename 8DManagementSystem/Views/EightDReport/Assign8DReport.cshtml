@@ -1,4 +1,5 @@
-﻿@{
+﻿@model _8DManagementSystem.Models.ReportAssignModel
+@{
     ViewBag.Title = "Assign8DReport";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -32,115 +33,139 @@
 <script src="@Url.Content("~/Contents/assets/js/jquery.unobtrusive-ajax.min.js")"></script>
 <script type="text/javascript">
     function Submitt() {
-        $('#form0').ajaxSubmit({
+
+
+        var formobj = document.getElementById("form0");
+        var formdata = new FormData(formobj);
+
+        $.ajax({
+            type: "post",
+            //dataType: "json",
+            "url": "@Url.Content("~/EightDReport/Assign8DReport/")",
+            data: formdata,
+            processData: false,
+            contentType: false,
+            async: false,
+            //jsonp: 'callback',
+            //jsonpCallback: 'callbackReportCreate',
             success: function (data) {
-                if (data.success) {
-                    var url = "../../Board";
+                if (data.success == true) {
+                    flag = true;
+                    var url = "../../DataDictionary";
                     //alert(url);
                     window.location.href = url;
-                } else {
+                }
+                else {
                     alert(data.message);
                 }
+            },
+            error: function (data) {
+                alert(data.message);
             }
         });
+        return flag;
+
     }
 
 </script>
 
 <div class="panel panel-default">
     <div class="panel-heading">Assign 8D Report</div>
+    <div class="panel-body">
+        <div class="table-responsive">
+            <div class="row">
+                <div class="space-4"></div>
+                <div class="col-xs-12">
+                    <!-- PAGE CONTENT BEGINS -->
+                    @using (Ajax.BeginForm("DictionaryEdit", "DataDictionary", null, new AjaxOptions() { HttpMethod = "Post", OnSuccess = "Back", OnComplete = "Back" }, new { id = "form0", enctype = "multipart/form-data", @class = "form-horizontal", role = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.HiddenFor(m => m.ReportAssignGuid)
+                        <div class="space-4"></div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Report Title </label>
 
-    <div class="table-responsive">
-        <div class="row">
-            <div class="col-xs-12">
-                <!-- PAGE CONTENT BEGINS -->
-                <form class="form-horizontal" role="form">
-                    <div class="space-4"></div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">8D Title </label>
-
-                        <div class="col-sm-7">
-                            <input type="text" id="form-field-1-1" placeholder="Text Field" class="form-control" />
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Report Type</label>
-
-                        <div class="col-sm-7">
-                            <div>
-                                <select class="form-control" id="form-field-select-1">
-                                    <option value="">Plant</option>
-                                    <option value="AL">Alabama</option>
-                                    <option value="AK">Alaska</option>
-                                    <option value="AZ">Arizona</option>
-                                    <option value="AR">Arkansas</option>
-                                </select>
+                            <div class="col-sm-7">
+                                @Html.TextBoxFor(model => model.ReportTitle, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.ReportTitle)
                             </div>
                         </div>
-                    </div>
 
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Report Type</label>
 
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Department</label>
-
-                        <div class="col-sm-7">
-                            <div>
-                                <select class="form-control" id="Select1">
-                                    <option value="">Dept1</option>
-                                    <option value="AL">Dept2</option>
-                                    <option value="AK">Dept3</option>
-                                    <option value="AZ">Dept4</option>
-                                    <option value="AR">Dept5</option>
-                                </select>
+                            <div class="col-sm-7">
+                                <div>
+                                    @Html.DropDownListFor(model => model.ReportType, Model.ReportTypeSelectList, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.ReportType)
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Report Owner</label>
 
-                        <div class="col-sm-7">
-                            <input type="text" id="Text1" placeholder="Text Field" class="form-control" />
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Board</label>
+
+                            <div class="col-sm-7">
+                                <div>
+                                    @Html.DropDownListFor(model => model.BoardGuid, Model.BoardSelectList, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.BoardGuid)
+                                </div>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Responsible QE</label>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Report Owner</label>
 
-                        <div class="col-sm-7">
-                            <input type="text" id="Text2" placeholder="Text Field" class="form-control" />
+                            <div class="col-sm-7">
+                                @Html.TextBoxFor(model => model.ReportOwner, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.ReportOwner)
+                                @*<input type="text" id="Text1" placeholder="Text Field" class="form-control" />*@
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Responsible QE</label>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Responsible QE</label>
 
-                        <div class="col-sm-7">
-                            <input readonly="" type="text" class="form-control" id="form-input-readonly" value="This text field is readonly!" />
+                            <div class="col-sm-7">
+                                @Html.TextBoxFor(model => model.ResponsibleQE, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.ResponsibleQE)
+                                @* <input type="text" id="Text2" placeholder="Text Field" class="form-control" />*@
+                            </div>
                         </div>
-                    </div>
 
-                    <hr />
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Responsible No</label>
 
-                    <div class="clearfix form-actions">
-                        <div class="col-md-offset-3 col-md-9">
-                            <button class="btn btn-info" type="button">
-                                <i class="ace-icon fa fa-check bigger-110"></i>
-                                Submit
-                            </button>
+                            <div class="col-sm-7">
+                                @Html.TextBoxFor(model => model.ReportNo, new { @class = "form-control", @readonly = "" })
+                                @Html.ValidationMessageFor(model => model.ReportNo)
+                                @*<input readonly="" type="text" class="form-control" id="form-input-readonly" value="This text field is readonly!" />*@
+                            </div>
+                        </div>
 
-                            &nbsp; &nbsp; &nbsp;
+                        <hr />
+
+                        <div class="clearfix form-actions">
+                            <div class="col-md-offset-3 col-md-9">
+                                <button class="btn btn-info" type="button" id="submit" onclick="Submitt()">
+                                    <i class="ace-icon fa fa-check bigger-110"></i>
+                                    Submit
+                                </button>
+
+                                &nbsp; &nbsp; &nbsp;
 										<button class="btn" type="reset">
                                             <i class="ace-icon fa fa-undo bigger-110"></i>
                                             Reset
                                         </button>
+                            </div>
                         </div>
-                    </div>
-                </form>
+                    }
+
+                </div>
             </div>
+
+
         </div>
-
-
     </div>
 </div>

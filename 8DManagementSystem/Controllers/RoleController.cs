@@ -36,6 +36,7 @@ namespace _8DManagementSystem.Controllers
             String jsondata = HttpUtility.UrlDecode(Request.Params[0], System.Text.Encoding.UTF8);
 
             int sEcho = 0;
+            int startCount = 0;
             string roleName = string.Empty;
 
             string dateCreated = string.Empty;
@@ -49,7 +50,7 @@ namespace _8DManagementSystem.Controllers
                     sEcho = jobj.Property("value").Value.EToInt();
 
                 if (jobj.Property("name").Value.ToString().Equals("iDisplayStart"))
-                    page = jobj.Property("value").Value.EToInt();
+                    startCount = jobj.Property("value").Value.EToInt();
 
                 if (jobj.Property("name").Value.ToString().Equals("iDisplayLength"))
                     rowCount = jobj.Property("value").Value.EToInt();
@@ -67,7 +68,7 @@ namespace _8DManagementSystem.Controllers
             //总条数
             int totalCount = 0;
 
-            IList<Model.D_Role_Model> list = new DAL.D_Role_DAL().GetAllByPage(page - 1, rowCount, roleName, dateCreated, out totalCount);
+            IList<Model.D_Role_Model> list = new DAL.D_Role_DAL().GetAllByPage(startCount, rowCount, roleName, dateCreated, out totalCount);
 
             int totalPage = totalCount % rowCount == 0 ? totalCount / rowCount : totalCount / rowCount + 1;
 

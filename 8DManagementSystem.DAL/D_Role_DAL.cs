@@ -93,7 +93,7 @@ namespace _8DManagementSystem.DAL
         /// <param name="createDate"></param>
         /// <param name="totalCount"></param>
         /// <returns></returns>
-        public IList<D_Role_Model> GetAllByPage(int page, int rowCount, string roleName, string createDate, out int totalCount)
+        public IList<D_Role_Model> GetAllByPage(int startCount, int rowCount, string roleName, string createDate, out int totalCount)
         {
             ICriteria ic = NhSession.CreateCriteria(typeof(D_Role_Model));
             if (!string.IsNullOrEmpty(roleName))
@@ -108,7 +108,7 @@ namespace _8DManagementSystem.DAL
             totalCount = Convert.ToInt32(pageCrit.SetProjection(Projections.RowCount()).UniqueResult());
 
             ic.AddOrder(Order.Desc("ModifyDateTime"));
-            IList<D_Role_Model> list = ic.SetFirstResult(page * rowCount).SetMaxResults(rowCount).List<D_Role_Model>();
+            IList<D_Role_Model> list = ic.SetFirstResult(startCount).SetMaxResults(rowCount).List<D_Role_Model>();
 
             return list;
         }

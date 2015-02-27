@@ -7,7 +7,7 @@
 <ol class="breadcrumb">
     <li><a href="/8DReport/">Home</a></li>
     <li><a href="/8DReport/Workflow">Administration</a></li>
-    <li class="active">Board</li>
+    <li class="active">Dictionary</li>
 </ol>
 
 <div class="alert alert-success" role="alert">
@@ -31,7 +31,7 @@
 </div>
 <div class="panel panel-default">
 
-    <div class="panel-heading">BoardManage</div>
+    <div class="panel-heading">Dictionary</div>
     <div class="panel-body">
         <form class="form-horizontal" role="form">
             <button type="button" class="btn btn-default btn-sm collapsed" data-toggle="collapse" data-target="#filters" aria-expanded="true" aria-controls="demo">
@@ -225,7 +225,7 @@
     }
 
     function edit(e) {
-        var _url = "@Url.Content("~/Board/BoardEdit/")";
+        var _url = "@Url.Content("~/DataDictionary/DictionaryEdit/")";
         window.location.href = _url + e;
     }
 

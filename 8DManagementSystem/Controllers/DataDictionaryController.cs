@@ -7,6 +7,7 @@ using _8DManagementSystem.Filter;
 using _8DManagementSystem.Common;
 using Newtonsoft.Json.Linq;
 using System.Collections;
+using _8DManagementSystem.Models;
 
 namespace _8DManagementSystem.Controllers
 {
@@ -31,6 +32,8 @@ namespace _8DManagementSystem.Controllers
             String jsondata = HttpUtility.UrlDecode(Request.Params[0], System.Text.Encoding.UTF8);
 
             int sEcho = 0;
+            int startCount = 0;
+
             string dicName = string.Empty;
             string dicType = string.Empty;
             string dateCreated = string.Empty;
@@ -44,7 +47,7 @@ namespace _8DManagementSystem.Controllers
                     sEcho = jobj.Property("value").Value.EToInt();
 
                 if (jobj.Property("name").Value.ToString().Equals("iDisplayStart"))
-                    page = jobj.Property("value").Value.EToInt();
+                    startCount = jobj.Property("value").Value.EToInt();
 
                 if (jobj.Property("name").Value.ToString().Equals("iDisplayLength"))
                     rowCount = jobj.Property("value").Value.EToInt();
@@ -65,7 +68,7 @@ namespace _8DManagementSystem.Controllers
             //总条数
             int totalCount = 0;
 
-            IList<Model.D_Dictionary_Model> list = new DAL.D_Dictionary_DAL().GetAllByPage(page - 1, rowCount, (Model.DicTypeEnum)dicType.EToInt(), dicName, dateCreated, out totalCount);
+            IList<Model.D_Dictionary_Model> list = new DAL.D_Dictionary_DAL().GetAllByPage(startCount, rowCount, null, dicName, dateCreated, out totalCount);
 
             int totalPage = totalCount % rowCount == 0 ? totalCount / rowCount : totalCount / rowCount + 1;
 
@@ -81,7 +84,7 @@ namespace _8DManagementSystem.Controllers
                             "<button type=\"button\" class=\"btn btn-sm btn-primary dropdown-toggle\" data-toggle=\"dropdown\" aria-expanded=\"false\">" +
                                 "Action <span class=\"caret\"></span></button>" +
                             "<ul class=\"dropdown-menu\" role=\"menu\">" +
-                                "<li><a href=\"" + Url.Content("~/UserCenter/UserEdit") + "/" + item.DicGuid + "\"><span class=\"glyphicon glyphicon-edit\"></span> Show Detail</a></li>" +
+                                "<li><a href=\"" + Url.Content("~/DataDictionary/DictionaryEdit") + "/" + item.DicGuid + "\"><span class=\"glyphicon glyphicon-edit\"></span> Show Detail</a></li>" +
                                 "<li><a href=\"#\"><span class=\"glyphicon glyphicon-cog\"></span> Configuration</a></li>" +
                                 "<li><a href=\"#\"><span class=\"glyphicon glyphicon-export\"></span> Export to Excel</a></li>" +
                                 "<li class=\"divider\"></li>" +
@@ -89,7 +92,7 @@ namespace _8DManagementSystem.Controllers
                             "</ul></div>"),
                     ID = item.DicGuid,
                     DicName = item.DicName,
-                    DicType = item.DicType,
+                    DicType =  EnumUtility.GetEnumDescription(item.DicType),
                     ModifyUserName = item.ModifyUserName,
                     ModifyDate = item.ModifyDateTime.HasValue ? item.ModifyDateTime.Value.ToString("yyyy-MM-dd") : string.Empty,
                     CreateUserName = item.CreateUserName,
@@ -103,11 +106,113 @@ namespace _8DManagementSystem.Controllers
         #endregion
 
         #region 编辑
+        /// <summary>
+        /// 编辑板块
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [OutputCache(Duration = 0)]
+        [LoginFilter()]
+        public ActionResult DictionaryEdit(Guid? id)
+        {
 
+            DictionaryModel model = new DictionaryModel();
+            model.LoadDicTypeSelectList();
+
+            if (id.HasValue)
+            {
+                Model.D_Dictionary_Model dataModel = new DAL.D_Dictionary_DAL().GetModel(id.Value);
+                if (dataModel != null)
+                {
+                    if (!dataModel.DataStatus)
+                    {
+                        model.DicGuid = dataModel.DicGuid;
+                        model.DicName = dataModel.DicName;
+                        model.DicType = Convert.ToInt32(dataModel.DicType).ToString();
+                        model.Ord = dataModel.Ord;
+                    }
+                }
+            }
+            return View(model);
+        }
+
+        /// <summary>
+        /// 编辑板块名称
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [LoginFilter()]
+        //[AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult DictionaryEdit(DictionaryModel model)
+        {
+            bool success = false;
+
+            try
+            {
+                Model.D_Dictionary_Model dataModel = null;
+                if (model.DicGuid == Guid.Empty)
+                {
+                    dataModel = new Model.D_Dictionary_Model();
+
+                    dataModel.CreateDateTime = DateTime.Now;
+                    dataModel.DataStatus = false;
+                    dataModel.CreateUserGuid = UserView.UserGuid;
+                    dataModel.CreateUserName = UserView.UserName;
+
+                }
+                else
+                {
+                    dataModel = new DAL.D_Dictionary_DAL().GetModel(model.DicGuid);
+                }
+
+                dataModel.DicName = model.DicName;
+                dataModel.DicType = (Model.DicTypeEnum)model.DicType.EToInt();
+                dataModel.Ord = model.Ord;
+                dataModel.ModifyDateTime = DateTime.Now;
+                dataModel.ModifyUserGuid = UserView.UserGuid;
+                dataModel.ModifyUserName = UserView.UserName;
+
+
+                success = new DAL.D_Dictionary_DAL().Save(dataModel);
+                return Json(new { success = success, message = "成功" }, JsonRequestBehavior.AllowGet);
+
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = success, message = ex.Message });
+            }
+        }
         #endregion
 
         #region 删除
+        [LoginFilter()]
+        public ActionResult DictionaryDel(Guid? id)
+        {
+            bool success = false;
+            string msg = string.Empty;
+            if (id.HasValue)
+            {
+                try
+                {
 
+                    Model.D_Dictionary_Model model = new DAL.D_Dictionary_DAL().GetModel(id.Value);
+
+                    model.ModifyDateTime = DateTime.Now;
+                    model.DataStatus = true;
+
+                    success = new DAL.D_Dictionary_DAL().Save(model);
+                    return Json(new { success = success, message = "成功" }, JsonRequestBehavior.AllowGet);
+
+                }
+                catch (Exception ex)
+                {
+                    return Json(new { success = success, message = ex.Message });
+                }
+            }
+
+            return Json(new { success = success, msg = "数据已不存在" }, JsonRequestBehavior.AllowGet);
+        }
         #endregion
     }
 }

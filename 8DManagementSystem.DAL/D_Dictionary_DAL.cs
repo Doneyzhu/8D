@@ -37,7 +37,7 @@ namespace _8DManagementSystem.DAL
         /// <param name="createDate"></param>
         /// <param name="totalCount"></param>
         /// <returns></returns>
-        public IList<D_Dictionary_Model> GetAllByPage(int page, int rowCount, DicTypeEnum dicType, string dicName, string createDate, out int totalCount)
+        public IList<D_Dictionary_Model> GetAllByPage(int startCount, int rowCount, DicTypeEnum? dicType, string dicName, string createDate, out int totalCount)
         {
             ICriteria ic = NhSession.CreateCriteria(typeof(D_Dictionary_Model));
             if (!string.IsNullOrEmpty(dicName))
@@ -45,8 +45,8 @@ namespace _8DManagementSystem.DAL
 
             if (!string.IsNullOrEmpty(createDate))
                 ic.Add(Restrictions.Le("CreateDateTime", createDate));
-
-            ic.Add(Restrictions.Eq("DicType", dicType));
+            if (dicType.HasValue)
+                ic.Add(Restrictions.Eq("DicType", dicType));
 
             ic.Add(Restrictions.Eq("DataStatus", false));
 
@@ -54,9 +54,71 @@ namespace _8DManagementSystem.DAL
 
             totalCount = Convert.ToInt32(pageCrit.SetProjection(Projections.RowCount()).UniqueResult());
 
-            IList<D_Dictionary_Model> list = ic.SetFirstResult(page * rowCount).SetMaxResults(rowCount).List<D_Dictionary_Model>();
+            ic.AddOrder(new Order("Ord", false));
+
+            IList<D_Dictionary_Model> list = ic.SetFirstResult(startCount).SetMaxResults(rowCount).List<D_Dictionary_Model>();
 
             return list;
+        }
+
+        /// <summary>
+        /// 获取字典信息
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public D_Dictionary_Model GetModel(Guid id)
+        {
+            return new DbSession().NhSession.Get<D_Dictionary_Model>(id);
+        }
+
+        /// <summary>
+        /// 删除数据字典
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public bool Delete(D_Dictionary_Model model)
+        {
+            NHibernate.ITransaction tran = NhSession.BeginTransaction();
+            try
+            {
+                NhSession.Delete(model);
+                tran.Commit();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                if (!tran.WasCommitted && !tran.WasRolledBack)
+                    tran.Rollback();
+            }
+        }
+
+        /// <summary>
+        /// 保存数据字典信息
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns>true or false</returns>
+        public bool Save(D_Dictionary_Model model)
+        {
+            NHibernate.ITransaction tran = NhSession.BeginTransaction();
+            try
+            {
+                NhSession.SaveOrUpdate(model);
+                tran.Commit();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                if (!tran.WasCommitted && !tran.WasRolledBack)
+                    tran.Rollback();
+            }
         }
     }
 }

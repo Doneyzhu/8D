@@ -93,7 +93,7 @@ namespace _8DManagementSystem.DAL
         /// <param name="createDate"></param>
         /// <param name="totalCount"></param>
         /// <returns></returns>
-        public IList<D_Board_Model> GetAllByPage(int page, int rowCount, string boardName, string createDate, out int totalCount)
+        public IList<D_Board_Model> GetAllByPage(int startCount, int rowCount, string boardName, string createDate, out int totalCount)
         {
             ICriteria ic = NhSession.CreateCriteria(typeof(D_Board_Model));
             if (!string.IsNullOrEmpty(boardName))
@@ -108,7 +108,7 @@ namespace _8DManagementSystem.DAL
 
             totalCount = Convert.ToInt32(pageCrit.SetProjection(Projections.RowCount()).UniqueResult());
 
-            IList<D_Board_Model> list = ic.SetFirstResult(page * rowCount).SetMaxResults(rowCount).List<D_Board_Model>();
+            IList<D_Board_Model> list = ic.SetFirstResult(startCount).SetMaxResults(rowCount).List<D_Board_Model>();
 
             return list;
         }

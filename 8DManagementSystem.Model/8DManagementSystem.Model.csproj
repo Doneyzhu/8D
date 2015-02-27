@@ -47,6 +47,7 @@
     <Compile Include="D_Role_Model.cs" />
     <Compile Include="D_Role_Permissions_Model.cs" />
     <Compile Include="D_User_Model.cs" />
+    <Compile Include="D_Report_Model.cs" />
     <Compile Include="Enum.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
