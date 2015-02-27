@@ -247,6 +247,43 @@ CREATE TABLE [dbo].[EightD_Role_Permissions](
 GO
 
 
+USE [8DReport]
+GO
+
+/****** Object:  Table [dbo].[EightD_Report]    Script Date: 02/28/2015 03:00:23 ******/
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[EightD_Report]') AND type in (N'U'))
+DROP TABLE [dbo].[EightD_Report]
+GO
+
+USE [8DReport]
+GO
+
+/****** Object:  Table [dbo].[EightD_Report]    Script Date: 02/28/2015 03:00:24 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[EightD_Report](
+	[ReportGuid] [uniqueidentifier] NOT NULL,
+	[ReportTitle] [nvarchar](50) NULL,
+	[ReportTypeGuid] [uniqueidentifier] NULL,
+	[ReportBoardGuid] [uniqueidentifier] NULL,
+	[ReportOwner] [nvarchar](50) NULL,
+	[ResponsibleQE] [nvarchar](50) NULL,
+	[ReportNo] [nvarchar](50) NULL,
+ CONSTRAINT [PK_EightD_Report] PRIMARY KEY CLUSTERED 
+(
+	[ReportGuid] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+
+
+
 
 
 
