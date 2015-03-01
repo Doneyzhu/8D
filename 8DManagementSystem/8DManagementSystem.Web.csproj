@@ -216,6 +216,32 @@
     <Content Include="Contents\assets\img\glyphicons-halflings-white.png" />
     <Content Include="Contents\assets\img\glyphicons-halflings.png" />
     <Content Include="Contents\assets\img\loading.gif" />
+    <Content Include="Contents\assets\js\ace\ace.auto-container.js" />
+    <Content Include="Contents\assets\js\ace\ace.auto-padding.js" />
+    <Content Include="Contents\assets\js\ace\ace.autohide-sidebar.js" />
+    <Content Include="Contents\assets\js\ace\ace.js" />
+    <Content Include="Contents\assets\js\ace\ace.onpage-help.js" />
+    <Content Include="Contents\assets\js\ace\ace.searchbox-autocomplete.js" />
+    <Content Include="Contents\assets\js\ace\ace.settings-rtl.js" />
+    <Content Include="Contents\assets\js\ace\ace.settings-skin.js" />
+    <Content Include="Contents\assets\js\ace\ace.settings.js" />
+    <Content Include="Contents\assets\js\ace\ace.sidebar-scroll-1.js" />
+    <Content Include="Contents\assets\js\ace\ace.sidebar-scroll-2.js" />
+    <Content Include="Contents\assets\js\ace\ace.sidebar.js" />
+    <Content Include="Contents\assets\js\ace\ace.submenu-1.js" />
+    <Content Include="Contents\assets\js\ace\ace.submenu-2.js" />
+    <Content Include="Contents\assets\js\ace\ace.submenu-hover.js" />
+    <Content Include="Contents\assets\js\ace\ace.touch-drag.js" />
+    <Content Include="Contents\assets\js\ace\ace.widget-box.js" />
+    <Content Include="Contents\assets\js\ace\ace.widget-on-reload.js" />
+    <Content Include="Contents\assets\js\ace\elements.colorpicker.js" />
+    <Content Include="Contents\assets\js\ace\elements.fileinput.js" />
+    <Content Include="Contents\assets\js\ace\elements.scroller.js" />
+    <Content Include="Contents\assets\js\ace\elements.spinner.js" />
+    <Content Include="Contents\assets\js\ace\elements.treeview.js" />
+    <Content Include="Contents\assets\js\ace\elements.typeahead.js" />
+    <Content Include="Contents\assets\js\ace\elements.wizard.js" />
+    <Content Include="Contents\assets\js\ace\elements.wysiwyg.js" />
     <Content Include="Contents\assets\js\bootbox.min.js" />
     <Content Include="Contents\assets\js\bootstrap.js" />
     <Content Include="Contents\assets\js\bootstrap.min.js" />
@@ -288,6 +314,8 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\cascade.js" />
+    <Content Include="Contents\assets\js\ace\readme" />
+    <Content Include="Contents\assets\js\ace\scripts.json" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -327,6 +355,7 @@
     <Content Include="Views\DataDictionary\Index.cshtml" />
     <Content Include="Views\Role\Role_Permission_Edit.cshtml" />
     <Content Include="Views\DataDictionary\DictionaryEdit.cshtml" />
+    <Content Include="Views\EightDReport\ReportEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Web_ZH_CN.sitemap" />

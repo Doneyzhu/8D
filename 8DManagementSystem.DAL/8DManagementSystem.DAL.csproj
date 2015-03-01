@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="D_Board_DAL.cs" />
     <Compile Include="D_Dictionary_DAL.cs" />
+    <Compile Include="D_ReportD2_DAL.cs" />
     <Compile Include="D_Report_DAL.cs" />
     <Compile Include="D_Role_DAL.cs" />
     <Compile Include="D_Role_Permissions_DAL.cs" />

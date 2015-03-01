@@ -1,0 +1,2744 @@
+﻿@model _8DManagementSystem.Models.ReportAssignModel
+@{
+    ViewBag.Title = "ReportEdit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="@Url.Content("~/Contents/assets/css/bootstrap-datetimepicker.css")" rel="stylesheet" />
+
+<ol class="breadcrumb">
+    <li><a href="/8DReport/">Home</a></li>
+    <li><a href="~/EightDReport">EightDReport</a></li>
+    <li><a href="~/Board">EightDReport</a></li>
+    <li class="active">Edit Report</li>
+</ol>
+
+<script src="@Url.Content("~/Scripts/jquery.form.js")"></script>
+<script type="text/javascript">
+    function Submitt0() {
+        var formobj = document.getElementById("form0");
+        var formdata = new FormData(formobj);
+
+        $.ajax({
+            type: "post",
+            //dataType: "json",
+            "url": "@Url.Content("~/EightDReport/ReportHeaderSave/")",
+            data: formdata,
+            processData: false,
+            contentType: false,
+            async: false,
+            //jsonp: 'callback',
+            //jsonpCallback: 'callbackReportCreate',
+            success: function (data) {
+                if (data.success == true) {
+                    alert(data.message);
+                }
+                else {
+                    alert(data.message);
+                }
+            },
+            error: function (data) {
+                alert(data.message);
+            }
+        });
+        return flag;
+    }
+
+    function Submitt1() {
+        var formobj = document.getElementById("form1");
+        var formdata = new FormData(formobj);
+
+        $.ajax({
+            type: "post",
+            //dataType: "json",
+            "url": "@Url.Content("~/EightDReport/ReportD1Save/")",
+            data: formdata,
+            processData: false,
+            contentType: false,
+            async: false,
+            //jsonp: 'callback',
+            //jsonpCallback: 'callbackReportCreate',
+            success: function (data) {
+                if (data.success == true) {
+                    alert(data.message);
+                }
+                else {
+                    alert(data.message);
+                }
+            },
+            error: function (data) {
+                alert(data.message);
+            }
+        });
+        return flag;
+    }
+
+    function Submitt2() {
+        var formobj = document.getElementById("form2");
+        var formdata = new FormData(formobj);
+
+        $.ajax({
+            type: "post",
+            //dataType: "json",
+            "url": "@Url.Content("~/EightDReport/ReportD2Save/")",
+            data: formdata,
+            processData: false,
+            contentType: false,
+            async: false,
+            //jsonp: 'callback',
+            //jsonpCallback: 'callbackReportCreate',
+            success: function (data) {
+                if (data.success == true) {
+                    alert(data.message);
+                }
+                else {
+                    alert(data.message);
+                }
+            },
+            error: function (data) {
+                alert(data.message);
+            }
+        });
+        return flag;
+    }
+
+
+</script>
+
+<div class="panel panel-info">
+    <div class="panel-heading">
+        @*<button type="button" class="btn btn-primary">
+          <span class="glyphicon glyphicon-plus-sign"></span>Create new user
+      </button>*@
+        <button type="button" class="btn btn-default collapsed" data-toggle="collapse" data-target="#help" aria-expanded="false" aria-controls="demo">
+            <span class="glyphicon glyphicon-question-sign"></span>Help <span class="caret"></span>
+        </button>
+    </div>
+    <div id="help" class="panel-body collapse" aria-expanded="false" style="height: 30px;">
+        <p class="lead">8D Report Edit Board ：用于编辑 8D Board</p>
+        <p><strong>Create new report:</strong> 创建8D报告Board</p>
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">Edit Reoprt</div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-sm-12">
+                <!-- #section:elements.tab -->
+                <div class="tabbable">
+                    <ul class="nav nav-tabs" id="myTab">
+                        <li class="active">
+                            <a data-toggle="tab" href="#home">
+                                <i class="green ace-icon fa fa-home bigger-120"></i>
+                                Home
+                            </a>
+                        </li>
+
+                        <li>
+                            <a data-toggle="tab" href="#profile">Approval Work Flow
+                            </a>
+                        </li>
+                        <li>
+                            <a data-toggle="tab" href="#dropdown1">Approval History
+                            </a>
+                        </li>
+
+
+                    </ul>
+
+                    <div class="tab-content">
+                        <div id="home" class="tab-pane in active">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">8D Report No. </label>
+                                <div class="col-sm-9">
+                                    <input type="text" readonly="" id="Text1" class="col-xs-10 col-sm-5" />
+                                </div>
+                            </div>
+
+                            <div class="vspace-6-sm"></div>
+
+                            <div id="accordion" class="accordion-style1 panel-group">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                                                <i class="ace-icon fa fa-angle-down bigger-110" data-icon-hide="ace-icon fa fa-angle-down" data-icon-show="ace-icon fa fa-angle-right"></i>
+                                                &nbsp;Header Data
+                                            </a>
+                                        </h4>
+                                    </div>
+
+                                    <div class="panel-collapse collapse in" id="collapseOne">
+                                        <div class="panel-body">
+                                            @using (Ajax.BeginForm("ReportHeaderSave", "EightDReport", null, new AjaxOptions() { HttpMethod = "Post", OnSuccess = "Back", OnComplete = "Back" }, new { id = "form0", enctype = "multipart/form-data", @class = "form-horizontal", role = "form" }))
+                                            {
+                                                @Html.AntiForgeryToken()
+                                                @Html.HiddenFor(m => m.ReportAssignGuid)
+                                                <!-- #section:elements.form -->
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <div class="col-xs-12 col-lg-6">
+                                                            @* <div class="input-group">*@
+                                                            <div class="row">
+                                                                <label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Complaint Date: </label>
+                                                                <div class="col-sm-8">
+                                                                    <div class="input-group input-group-sm">
+                                                                        @Html.TextBoxFor(model => model.ReportHeader.ComplaintDate, new { @class = "form-control date-picker" })
+                                                                        @Html.ValidationMessageFor(model => model.ReportHeader.ComplaintDate)
+                                                                        <span class="input-group-addon">
+                                                                            <i class="ace-icon fa fa-calendar"></i>
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            @*</div>*@
+                                                        </div>
+
+                                                        <div class="col-xs-12 col-lg-6">
+                                                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Product </label>
+
+                                                            <div class="col-sm-9">
+                                                                @Html.TextBoxFor(model => model.ReportHeader.Product, new { @class = "form-control" })
+                                                                @Html.ValidationMessageFor(model => model.ReportHeader.Product)
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <div class="col-xs-12 col-lg-6">
+                                                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">8D Title</label>
+
+                                                            <div class="col-sm-9">
+                                                                @Html.TextBoxFor(model => model.ReportTitle, new { @class = "form-control", @readonly = "" })
+                                                                @Html.ValidationMessageFor(model => model.ReportTitle)
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xs-12 col-lg-6">
+                                                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Bosch Material No</label>
+                                                            <div class="col-sm-9">
+                                                                @Html.TextBoxFor(model => model.ReportHeader.Bosch_Material_No, new { @class = "form-control" })
+                                                                @Html.ValidationMessageFor(model => model.ReportHeader.Bosch_Material_No)
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <div class="col-xs-12 col-lg-6">
+                                                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Warranty Descision</label>
+
+                                                            <div class="col-sm-9">
+                                                                @Html.TextBoxFor(model => model.ReportHeader.Warranty_Descision, new { @class = "form-control" })
+                                                                @Html.ValidationMessageFor(model => model.ReportHeader.Warranty_Descision)
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xs-12 col-lg-6">
+                                                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Manufacturing plant</label>
+                                                            <div class="col-sm-9">
+                                                                @Html.TextBoxFor(model => model.ReportHeader.Manufacturing_Plant, new { @class = "form-control" })
+                                                                @Html.ValidationMessageFor(model => model.ReportHeader.Manufacturing_Plant)
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <div class="col-xs-12 col-lg-6">
+                                                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Customer</label>
+
+                                                            <div class="col-sm-9">
+                                                                @Html.TextBoxFor(model => model.ReportHeader.Customer, new { @class = "form-control" })
+                                                                @Html.ValidationMessageFor(model => model.ReportHeader.Customer)
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xs-12 col-lg-6">
+                                                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Customer Material No</label>
+                                                            <div class="col-sm-9">
+                                                                @Html.TextBoxFor(model => model.ReportHeader.Customer_Material_No, new { @class = "form-control" })
+                                                                @Html.ValidationMessageFor(model => model.ReportHeader.Customer_Material_No)
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <div class="col-xs-12 col-lg-6">
+                                                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Complaint type/mode</label>
+
+                                                            <div class="col-sm-9">
+                                                                @Html.TextBoxFor(model => model.ReportHeader.Complaint_TypeMode, new { @class = "form-control" })
+                                                                @Html.ValidationMessageFor(model => model.ReportHeader.Complaint_TypeMode)
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xs-12 col-lg-6">
+                                                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Serial No</label>
+                                                            <div class="col-sm-9">
+                                                                @Html.TextBoxFor(model => model.ReportHeader.Serial_No, new { @class = "form-control" })
+                                                                @Html.ValidationMessageFor(model => model.ReportHeader.Serial_No)
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <div class="col-xs-12 col-lg-6">
+                                                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Supplier No</label>
+
+                                                            <div class="col-sm-9">
+                                                                @Html.TextBoxFor(model => model.ReportHeader.Supplier_No, new { @class = "form-control" })
+                                                                @Html.ValidationMessageFor(model => model.ReportHeader.Supplier_No)
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xs-12 col-lg-6">
+                                                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Supplier Name</label>
+                                                            <div class="col-sm-9">
+                                                                @Html.TextBoxFor(model => model.ReportHeader.Supplier_Name, new { @class = "form-control" })
+                                                                @Html.ValidationMessageFor(model => model.ReportHeader.Supplier_Name)
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <div class="col-xs-12">
+                                                            <label class="col-sm-1 control-label no-padding-right" for="form-field-1-1">Issuer</label>
+                                                            <div class="col-sm-11">
+                                                                @Html.TextBoxFor(model => model.ReportHeader.Issuer, new { @class = "form-control" })
+                                                                @Html.ValidationMessageFor(model => model.ReportHeader.Issuer)
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <hr />
+
+                                                <div class="clearfix form-actions">
+                                                    <div class="col-md-offset-3 col-md-9">
+                                                        <button class="btn btn-info" type="button" onclick="Submitt0()">
+                                                            <i class="ace-icon fa fa-check bigger-110"></i>
+                                                            Submit
+                                                        </button>
+
+                                                        &nbsp; &nbsp; &nbsp;
+										<button class="btn" type="reset">
+                                            <i class="ace-icon fa fa-undo bigger-110"></i>
+                                            Reset
+                                        </button>
+                                                    </div>
+                                                </div>
+
+                                                <div class="hr hr-24"></div>
+
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+                                                <i class="ace-icon fa fa-angle-right bigger-110" data-icon-hide="ace-icon fa fa-angle-down" data-icon-show="ace-icon fa fa-angle-right"></i>
+                                                &nbsp;D1 Problem Solving Team
+                                            </a>
+                                        </h4>
+                                    </div>
+
+                                    <div class="panel-collapse collapse" id="collapseTwo">
+                                        <div class="panel-body">
+                                            @using (Ajax.BeginForm("ReportD1Save", "EightDReport", null, new AjaxOptions() { HttpMethod = "Post", OnSuccess = "Back", OnComplete = "Back" }, new { id = "form1", enctype = "multipart/form-data", @class = "form-horizontal", role = "form" }))
+                                            {
+                                                @Html.AntiForgeryToken()
+                                                @Html.HiddenFor(m => m.ReportAssignGuid)
+                                                <!-- #section:elements.form -->
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <div class="col-xs-12 col-lg-6">
+                                                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Team Leader</label>
+
+                                                            <div class="col-sm-9">
+                                                                @Html.TextBoxFor(model => model.ReportD1.Team_Leader, new { @class = "form-control" })
+                                                                @Html.ValidationMessageFor(model => model.ReportD1.Team_Leader)
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xs-12 col-lg-6">
+                                                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Sponaor</label>
+                                                            <div class="col-sm-9">
+                                                                @Html.TextBoxFor(model => model.ReportD1.Sponaor, new { @class = "form-control" })
+                                                                @Html.ValidationMessageFor(model => model.ReportD1.Sponaor)
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <div class="col-xs-12 col-lg-12">
+                                                            <label class="col-sm-1 control-label no-padding-right" for="form-field-1-1">Coordinator</label>
+
+                                                            <div class="col-sm-5">
+                                                                @Html.TextBoxFor(model => model.ReportD1.Coordinator, new { @class = "form-control" })
+                                                                @Html.ValidationMessageFor(model => model.ReportD1.Coordinator)
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label no-padding-right" for="form-field-tags">Team Member</label>
+
+                                                    <div class="col-sm-9">
+                                                        <!-- #section:plugins/input.tag-input -->
+                                                        <div class="inline">
+                                                            <input type="text" name="tags" id="form-field-tags" value="Tag Input Control" placeholder="Enter tags ..." />
+                                                        </div>
+
+                                                        <!-- /section:plugins/input.tag-input -->
+                                                    </div>
+                                                </div>
+
+                                                <hr />
+
+                                                <div class="clearfix form-actions">
+                                                    <div class="col-md-offset-3 col-md-9">
+                                                        <button class="btn btn-info" type="button" onclick="Submitt1()">
+                                                            <i class="ace-icon fa fa-check bigger-110"></i>
+                                                            Submit
+                                                        </button>
+
+                                                        &nbsp; &nbsp; &nbsp;
+										<button class="btn" type="reset">
+                                            <i class="ace-icon fa fa-undo bigger-110"></i>
+                                            Reset
+                                        </button>
+                                                    </div>
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+                                                <i class="ace-icon fa fa-angle-right bigger-110" data-icon-hide="ace-icon fa fa-angle-down" data-icon-show="ace-icon fa fa-angle-right"></i>
+                                                &nbsp;D2 Problem Description
+                                            </a>
+                                        </h4>
+                                    </div>
+
+                                    <div class="panel-collapse collapse" id="collapseThree">
+                                        <div class="panel-body">
+                                            @using (Ajax.BeginForm("ReportD2Save", "EightDReport", null, new AjaxOptions() { HttpMethod = "Post", OnSuccess = "Back", OnComplete = "Back" }, new { id = "form2", enctype = "multipart/form-data", @class = "form-horizontal", role = "form" }))
+                                            {
+                                                @Html.AntiForgeryToken()
+                                                @Html.HiddenFor(m => m.ReportAssignGuid)
+
+                                                <!-- #section:elements.form -->
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <label class="col-sm-2 control-label no-padding-right" for="form-field-1-1">Manufacturing Date</label>
+                                                        <div class="col-xs-6">
+                                                            <div class="input-group input-group-sm">
+                                                                @Html.TextBoxFor(model => model.ReportD2.Manufacturing_Date, new { @class = "form-control date-picker" })
+                                                                @Html.ValidationMessageFor(model => model.ReportD2.Manufacturing_Date)
+                                                                <span class="input-group-addon">
+                                                                    <i class="ace-icon fa fa-calendar"></i>
+                                                                </span>
+                                                                @* <input type="text" id="datepicker" class="form-control date-picker" />
+                                                                <span class="input-group-addon">
+                                                                    <i class="ace-icon fa fa-calendar"></i>
+                                                                </span>*@
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <label class="col-sm-2 control-label no-padding-right" for="form-field-1-1">Customer Complaint</label>
+                                                        <div class="col-xs-10">
+                                                            @Html.TextAreaFor(model => model.ReportD2.Customer_Complaint, new { @class = "form-control" })
+
+                                                            @* <textarea class="form-control" id="form-field-8" placeholder="Default Text"></textarea>*@
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <label class="col-sm-2 control-label no-padding-right" for="form-field-1-1">Bosch Description</label>
+                                                        <div class="col-xs-10">
+                                                            @Html.TextAreaFor(model => model.ReportD2.Bosch_Description, new { @class = "form-control" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1-1">No. of complaint parts </label>
+
+                                                    <div class="col-sm-10">
+                                                        @Html.TextBoxFor(model => model.ReportD2.No_of_complaint_parts, new { @class = "form-control" })
+                                                    </div>
+                                                </div>
+
+                                                <hr />
+
+                                                <div class="clearfix form-actions">
+                                                    <div class="col-md-offset-3 col-md-9">
+                                                        <button class="btn btn-info" type="button" onclick="Submitt2()">
+                                                            <i class="ace-icon fa fa-check bigger-110"></i>
+                                                            Submit
+                                                        </button>
+
+                                                        &nbsp; &nbsp; &nbsp;
+										<button class="btn" type="reset">
+                                            <i class="ace-icon fa fa-undo bigger-110"></i>
+                                            Reset
+                                        </button>
+                                                    </div>
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseFour">
+                                                <i class="ace-icon fa fa-angle-right bigger-110" data-icon-hide="ace-icon fa fa-angle-down" data-icon-show="ace-icon fa fa-angle-right"></i>
+                                                &nbsp;D3 Containment Action(s):
+                                            </a>
+                                        </h4>
+                                    </div>
+
+                                    <div class="panel-collapse collapse" id="collapseFour">
+                                        <div class="panel-body">
+                                            @using (Ajax.BeginForm("ReportD3Save", "EightDReport", null, new AjaxOptions() { HttpMethod = "Post", OnSuccess = "Back", OnComplete = "Back" }, new { id = "form3", enctype = "multipart/form-data", @class = "form-horizontal", role = "form" }))
+                                            {
+                                                @Html.AntiForgeryToken()
+                                                @Html.HiddenFor(m => m.ReportAssignGuid)
+                                                <div id="div3">
+                                                    @if (Model.ReportD3 != null)
+                                                    {
+                                                        if (Model.ReportD3.D3DataList.Count > 0)
+                                                        {
+                                                            foreach (var item in Model.ReportD3.D3DataList)
+                                                            {
+                                                        <div id="divDataList_@item.Number" class="form-group">
+
+                                                            <label class="col-sm-2 control-label no-padding-right" for="form-field-1-1">Responsible:</label>
+
+                                                            <div class="col-sm-2">
+                                                                <input type="text" name="responsible" placeholder="Text Field" class="form-control" value="@item.Responsible" />
+                                                            </div>
+
+                                                            <label class="col-sm-2 control-label no-padding-right" for="form-field-1-1">introduced on:</label>
+
+                                                            <div class="col-sm-2">
+                                                                <input type="text" name="introduced" placeholder="Text Field" class="form-control" value="@item.Introduced" />
+                                                            </div>
+
+                                                            <label class="col-sm-2 control-label no-padding-right" for="form-field-1-1">Effectinve from:</label>
+
+                                                            <div class="col-sm-2">
+                                                                <input type="text" name="effectinve" placeholder="Text Field" class="form-control" value="@item.Effectinve" />
+
+                                                                <a id="@item.Number" href="#" onclick="DelDiv(this)">删除</a>
+                                                            </div>
+
+                                                        </div>
+                                                            }
+                                                        }
+                                                        else
+                                                        {
+                                                        <div id="divDataList_1" class="form-group">
+                                                            <label class="col-sm-2 control-label no-padding-right" for="form-field-1-1">Responsible:</label>
+
+                                                            <div class="col-sm-2">
+                                                                <input type="text" name="responsible" placeholder="Text Field" class="form-control" />
+                                                            </div>
+
+                                                            <label class="col-sm-2 control-label no-padding-right" for="form-field-1-1">introduced on:</label>
+
+                                                            <div class="col-sm-2">
+                                                                <input type="text" name="introduced" placeholder="Text Field" class="form-control" />
+                                                            </div>
+
+                                                            <label class="col-sm-2 control-label no-padding-right" for="form-field-1-1">Effectinve from:</label>
+
+                                                            <div class="col-sm-2">
+                                                                <input type="text" name="effectinve" placeholder="Text Field" class="form-control" />
+                                                            </div>
+
+                                                            <div><a id="1" href="#" onclick="DelDiv(this)">删除</a></div>
+                                                        </div>
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        <!-- #section:elements.form -->
+                                                        <div id="divDataList_1" class="form-group">
+                                                            <label class="col-sm-2 control-label no-padding-right" for="form-field-1-1">Responsible:</label>
+
+                                                            <div class="col-sm-2">
+                                                                <input type="text" name="responsible" placeholder="Text Field" class="form-control" />
+                                                            </div>
+
+                                                            <label class="col-sm-2 control-label no-padding-right" for="form-field-1-1">introduced on:</label>
+
+                                                            <div class="col-sm-2">
+                                                                <input type="text" name="introduced" placeholder="Text Field" class="form-control" />
+                                                            </div>
+
+                                                            <label class="col-sm-2 control-label no-padding-right" for="form-field-1-1">Effectinve from:</label>
+
+                                                            <div class="col-sm-2">
+                                                                <input type="text" name="effectinve" placeholder="Text Field" class="form-control" />
+                                                            </div>
+
+                                                            <div><a id="1" href="#" onclick="DelDiv(this)">删除</a></div>
+                                                        </div>
+                                                        
+                                                    }
+                                                </div>
+
+                                                <div class="form-group">
+                                                </div>
+
+                                                <hr />
+
+                                                <div class="clearfix form-actions">
+                                                    <div class="col-md-offset-3 col-md-9">
+                                                        <button class="btn btn-info" type="button" onclick="Submitt3()">
+                                                            <i class="ace-icon fa fa-check bigger-110"></i>
+                                                            Submit
+                                                        </button>
+
+                                                        &nbsp; &nbsp; &nbsp;
+										<button class="btn" type="reset" onclick="Add3()">
+                                            <i class="ace-icon fa fa-undo bigger-110"></i>
+                                            Add
+                                        </button>
+                                                    </div>
+                                                </div>
+                                            }
+
+                                            <script type="text/javascript">
+                                                function Submitt3() {
+
+                                                    var formobj = document.getElementById("form3");
+                                                    var formdata = new FormData(formobj);
+                                                    alert(formdata);
+                                                    $.ajax({
+                                                        type: "post",
+                                                        //dataType: "json",
+                                                        "url": "@Url.Content("~/EightDReport/ReportD3Save/")",
+                                                        data: formdata,
+                                                        processData: false,
+                                                        contentType: false,
+                                                        async: false,
+                                                        //jsonp: 'callback',
+                                                        //jsonpCallback: 'callbackReportCreate',
+                                                        success: function (data) {
+                                                            if (data.success == true) {
+                                                                alert(data.message);
+                                                            }
+                                                            else {
+                                                                alert(data.message);
+                                                            }
+                                                        },
+                                                        error: function (data) {
+                                                            alert(data.message);
+                                                        }
+                                                    });
+                                                    return flag;
+                                                }
+
+                                                var count = $("#div3").children().length + 1;
+                                                function Add3() {
+                                                    alert(count);
+                                                    //children().length
+                                                    //alert($("#div3").children().length);
+                                                    var html;
+                                                    html = "<div id=\"divDataList_" + count + "\" class=\"form-group\">";
+                                                    html += "<label class=\"col-sm-2 control-label no-padding-right\" for=\"form-field-1-1\">Responsible:</label>";
+                                                    html += " <div class=\"col-sm-2\">";
+                                                    html += " <input type=\"text\" name=\"responsible\" placeholder=\"Text Field\" class=\"form-control\" />";
+                                                    html += "</div>";
+
+                                                    html += "<label class=\"col-sm-2 control-label no-padding-right\" for=\"form-field-1-1\">introduced on:</label>";
+                                                    html += " <div class=\"col-sm-2\">";
+                                                    html += " <input type=\"text\"  name=\"introduced\"  placeholder=\"Text Field\" class=\"form-control\" />";
+                                                    html += "</div>";
+
+                                                    html += "<label class=\"col-sm-2 control-label no-padding-right\" for=\"form-field-1-1\">Effectinve from:</label>";
+                                                    html += " <div class=\"col-sm-2\">";
+                                                    html += " <input type=\"text\" name=\"effectinve\"  placeholder=\"Text Field\" class=\"form-control\" />";
+                                                    html += "</div>";
+
+                                                    html += "<a id=\"" + count + "\" href=\"#\" onclick=\"DelDiv(this)\">删除</a>"
+
+                                                    html += "</div>";
+                                                    count = count + 1;
+                                                    $("#div3").append(html);
+                                                }
+
+                                                function DelDiv(dom) {
+                                                    debugger;
+                                                    $("#divDataList_" + dom.id).remove();
+                                                    //$("#div3").remove(divd);
+                                                }
+
+                                            </script>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseFive">
+                                                <i class="ace-icon fa fa-angle-right bigger-110" data-icon-hide="ace-icon fa fa-angle-down" data-icon-show="ace-icon fa fa-angle-right"></i>
+                                                &nbsp;D4 Cause and Effect Analysis
+                                            </a>
+                                        </h4>
+                                    </div>
+
+                                    <div class="panel-collapse collapse" id="collapseFive">
+                                        <div class="panel-body">
+                                            @using (Ajax.BeginForm("ReportD4Save", "EightDReport", null, new AjaxOptions() { HttpMethod = "Post", OnSuccess = "Back", OnComplete = "Back" }, new { id = "form4", enctype = "multipart/form-data", @class = "form-horizontal", role = "form" }))
+                                            {
+                                                @Html.AntiForgeryToken()
+                                                @Html.HiddenFor(m => m.ReportAssignGuid)
+
+                                                <div class="form-group">
+                                                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1-1">Title</label>
+
+                                                    <div class="col-sm-10">
+                                                        @Html.TextBoxFor(model => model.ReportD4.Title, new { @class = "form-control" })
+                                                        @Html.ValidationMessageFor(model => model.ReportD4.Title)
+                                                    </div>
+                                                </div>
+                                                <hr />
+
+                                                <div id="div4Data1">
+
+                                                    @if (Model.ReportD4.D4Data1List.Count > 0)
+                                                    {
+                                                        foreach (var item in Model.ReportD4.D4Data1List)
+                                                        {
+                                                        <div id="div4Data1_Child_@item.Number">
+
+                                                            <div class="form-group">
+                                                                <div class="row">
+                                                                    <label class="col-sm-12 control-label no-padding-left" for="form-field-1-1">Root cause(s) with evidence:why could the non-conformity occur?</label>
+                                                                    <div class="col-xs-12">
+                                                                        <textarea name="non_conformity_occur" class="form-control">@item.Non_Conformity_Occur</textarea>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <div class="row">
+                                                                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1-1">Responsible</label>
+                                                                    <div class="col-sm-4">
+                                                                        <input name="responsible" type="text" placeholder="Text Field" class="form-control" value="@item.Responsible" />
+                                                                    </div>
+
+                                                                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1-1">Completed on</label>
+
+                                                                    <div class="col-sm-4">
+                                                                        <input  name="completed" type="text" placeholder="Text Field" class="form-control" value="@item.Completed_On" />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <a id="@item.Number" href="#" onclick="DelDiv4_1(this)">删除</a>
+                                                        </div>
+                                                        }
+
+                                                    }
+                                                    else
+                                                    {
+                                                        <div id="div4Data1_Child_1">
+                                                            <!-- #section:elements.form -->
+                                                            <div class="form-group">
+                                                                <div class="row">
+                                                                    <label class="col-sm-12 control-label no-padding-left" for="form-field-1-1">Root cause(s) with evidence:why could the non-conformity occur?</label>
+                                                                    <div class="col-xs-12">
+                                                                        <textarea name="non_conformity_occur" class="form-control" placeholder="Default Text"></textarea>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <div class="row">
+                                                                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1-1">Responsible</label>
+                                                                    <div class="col-sm-4">
+                                                                        <input name="responsible" type="text" placeholder="Text Field" class="form-control" />
+                                                                    </div>
+
+                                                                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1-1">Completed on</label>
+
+                                                                    <div class="col-sm-4">
+                                                                        <input name="completed" type="text" placeholder="Text Field" class="form-control" />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <a id="1" href="#" onclick="DelDiv4_1(this)">删除</a>
+                                                        </div>
+                                                    }
+                                                </div>
+                                                <hr />
+
+                                                <div id="div4Data2">
+                                                    @if (Model.ReportD4.D4Data2List.Count > 0)
+                                                    {
+                                                        foreach (var item in Model.ReportD4.D4Data2List)
+                                                        {
+                                                        <div id="div4Data2_Child_@item.Number">
+
+                                                            <div class="form-group">
+                                                                <div class="row">
+                                                                    <label class="col-sm-12 control-label no-padding-left" for="form-field-1-1">Root cause(s) with evidence:why could the non-conformity not been detected?</label>
+                                                                    <div class="col-xs-12">
+                                                                        <textarea name="non_conformity_detected" class="form-control">@item.Non_Conformity_Detected</textarea>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <div class="row">
+                                                                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1-1">Responsible</label>
+                                                                    <div class="col-sm-4">
+                                                                        <input name="nonresponsible" type="text" placeholder="Text Field" class="form-control" value="@item.Responsible" />
+                                                                    </div>
+
+                                                                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1-1">Completed on</label>
+
+                                                                    <div class="col-sm-4">
+                                                                        <input name="noncompleted" type="text" placeholder="Text Field" class="form-control" value="@item.Completed_On" />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <a id="@item.Number" href="#" onclick="DelDiv4_2(this)">删除</a>
+                                                        </div>
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        <div id="div4Data2_Child_1">
+                                                            <!-- #section:elements.form -->
+                                                            <div class="form-group">
+                                                                <div class="row">
+                                                                    <label class="col-sm-12 control-label no-padding-left" for="form-field-1-1">Root cause(s) with evidence:why could the non-conformity not been detected?</label>
+                                                                    <div class="col-xs-12">
+                                                                        <textarea name="non_conformity_detected" class="form-control" placeholder="Default Text"></textarea>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <div class="row">
+                                                                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1-1">Responsible</label>
+                                                                    <div class="col-sm-4">
+                                                                        <input name="nonresponsible" type="text" placeholder="Text Field" class="form-control" />
+                                                                    </div>
+
+                                                                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1-1">Completed on</label>
+
+                                                                    <div class="col-sm-4">
+                                                                        <input name="noncompleted" type="text" placeholder="Text Field" class="form-control" />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <a id="1" href="#" onclick="DelDiv4_2(this)">删除</a>
+                                                        </div>
+                                                    }
+                                                </div>
+                                                
+                                                <hr />
+                                                
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <label class="col-sm-2 control-label no-padding-right" for="form-field-1-1">Causing Process</label>
+                                                        <div class="col-xs-10">
+                                                            @Html.TextAreaFor(model => model.ReportD4.Causing_Process, new { @class = "form-control" })
+                                                            @Html.ValidationMessageFor(model => model.ReportD4.Causing_Process)
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <label class="col-sm-2 control-label no-padding-right" for="form-field-1-1">Risk assessment</label>
+                                                        <div class="col-xs-10">
+                                                            @Html.TextAreaFor(model => model.ReportD4.Risk_Assessment, new { @class = "form-control" })
+                                                            @Html.ValidationMessageFor(model => model.ReportD4.Risk_Assessment)
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <div class="col-xs-8 col-sm-6">
+
+                                                            <label class="col-sm-5 control-label no-padding-right" for="form-field-1-1">Production period affected from</label>
+                                                            <div class="col-xs-8 col-sm-3">
+                                                                @Html.TextBoxFor(model => model.ReportD4.Period_Affected_FromStart, new { @class = "input-sm form-control" })
+                                                                @Html.ValidationMessageFor(model => model.ReportD4.Period_Affected_FromStart)
+                                                            </div>
+
+                                                            <label class="col-sm-1 control-label no-padding-right" for="form-field-1-1">To:</label>
+                                                            <div class="col-xs-8 col-sm-3">
+                                                                @Html.TextBoxFor(model => model.ReportD4.Period_Affected_FromEnd, new { @class = "input-sm form-control" })
+                                                                @Html.ValidationMessageFor(model => model.ReportD4.Period_Affected_FromEnd)
+                                                            </div>
+
+                                                            <!-- /section:plugins/date-time.datepicker -->
+                                                        </div>
+
+                                                        <label class="col-sm-2 control-label no-padding-right" for="form-field-1-1">Responsible</label>
+                                                        <div class="col-xs-8 col-sm-4">
+
+                                                            @Html.TextBoxFor(model => model.ReportD4.Responsible, new { @class = "form-control" })
+                                                            @Html.ValidationMessageFor(model => model.ReportD4.Responsible)
+                                                            <!-- /section:plugins/date-time.datepicker -->
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Expected number of further non-conformities</label>
+                                                        <div class="col-xs-8 col-sm-3">
+                                                            @Html.TextBoxFor(model => model.ReportD4.Expected_Number, new { @class = "form-control" })
+                                                            @Html.ValidationMessageFor(model => model.ReportD4.Expected_Number)
+                                                        </div>
+
+                                                        <label class="col-sm-2 control-label no-padding-right" for="form-field-1-1">completed on</label>
+                                                        <div class="col-xs-8 col-sm-4">
+                                                            <div class="input-group input-group-sm">
+                                                                @Html.TextBoxFor(model => model.ReportD4.Completed_On, new { @class = "form-control date-picker" })
+                                                                @Html.ValidationMessageFor(model => model.ReportD4.Completed_On)
+                                                                @*<input type="text" id="Text39" class="form-control date-picker" />*@
+                                                                <span class="input-group-addon">
+                                                                    <i class="ace-icon fa fa-calendar"></i>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Pot. failure qty:internal</label>
+                                                        <div class="col-xs-8 col-sm-3">
+                                                            <div class="input-daterange input-group">
+                                                                @Html.TextBoxFor(model => model.ReportD4.Qty, new { @class = "form-control" })
+                                                                @Html.ValidationMessageFor(model => model.ReportD4.Qty)
+                                                                <span class="input-group-addon">0 km:
+                                                                </span>
+                                                                @Html.TextBoxFor(model => model.ReportD4.Internal_Km, new { @class = "form-control" })
+                                                                @Html.ValidationMessageFor(model => model.ReportD4.Internal_Km)
+                                                                @* <input type="text" class="input-sm form-control" name="end" />*@
+                                                            </div>
+                                                        </div>
+
+                                                        <label class="col-sm-2 control-label no-padding-right" for="form-field-1-1">field:</label>
+                                                        <div class="col-xs-8 col-sm-4">
+                                                            <div class="input-group input-group-sm">
+                                                                @Html.TextBoxFor(model => model.ReportD4.Field, new { @class = "form-control" })
+                                                                @Html.ValidationMessageFor(model => model.ReportD4.Field)
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <hr />
+                                                
+                                                <div class="clearfix form-actions">
+                                                    <div class="col-md-offset-3 col-md-9">
+                                                        <button class="btn btn-info" type="button" onclick="Submitt4()">
+                                                            <i class="ace-icon fa fa-check bigger-110"></i>
+                                                            Submit
+                                                        </button>
+
+                                                        &nbsp; &nbsp; &nbsp;
+										<button class="btn" type="reset" onclick="Add4_1()">
+                                            <i class="ace-icon fa fa-undo bigger-110"></i>
+                                            Add D4 RC (Occurrence)
+                                        </button>
+                                                        &nbsp; &nbsp; &nbsp;
+										<button class="btn" type="reset" onclick="Add4_2()">
+                                            <i class="ace-icon fa fa-undo bigger-110"></i>
+                                            Add D4 RC (Non-Detection)
+                                        </button>
+
+                                                    </div>
+                                                </div>
+                                            }
+                                            <script type="text/javascript">
+                                                function Submitt4() {
+
+                                                    var formobj = document.getElementById("form4");
+                                                    var formdata = new FormData(formobj);
+                                                    alert(formdata);
+                                                    $.ajax({
+                                                        type: "post",
+                                                        //dataType: "json",
+                                                        "url": "@Url.Content("~/EightDReport/ReportD4Save/")",
+                                                        data: formdata,
+                                                        processData: false,
+                                                        contentType: false,
+                                                        async: false,
+                                                        //jsonp: 'callback',
+                                                        //jsonpCallback: 'callbackReportCreate',
+                                                        success: function (data) {
+                                                            if (data.success == true) {
+                                                                alert(data.message);
+                                                            }
+                                                            else {
+                                                                alert(data.message);
+                                                            }
+                                                        },
+                                                        error: function (data) {
+                                                            alert(data.message);
+                                                        }
+                                                    });
+                                                    return flag;
+                                                }
+
+                                                var count1 = $("#div4Data1").children().length + 1;
+
+                                                function Add4_1() {
+                                                    var html;
+                                                    html = "<div id=\"div4Data1_Child_" + count1 + "\">";
+                                                    html += "<div class=\"form-group\">";
+                                                    html += "<div class=\"row\">";
+                                                    html += "<label class=\"col-sm-12 control-label no-padding-left\" for=\"form-field-1-1\">Root cause(s) with evidence:why could the non-conformity occur?</label>";
+                                                    html += "<div class=\"col-xs-12\">";
+                                                    html += "<textarea name=\"non_conformity_occur\" class=\"form-control\" placeholder=\"Default Text\"></textarea>";
+                                                    html += "</div>";
+                                                    html += "</div>";
+                                                    html += "</div>";
+
+                                                    html += "<div class=\"form-group\">";
+                                                    html += "<div class=\"row\">";
+                                                    html += "<label class=\"col-sm-2 control-label no-padding-right\" for=\"form-field-1-1\">Responsible</label>";
+                                                    html += "<div class=\"col-sm-4\">";
+                                                    html += "<input name=\"responsible\" type=\"text\" placeholder=\"Text Field\" class=\"form-control\" />";
+                                                    html += "</div>";
+
+                                                    html += "<label class=\"col-sm-2 control-label no-padding-right\" for=\"form-field-1-1\">Completed on</label>";
+                                                    html += "<div class=\"col-sm-4\">";
+                                                    html += "<input name=\"completed\" type=\"text\" placeholder=\"Text Field\" class=\"form-control\" />";
+                                                    html += "</div>";
+                                                    html += "</div>";
+                                                    html += "</div>";
+                                                    html += "<a id=\"" + count1 + "\" href=\"#\" onclick=\"DelDiv4_1(this)\">删除</a>"
+
+                                                    html += "</div>";
+
+                                                    count1 = count1 + 1;
+
+                                                    $("#div4Data1").append(html);
+                                                }
+
+                                                function DelDiv4_1(dom) {
+                                                    $("#div4Data1_Child_" + dom.id).remove();
+                                                }
+
+                                                var count2 = $("#div4Data2").children().length + 1;
+                                                function Add4_2() {
+                                                    var html;
+                                                    html = "<div id=\"div4Data2_Child_" + count2 + "\">";
+                                                    html += "<div class=\"form-group\">";
+                                                    html += "<div class=\"row\">";
+                                                    html += "<label class=\"col-sm-12 control-label no-padding-left\" for=\"form-field-1-1\">Root cause(s) with evidence:why could the non-conformity not been detected?</label>";
+                                                    html += "<div class=\"col-xs-12\">";
+                                                    html += "<textarea name=\"non_conformity_detected\" class=\"form-control\" placeholder=\"Default Text\"></textarea>";
+                                                    html += "</div>";
+                                                    html += "</div>";
+                                                    html += "</div>";
+
+                                                    html += "<div class=\"form-group\">";
+                                                    html += "<div class=\"row\">"
+                                                    html += "<label class=\"col-sm-2 control-label no-padding-right\" for=\"form-field-1-1\">Responsible</label>";
+                                                    html += "<div class=\"col-sm-4\">";
+                                                    html += "<input name=\"nonresponsible\" type=\"text\" placeholder=\"Text Field\" class=\"form-control\" />";
+                                                    html += "</div>";
+
+                                                    html += "<label class=\"col-sm-2 control-label no-padding-right\" for=\"form-field-1-1\">Completed on</label>";
+                                                    html += "<div class=\"col-sm-4\">";
+                                                    html += "<input name=\"noncompleted\" type=\"text\" placeholder=\"Text Field\" class=\"form-control\" />";
+                                                    html += "</div>";
+                                                    html += "</div>";
+                                                    html += "</div>";
+                                                    html += "<a id=\"" + count2 + "\" href=\"#\" onclick=\"DelDiv4_2(this)\">删除</a>"
+
+                                                    html += "</div>";
+
+                                                    count2 = count2 + 1;
+
+                                                    $("#div4Data2").append(html);
+                                                }
+
+                                                function DelDiv4_2(dom) {
+                                                    debugger;
+                                                    $("#div4Data2_Child_" + dom.id).remove();
+                                                }
+
+                                            </script>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseSix">
+                                                <i class="ace-icon fa fa-angle-right bigger-110" data-icon-hide="ace-icon fa fa-angle-down" data-icon-show="ace-icon fa fa-angle-right"></i>
+                                                &nbsp;D5 Corrective actions and proof of effectiveness:
+                                            </a>
+                                        </h4>
+                                    </div>
+
+                                    <div class="panel-collapse collapse" id="collapseSix">
+                                        <div class="panel-body">
+                                            @using (Ajax.BeginForm("ReportD5Save", "EightDReport", null, new AjaxOptions() { HttpMethod = "Post", OnSuccess = "Back", OnComplete = "Back" }, new { id = "form5", enctype = "multipart/form-data", @class = "form-horizontal", role = "form" }))
+                                            {
+                                                @Html.AntiForgeryToken()
+                                                @Html.HiddenFor(m => m.ReportAssignGuid)
+
+                                                <div id="div5">
+                                                    @if (Model.ReportD5.D5DataList.Count > 0)
+                                                    {
+                                                        foreach (var item in Model.ReportD5.D5DataList)
+                                                        {
+                                                        <div id="div5Data1_Child_@item.Number">
+                                                            <div class="form-group">
+                                                                <div class="row">
+                                                                    <label class="col-sm-3 control-label no-padding-left" for="form-field-1-1">Corrective actions and proof of effectiveness:</label>
+                                                                    <div class="col-xs-9">
+                                                                        <textarea class="form-control" name="Corrective_Effectiveness5" placeholder="Default Text">@item.Corrective_Effectiveness</textarea>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <div class="row">
+                                                                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1-1">Responsible</label>
+                                                                    <div class="col-xs-8 col-sm-4">
+                                                                        <input type="text" name="Responsible5" placeholder="Text Field" class="form-control" value="@item.Responsible" />
+                                                                    </div>
+
+                                                                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1-1">completed on</label>
+                                                                    <div class="col-xs-8 col-sm-4">
+                                                                        <div class="input-group input-group-sm">
+                                                                            <input type="text" name="Completed_On5" class="form-control date-picker" value="@item.Completed_On" />
+                                                                            <span class="input-group-addon">
+                                                                                <i class="ace-icon fa fa-calendar"></i>
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                            <a id="@item.Number" href="#" onclick="DelDiv5_1(this)">删除</a>
+                                                        </div>
+                                                        <hr />
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        <div id="div5Data1_Child_1">
+                                                            <div class="form-group">
+                                                                <div class="row">
+                                                                    <label class="col-sm-3 control-label no-padding-left" for="form-field-1-1">Corrective actions and proof of effectiveness:</label>
+                                                                    <div class="col-xs-9">
+                                                                        <textarea class="form-control" name="Corrective_Effectiveness5" placeholder="Default Text"></textarea>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <div class="row">
+                                                                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1-1">Responsible</label>
+                                                                    <div class="col-xs-8 col-sm-4">
+                                                                        <input type="text" name="Responsible5" placeholder="Text Field" class="form-control" />
+                                                                    </div>
+
+                                                                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1-1">completed on</label>
+                                                                    <div class="col-xs-8 col-sm-4">
+                                                                        <div class="input-group input-group-sm">
+                                                                            <input type="text" name="Completed_On5" class="form-control date-picker" />
+                                                                            <span class="input-group-addon">
+                                                                                <i class="ace-icon fa fa-calendar"></i>
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+
+                                                            <a id="1" href="#" onclick="DelDiv5_1(this)">删除</a>
+                                                        </div>
+                                                        <hr />
+                                                    }
+                                                </div>
+                                                
+                                                <div class="clearfix form-actions">
+                                                    <div class="col-md-offset-3 col-md-9">
+                                                        <button class="btn btn-info" type="button" onclick="Submitt5()">
+                                                            <i class="ace-icon fa fa-check bigger-110"></i>
+                                                            Submit
+                                                        </button>
+
+                                                        &nbsp; &nbsp; &nbsp;
+										<button class="btn" type="reset" onclick="Add5()">
+                                            <i class="ace-icon fa fa-undo bigger-110"></i>
+                                            Add D5 Corrective actions
+                                        </button>
+                                                    </div>
+                                                </div>
+
+                                            }
+
+                                            <script type="text/javascript">
+                                                function Submitt5() {
+
+                                                    var formobj = document.getElementById("form5");
+                                                    var formdata = new FormData(formobj);
+
+                                                    $.ajax({
+                                                        type: "post",
+                                                        //dataType: "json",
+                                                        "url": "@Url.Content("~/EightDReport/ReportD5Save/")",
+                                                        data: formdata,
+                                                        processData: false,
+                                                        contentType: false,
+                                                        async: false,
+                                                        //jsonp: 'callback',
+                                                        //jsonpCallback: 'callbackReportCreate',
+                                                        success: function (data) {
+                                                            if (data.success == true) {
+                                                                alert(data.message);
+                                                            }
+                                                            else {
+                                                                alert(data.message);
+                                                            }
+                                                        },
+                                                        error: function (data) {
+                                                            alert(data.message);
+                                                        }
+                                                    });
+                                                    return flag;
+                                                }
+
+                                                var count5 = $("#div5").children().length + 1;
+                                                function Add5() {
+
+                                                    var html;
+                                                    html = "<div id=\"div5Data1_Child_" + count5 + "\" >";
+
+                                                    html += "<div class=\"form-group\">";
+                                                    html += "<div class=\"row\">";
+                                                    html += "<label class=\"col-sm-3 control-label no-padding-left\" for=\"form-field-1-1\">Corrective actions and proof of effectiveness:</label>";
+                                                    html += "<div class=\"col-xs-9\">";
+                                                    html += "<textarea class=\"form-control\" name=\"Corrective_Effectiveness5\" ></textarea>";
+                                                    html += "</div>";
+                                                    html += "</div>";
+                                                    html += "</div>";
+
+                                                    html += "<div class=\"form-group\">"
+                                                    html += "<div class=\"row\">"
+                                                    html += "<label class=\"col-sm-2 control-label no-padding-right\" for=\"form-field-1-1\">Responsible</label>";
+                                                    html += "<div class=\"col-xs-8 col-sm-4\">";
+                                                    html += "<input type=\"text\" name=\"Responsible5\" class=\"form-control\" />";
+                                                    html += "</div>";
+
+                                                    html += "<label class=\"col-sm-2 control-label no-padding-right\" for=\"form-field-1-1\">completed on</label>";
+                                                    html += "<div class=\"col-xs-8 col-sm-4\">";
+                                                    html += "<div class=\"input-group input-group-sm\">";
+                                                    html += "<input type=\"text\" name=\"Completed_On5\" class=\"form-control date-picker\" />";
+                                                    html += "<span class=\"input-group-addon\">";
+                                                    html += "<i class=\"ace-icon fa fa-calendar\"></i>";
+                                                    html += "</span>";
+                                                    html += "</div>";
+                                                    html += "</div>";
+
+                                                    html += "</div>";
+                                                    html += "</div>";
+
+                                                    html += "<a id=\"" + count5 + "\" href=\"#\" onclick=\"DelDiv5_1(this)\">删除</a>";
+
+                                                    html += "</div>";
+                                                    html += "<hr />";
+
+                                                    count5 = count5 + 1;
+                                                    $("#div5").append(html);
+
+                                                    dateInit();
+                                                }
+
+                                                function DelDiv5_1(dom) {
+                                                    debugger;
+                                                    $("#div5Data1_Child_" + dom.id).remove();
+                                                    //$("#div3").remove(divd);
+                                                }
+
+                                            </script>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseSeven">
+                                                <i class="ace-icon fa fa-angle-right bigger-110" data-icon-hide="ace-icon fa fa-angle-down" data-icon-show="ace-icon fa fa-angle-right"></i>
+                                                &nbsp;D6 Introduction of corrective actions and tracking of effectiveness
+                                            </a>
+                                        </h4>
+                                    </div>
+
+                                    <div class="panel-collapse collapse" id="collapseSeven">
+                                        <div class="panel-body">
+                                            @using (Ajax.BeginForm("ReportD6Save", "EightDReport", null, new AjaxOptions() { HttpMethod = "Post", OnSuccess = "Back", OnComplete = "Back" }, new { id = "form6", enctype = "multipart/form-data", @class = "form-horizontal", role = "form" }))
+                                            {
+                                                @Html.AntiForgeryToken()
+                                                @Html.HiddenFor(m => m.ReportAssignGuid)
+
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Customer agreement at:</label>
+                                                        <div class="col-xs-8 col-sm-3">
+                                                            @Html.TextBoxFor(model => model.ReportD6.CustomerAgreementAt, new { @class = "form-control" })
+                                                            @Html.ValidationMessageFor(model => model.ReportD6.CustomerAgreementAt)
+                                                        </div>
+
+                                                        <label class="col-sm-2 control-label no-padding-right" for="form-field-1-1">by:</label>
+                                                        <div class="col-xs-8 col-sm-4">
+                                                            <div class="input-group input-group-sm">
+                                                                @Html.TextBoxFor(model => model.ReportD6.CustomerAgreementBy, new { @class = "form-control" })
+                                                                @Html.ValidationMessageFor(model => model.ReportD6.CustomerAgreementBy)
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                
+                                                <hr />
+                                                
+                                                <div id="div6Data1">
+                                                    @if (Model.ReportD6.D6Data1List.Count > 0)
+                                                    {
+                                                        foreach (var item in Model.ReportD6.D6Data1List)
+                                                        {
+                                                        <div id="div6Data1_Childer_@item.Number">
+                                                            <div class="form-group">
+                                                                <div class="row">
+                                                                    <label class="col-sm-3 control-label no-padding-left" for="form-field-1-1">Description of the action(s):</label>
+                                                                    <div class="col-xs-9">
+                                                                        <textarea name="DescriptionOfAction1_6" class="form-control">@item.DescriptionOfAction</textarea>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <div class="row">
+                                                                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1-1">Responsible</label>
+                                                                    <div class="col-xs-8 col-sm-4">
+                                                                        <input name="Responsible1_6"  type="text" class="form-control" value="@item.Responsible" />
+                                                                        <!-- /section:plugins/date-time.datepicker -->
+                                                                    </div>
+
+                                                                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1-1">planned</label>
+                                                                    <div class="col-xs-8 col-sm-4">
+                                                                        <input name="Planned1_6" type="text"  class="form-control" value="@item.Planned" />
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <div class="row">
+                                                                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1-1">introduced on:</label>
+                                                                    <div class="col-xs-8 col-sm-4">
+                                                                        <input name="Introduce_On1_6"  type="text" class="form-control" value="@item.Introduce_On" />
+                                                                        <!-- /section:plugins/date-time.datepicker -->
+                                                                    </div>
+
+                                                                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1-1">effective from:</label>
+                                                                    <div class="col-xs-8 col-sm-4">
+                                                                        <input name="Effective_From1_6" type="text" class="form-control" value="@item.Effective_From" />
+                                                                    </div>
+
+                                                                </div>
+
+                                                                <a id="@item.Number" href="#" onclick="DelDiv6_1(this)">删除</a>
+                                                            </div>
+
+                                                        </div>
+                                                        
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        <div id="div6Data1_Childer_1">
+                                                            <div class="form-group">
+                                                                <div class="row">
+                                                                    <label class="col-sm-3 control-label no-padding-left" for="form-field-1-1">Description of the action(s):</label>
+                                                                    <div class="col-xs-9">
+                                                                        <textarea name="DescriptionOfAction1_6" class="form-control"></textarea>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <div class="row">
+                                                                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1-1">Responsible</label>
+                                                                    <div class="col-xs-8 col-sm-4">
+                                                                        <input name="Responsible1_6" type="text" class="form-control" />
+                                                                        <!-- /section:plugins/date-time.datepicker -->
+                                                                    </div>
+
+                                                                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1-1">planned</label>
+                                                                    <div class="col-xs-8 col-sm-4">
+                                                                        <input name="Planned1_6" type="text" class="form-control" />
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <div class="row">
+                                                                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1-1">introduced on:</label>
+                                                                    <div class="col-xs-8 col-sm-4">
+                                                                        <input name="Introduce_On1_6" type="text" class="form-control" />
+                                                                        <!-- /section:plugins/date-time.datepicker -->
+                                                                    </div>
+
+                                                                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1-1">effective from:</label>
+                                                                    <div class="col-xs-8 col-sm-4">
+                                                                        <input name="Effective_From1_6" type="text" class="form-control" />
+                                                                    </div>
+
+                                                                </div>
+
+                                                                <a id="1" href="#" onclick="DelDiv6_1(this)">删除</a>
+                                                            </div>
+
+                                                        </div>
+                                                    }
+                                                </div>
+                                                
+                                                <hr />
+                                                
+                                                <div id="div6Data2">
+                                                    @if (Model.ReportD6.D6Data2List.Count > 0)
+                                                    {
+                                                        foreach (var item in Model.ReportD6.D6Data2List)
+                                                        {
+                                                        <div id="div6Data2_Childer_@item.Number">
+
+                                                            <div class="form-group">
+                                                                <div class="row">
+                                                                    <label class="col-sm-3 control-label no-padding-left" for="form-field-1-1">validation of effectiveness after implementation of corrective action(s):</label>
+                                                                    <div class="col-xs-9">
+                                                                        <textarea class="form-control" name="ValidationOfAction2_6">@item.ValidationOfAction</textarea>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <div class="row">
+                                                                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1-1">Responsible</label>
+                                                                    <div class="col-xs-8 col-sm-4">
+
+                                                                        <input type="text"  name="Responsible2_6"  class="form-control" value="@item.Responsible" />
+                                                                        <!-- /section:plugins/date-time.datepicker -->
+                                                                    </div>
+
+
+                                                                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1-1">completed on</label>
+                                                                    <div class="col-xs-8 col-sm-4">
+                                                                        <div class="input-group input-group-sm">
+                                                                            <input type="text" name="Completed_On2_6" value="@item.Completed_On"  class="form-control date-picker" />
+                                                                            <span class="input-group-addon">
+                                                                                <i class="ace-icon fa fa-calendar"></i>
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+
+                                                            <a id="@item.Number" href="#" onclick="DelDiv6_2(this)">删除</a>
+                                                        </div>
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        <div id="div6Data2_Childer_1">
+
+                                                            <div class="form-group">
+                                                                <div class="row">
+                                                                    <label class="col-sm-3 control-label no-padding-left" for="form-field-1-1">validation of effectiveness after implementation of corrective action(s):</label>
+                                                                    <div class="col-xs-9">
+                                                                        <textarea class="form-control" name="ValidationOfAction2_6"></textarea>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <div class="row">
+                                                                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1-1">Responsible</label>
+                                                                    <div class="col-xs-8 col-sm-4">
+
+                                                                        <input type="text" name="Responsible2_6" class="form-control" />
+                                                                        <!-- /section:plugins/date-time.datepicker -->
+                                                                    </div>
+
+
+                                                                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1-1">completed on</label>
+                                                                    <div class="col-xs-8 col-sm-4">
+                                                                        <div class="input-group input-group-sm">
+                                                                            <input type="text" name="Completed_On2_6" class="form-control date-picker" />
+                                                                            <span class="input-group-addon">
+                                                                                <i class="ace-icon fa fa-calendar"></i>
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+
+                                                            <a id="1" href="#" onclick="DelDiv6_2(this)">删除</a>
+                                                        </div>
+
+                                                    }
+                                                </div>
+                                                <hr />
+
+                                                <div id="div6Data3">
+                                                    @if (Model.ReportD6.D6Data3List.Count > 0)
+                                                    {
+                                                        foreach (var item in Model.ReportD6.D6Data3List)
+                                                        {
+                                                        <div id="div6Data3_Childer_@item.Number">
+                                                            <div class="form-group">
+                                                                <div class="row">
+                                                                    <label class="col-sm-3 control-label no-padding-left" for="form-field-1-1">Removal of containment action(s):</label>
+                                                                    <div class="col-xs-9">
+                                                                        <textarea class="form-control" name="RemovalOfAction3_6">@item.RemovalOfAction
+                                                                        </textarea>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <div class="row">
+                                                                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1-1">Responsible</label>
+                                                                    <div class="col-xs-8 col-sm-4">
+                                                                        <input type="text" name="Responsible3_6" class="form-control" />
+                                                                    </div>
+
+
+                                                                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1-1">Removed At</label>
+                                                                    <div class="col-xs-8 col-sm-4">
+                                                                        <input type="text" name="Removed_At3_6" class="form-control" />
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+
+                                                            <a id="@item.Number" href="#" onclick="DelDiv6_3(this)">删除</a>
+
+                                                        </div>
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        <div id="div6Data3_Childer_1">
+                                                            <div class="form-group">
+                                                                <div class="row">
+                                                                    <label class="col-sm-3 control-label no-padding-left" for="form-field-1-1">Removal of containment action(s):</label>
+                                                                    <div class="col-xs-9">
+                                                                        <textarea class="form-control" name="RemovalOfAction3_6"></textarea>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <div class="row">
+                                                                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1-1">Responsible</label>
+                                                                    <div class="col-xs-8 col-sm-4">
+                                                                        <input type="text" name="Responsible3_6" class="form-control" />
+                                                                    </div>
+
+
+                                                                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1-1">Removed At</label>
+                                                                    <div class="col-xs-8 col-sm-4">
+                                                                        <input type="text" name="Removed_At3_6" class="form-control" />
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+
+                                                            <a id="1" href="#" onclick="DelDiv6_3(this)">删除</a>
+                                                        </div>
+                                                    
+                                                    }
+                                                </div>
+
+                                                <hr />
+
+                                                <div class="clearfix form-actions">
+                                                    <div class="col-md-offset-1 col-md-12">
+                                                        <button class="btn btn-info" type="button" onclick="Submitt6()">
+                                                            <i class="ace-icon fa fa-check bigger-110"></i>
+                                                            Submit
+                                                        </button>
+
+                                                        &nbsp; &nbsp; &nbsp;
+										<button class="btn" type="reset" onclick="Add6_1()">
+                                            <i class="ace-icon fa fa-undo bigger-110"></i>
+                                            D6 Introduction corrective action
+                                        </button>
+                                                        &nbsp; &nbsp; &nbsp;
+										<button class="btn" type="reset" onclick="Add6_2()">
+                                            <i class="ace-icon fa fa-undo bigger-110"></i>
+                                            D6 Validation action
+                                        </button>
+                                                        &nbsp; &nbsp; &nbsp;
+										<button class="btn" type="reset" onclick="Add6_3()">
+                                            <i class="ace-icon fa fa-undo bigger-110"></i>
+                                            D6 Removal containment  action
+                                        </button>
+
+                                                    </div>
+                                                </div>
+                                                
+                                            }
+
+                                            <script type="text/javascript">
+                                                function Submitt6() {
+                                                    var formobj = document.getElementById("form6");
+                                                    var formdata = new FormData(formobj);
+                                                    $.ajax({
+                                                        type: "post",
+                                                        //dataType: "json",
+                                                        "url": "@Url.Content("~/EightDReport/ReportD6Save/")",
+                                                        data: formdata,
+                                                        processData: false,
+                                                        contentType: false,
+                                                        async: false,
+                                                        success: function (data) {
+                                                            if (data.success == true) {
+                                                                alert(data.message);
+                                                            }
+                                                            else {
+                                                                alert(data.message);
+                                                            }
+                                                        },
+                                                        error: function (data) {
+                                                            alert(data.message);
+                                                        }
+                                                    });
+                                                    return flag;
+                                                }
+                                            </script>
+
+                                            <script type="text/javascript">
+                                                var count6_1 = $("#div6Data1").children().length + 1;
+
+                                                function Add6_1() {
+                                                    var html;
+
+                                                    html = "<div id=\"div6Data1_Childer_" + count6_1 + "\" >";
+                                                    html += "<div class=\"form-group\">";
+                                                    html += "<div class=\"row\">";
+                                                    html += "<label class=\"col-sm-3 control-label no-padding-left\" for=\"form-field-1-1\">Description of the action(s):</label>";
+                                                    html += "<div class=\"col-xs-9\">";
+                                                    html += "<textarea name=\"DescriptionOfAction1_6\" class=\"form-control\"></textarea>";
+                                                    html += "</div>";
+                                                    html += "</div>";
+                                                    html += "</div>";
+
+                                                    html += "<div class=\"form-group\">";
+                                                    html += "<div class=\"row\">";
+                                                    html += "<label class=\"col-sm-2 control-label no-padding-right\" for=\"form-field-1-1\">Responsible</label>";
+                                                    html += "<div class=\"col-xs-8 col-sm-4\">";
+                                                    html += "<input name=\"Responsible1_6\" type=\"text\" class=\"form-control\" />";
+                                                    html += "</div>";
+
+                                                    html += "<label class=\"col-sm-2 control-label no-padding-right\" for=\"form-field-1-1\">planned</label>";
+                                                    html += "<div class=\"col-xs-8 col-sm-4\">";
+                                                    html += "<input name=\"Planned1_6\" type=\"text\" class=\"form-control\" />";
+                                                    html += "</div>";
+
+                                                    html += "</div>";
+                                                    html += "</div>";
+
+                                                    html += "<div class=\"form-group\">";
+                                                    html += "<div class=\"row\">";
+                                                    html += "<label class=\"col-sm-2 control-label no-padding-right\" for=\"form-field-1-1\">introduced on</label>";
+                                                    html += "<div class=\"col-xs-8 col-sm-4\">";
+                                                    html += "<input name=\"Introduce_On1_6\" type=\"text\" class=\"form-control\" />";
+                                                    html += "</div>";
+                                                    html += "<label class=\"col-sm-2 control-label no-padding-right\" for=\"form-field-1-1\">effective from:</label>";
+                                                    html += "<div class=\"col-xs-8 col-sm-4\">";
+                                                    html += "<input name=\"Effective_From1_6\" type=\"text\" class=\"form-control\" />";
+                                                    html += "</div>";
+
+                                                    html += "</div>";
+                                                    html += "<a id=\"" + count6_1 + "\" href=\"#\" onclick=\"DelDiv6_1(this)\">删除</a>";
+                                                    html += "</div>";
+
+                                                    html += "</div>";
+
+                                                    count6_1 = count6_1 + 1;
+
+                                                    $("#div6Data1").append(html);
+                                                }
+
+                                                function DelDiv6_1(dom) {
+                                                    $("#div6Data1_Childer_" + dom.id).remove();
+                                                }
+
+                                            </script>
+
+                                            <script type="text/javascript">
+                                                var count6_2 = $("#div6Data2").children().length + 1;
+
+                                                function Add6_2() {
+                                                    var html;
+
+                                                    html = "<div id=\"div6Data2_Childer_" + count6_2 + "\" >";
+                                                    html += "<div class=\"form-group\">";
+                                                    html += "<div class=\"row\">";
+                                                    html += "<label class=\"col-sm-3 control-label no-padding-left\" for=\"form-field-1-1\">validation of effectiveness after implementation of corrective action(s):</label>";
+                                                    html += "<div class=\"col-xs-9\">";
+                                                    html += "<textarea name=\"ValidationOfAction2_6\" class=\"form-control\"></textarea>";
+                                                    html += "</div>";
+                                                    html += "</div>";
+                                                    html += "</div>";
+
+                                                    html += "<div class=\"form-group\">";
+                                                    html += "<div class=\"row\">";
+                                                    html += "<label class=\"col-sm-2 control-label no-padding-right\" for=\"form-field-1-1\">Responsible</label>";
+                                                    html += "<div class=\"col-xs-8 col-sm-4\">";
+                                                    html += "<input name=\"Responsible2_6\" type=\"text\" class=\"form-control\" />";
+                                                    html += "</div>";
+                                                    html += "<label class=\"col-sm-2 control-label no-padding-right\" for=\"form-field-1-1\">completed on</label>";
+                                                    html += "<div class=\"col-xs-8 col-sm-4\">";
+                                                    html += "<div class=\"input-group input-group-sm\">";
+                                                    html += "<input name=\"Completed_On2_6\" type=\"text\" class=\"form-control  date-picker\" />";
+                                                    html += "<span class=\"input-group-addon\">";
+                                                    html += "<i class=\"ace-icon fa fa-calendar\"></i>";
+                                                    html += "</span>";
+                                                    html += "</div>";
+                                                    html += "</div>";
+
+                                                    html += "</div>";
+                                                    html += "</div>";
+
+                                                    html += "<a id=\"" + count6_2 + "\" href=\"#\" onclick=\"DelDiv6_2(this)\">删除</a>";
+                                                    html += "</div>";
+
+                                                    count6_2 = count6_2 + 1;
+
+                                                    $("#div6Data2").append(html);
+
+                                                    dateInit();
+                                                }
+
+                                                function DelDiv6_2(dom) {
+                                                    $("#div6Data2_Childer_" + dom.id).remove();
+                                                }
+
+                                            </script>
+
+                                            <script type="text/javascript">
+                                                var count6_3 = $("#div6Data3").children().length + 1;
+
+                                                function Add6_3() {
+                                                    var html;
+
+                                                    html = "<div id=\"div6Data3_Childer_" + count6_3 + "\" >";
+                                                    html += "<div class=\"form-group\">";
+                                                    html += "<div class=\"row\">";
+                                                    html += "<label class=\"col-sm-3 control-label no-padding-left\" for=\"form-field-1-1\">Removal of containment action(s):</label>";
+                                                    html += "<div class=\"col-xs-9\">";
+                                                    html += "<textarea name=\"RemovalOfAction3_6\" class=\"form-control\"></textarea>";
+                                                    html += "</div>";
+                                                    html += "</div>";
+                                                    html += "</div>";
+
+                                                    html += "<div class=\"form-group\">";
+                                                    html += "<div class=\"row\">";
+                                                    html += "<label class=\"col-sm-2 control-label no-padding-right\" for=\"form-field-1-1\">Responsible</label>";
+                                                    html += "<div class=\"col-xs-8 col-sm-4\">";
+                                                    html += "<input name=\"Responsible3_6\" type=\"text\" class=\"form-control\" />";
+                                                    html += "</div>";
+                                                    html += "<label class=\"col-sm-2 control-label no-padding-right\" for=\"form-field-1-1\">Removed At</label>";
+                                                    html += "<div class=\"col-xs-8 col-sm-4\">";
+                                                    html += "<input name=\"Removed_At3_6\" type=\"text\" class=\"form-control\" />";
+                                                    html += "</div>";
+
+                                                    html += "</div>";
+                                                    html += "</div>";
+
+                                                    html += "<a id=\"" + count6_3 + "\" href=\"#\" onclick=\"DelDiv6_3(this)\">删除</a>";
+                                                    html += "</div>";
+
+                                                    count6_3 = count6_3 + 1;
+
+                                                    $("#div6Data3").append(html);
+
+                                                }
+
+                                                function DelDiv6_3(dom) {
+                                                    $("#div6Data3_Childer_" + dom.id).remove();
+                                                }
+
+                                            </script>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseEight">
+                                                <i class="ace-icon fa fa-angle-right bigger-110" data-icon-hide="ace-icon fa fa-angle-down" data-icon-show="ace-icon fa fa-angle-right"></i>
+                                                &nbsp;D7 Preventive action(s)
+                                            </a>
+                                        </h4>
+                                    </div>
+
+                                    <div class="panel-collapse collapse" id="collapseEight">
+                                        <div class="panel-body">
+
+                                            @using (Ajax.BeginForm("ReportD7Save", "EightDReport", null, new AjaxOptions() { HttpMethod = "Post", OnSuccess = "Back", OnComplete = "Back" }, new { id = "form7", enctype = "multipart/form-data", @class = "form-horizontal", role = "form" }))
+                                            {
+                                                @Html.AntiForgeryToken()
+                                                @Html.HiddenFor(m => m.ReportAssignGuid)
+                                                
+                                                <div id="div7DataList">
+                                                    @if (Model.ReportD7.D7DataList.Count > 0)
+                                                    {
+                                                        foreach (var item in Model.ReportD7.D7DataList)
+                                                        {
+                                                        <div id="div7Data_Childer_@item.Number">
+                                                            <div class="form-group">
+                                                                <div class="row">
+                                                                    <label class="col-sm-3 control-label no-padding-left" for="form-field-1-1">Improvement of QM-System(FMEA,Process instruction, Control Plan ...):</label>
+                                                                    <div class="col-xs-9">
+                                                                        <textarea name="ImprovementOfQM7" class="form-control">@item.ImprovementOfQM</textarea>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <div class="row">
+                                                                    <label class="col-sm-1 control-label no-padding-right" for="form-field-1-1">Responsible</label>
+                                                                    <div class="col-xs-8 col-sm-3">
+                                                                        <input type="text" name="Responsible7" class="form-control" value="@item.Responsible" />
+                                                                    </div>
+
+                                                                    <label class="col-sm-1 control-label no-padding-right" for="form-field-1-1">planned:</label>
+                                                                    <div class="col-xs-8 col-sm-3">
+                                                                        <input type="text" name="Planed7" class="form-control" value="@item.Planed" />
+                                                                    </div>
+
+
+                                                                    <label class="col-sm-1 control-label no-padding-right" for="form-field-1-1">completed on</label>
+                                                                    <div class="col-xs-8 col-sm-3">
+                                                                        <div class="input-group input-group-sm">
+                                                                            <input type="text" name="Completed_On7" class="form-control date-picker" value="@item.Completed_On"  />
+                                                                            <span class="input-group-addon">
+                                                                                <i class="ace-icon fa fa-calendar"></i>
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+
+                                                            <a id="@item.Number" href="#" onclick="DelDiv7_1(this)">删除</a>
+                                                        </div>
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        <div id="div7Data_Childer_1">
+                                                            <div class="form-group">
+                                                                <div class="row">
+                                                                    <label class="col-sm-3 control-label no-padding-left" for="form-field-1-1">Improvement of QM-System(FMEA,Process instruction, Control Plan ...):</label>
+                                                                    <div class="col-xs-9">
+                                                                        <textarea name="ImprovementOfQM7" class="form-control"></textarea>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <div class="row">
+                                                                    <label class="col-sm-1 control-label no-padding-right" for="form-field-1-1">Responsible</label>
+                                                                    <div class="col-xs-8 col-sm-3">
+                                                                        <input type="text" name="Responsible7" class="form-control" />
+                                                                    </div>
+
+                                                                    <label class="col-sm-1 control-label no-padding-right" for="form-field-1-1">planned:</label>
+                                                                    <div class="col-xs-8 col-sm-3">
+                                                                        <input type="text" name="Planed7" class="form-control" />
+                                                                    </div>
+
+
+                                                                    <label class="col-sm-1 control-label no-padding-right" for="form-field-1-1">completed on</label>
+                                                                    <div class="col-xs-8 col-sm-3">
+                                                                        <div class="input-group input-group-sm">
+                                                                            <input type="text" name="Completed_On7" class="form-control date-picker" />
+                                                                            <span class="input-group-addon">
+                                                                                <i class="ace-icon fa fa-calendar"></i>
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+
+                                                            <a id="1" href="#" onclick="DelDiv7_1(this)">删除</a>
+                                                        </div>
+                                                    }
+                                                </div>
+                                                <hr />
+
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <label class="col-sm-7 control-label no-padding-left" for="form-field-1-1">Transfer of Corrective Action(s) to other Processes Products,Locations</label>
+                                                        <label class="col-sm-7 control-label no-padding-left" for="form-field-1-1">Cloud the root cause affect other processes, products or sites?</label>
+                                                        <div class="col-xs-3">
+                                                            <label>
+
+                                                                @*<input name="switch-field-1" class="ace ace-switch ace-switch-5" type="checkbox" />*@
+
+                                                                @Html.CheckBoxFor(m => m.ReportD7.IsRootCause, new { @class = "ace ace-switch ace-switch-5" })
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <label class="col-sm-6 control-label no-padding-left" for="form-field-1-1">Which department or networks were informed (e.g.Lessons Learned Coordinators)</label>
+                                                        <div class="col-xs-12">
+                                                            @Html.TextAreaFor(m => m.ReportD7.IfYes, new { @class = "form-control" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <label class="col-sm-6 control-label no-padding-left" for="form-field-1-1">If no: Why don't you expect other processes, products or sites to be concerned?</label>
+                                                        <div class="col-xs-12">
+                                                            @Html.TextAreaFor(m => m.ReportD7.IfNo, new { @class = "form-control" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <hr />
+
+                                                <div class="clearfix form-actions">
+                                                    <div class="col-md-offset-3 col-md-9">
+                                                        <button class="btn btn-info" type="button" onclick="Submitt7()">
+                                                            <i class="ace-icon fa fa-check bigger-110"></i>
+                                                            Submit
+                                                        </button>
+
+                                                        &nbsp; &nbsp; &nbsp;
+										<button class="btn" type="reset" onclick="Add7()">
+                                            <i class="ace-icon fa fa-undo bigger-110"></i>
+                                            Add D7 Preventive Action
+                                        </button>
+                                                    </div>
+                                                </div>
+
+
+                                            }
+
+                                            <script type="text/javascript">
+                                                function Submitt7() {
+
+                                                    var formobj = document.getElementById("form7");
+                                                    var formdata = new FormData(formobj);
+
+                                                    $.ajax({
+                                                        type: "post",
+                                                        //dataType: "json",
+                                                        "url": "@Url.Content("~/EightDReport/ReportD7Save/")",
+                                                        data: formdata,
+                                                        processData: false,
+                                                        contentType: false,
+                                                        async: false,
+                                                        //jsonp: 'callback',
+                                                        //jsonpCallback: 'callbackReportCreate',
+                                                        success: function (data) {
+                                                            if (data.success == true) {
+                                                                alert(data.message);
+                                                            }
+                                                            else {
+                                                                alert(data.message);
+                                                            }
+                                                        },
+                                                        error: function (data) {
+                                                            alert(data.message);
+                                                        }
+                                                    });
+                                                    return flag;
+                                                }
+                                            </script>
+                                            <script type="text/javascript">
+                                                var count7 = $("#div7DataList").children().length + 1;
+                                                function Add7() {
+                                                    var html;
+                                                    html = "<div id=\"div7Data_Childer_" + count7 + "\" >";
+
+                                                    html += "<div class=\"form-group\">";
+                                                    html += "<div class=\"row\">";
+                                                    html += "<label class=\"col-sm-3 control-label no-padding-left\" for=\"form-field-1-1\">Improvement of QM-System(FMEA,Process instruction, Control Plan ...):</label>";
+                                                    html += "<div class=\"col-xs-9\">";
+                                                    html += "<textarea class=\"form-control\" name=\"ImprovementOfQM7\" ></textarea>";
+                                                    html += "</div>";
+                                                    html += "</div>";
+                                                    html += "</div>";
+
+                                                    html += "<div class=\"form-group\">";
+                                                    html += "<div class=\"row\">";
+
+                                                    html += "<label class=\"col-sm-1 control-label no-padding-right\" for=\"form-field-1-1\">Responsible</label>";
+                                                    html += "<div class=\"col-xs-8 col-sm-3\">";
+                                                    html += "<input type=\"text\" name=\"Responsible7\" class=\"form-control\" />";
+                                                    html += "</div>";
+
+                                                    html += "<label class=\"col-sm-1 control-label no-padding-right\" for=\"form-field-1-1\">planned:</label>";
+                                                    html += "<div class=\"col-xs-8 col-sm-3\">";
+                                                    html += "<input type=\"text\" name=\"Planed7\" class=\"form-control\" />";
+                                                    html += "</div>";
+
+                                                    html += "<label class=\"col-sm-1 control-label no-padding-right\" for=\"form-field-1-1\">completed on</label>";
+                                                    html += "<div class=\"col-xs-8 col-sm-3\">";
+                                                    html += "<div class=\"input-group input-group-sm\">";
+                                                    html += "<input type=\"text\" name=\"Completed_On7\" class=\"form-control date-picker\" />";
+                                                    html += "<span class=\"input-group-addon\">";
+                                                    html += "<i class=\"ace-icon fa fa-calendar\"></i>";
+                                                    html += "</span>";
+                                                    html += "</div>";
+                                                    html += "</div>";
+
+                                                    html += "</div>";
+                                                    html += "</div>";
+
+                                                    html += "<a id=\"" + count7 + "\" href=\"#\" onclick=\"DelDiv7_1(this)\">删除</a>";
+
+                                                    html += "</div>";
+
+                                                    count7 = count7 + 1;
+                                                    $("#div7DataList").append(html);
+
+                                                    dateInit();
+                                                }
+
+                                                function DelDiv7_1(dom) {
+                                                    $("#div7Data_Childer_" + dom.id).remove();
+                                                }
+
+                                            </script>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseNine">
+                                                <i class="ace-icon fa fa-angle-right bigger-110" data-icon-hide="ace-icon fa fa-angle-down" data-icon-show="ace-icon fa fa-angle-right"></i>
+                                                &nbsp;D8 Final Meeting
+                                            </a>
+                                        </h4>
+                                    </div>
+
+                                    <div class="panel-collapse collapse" id="collapseNine">
+                                        <div class="panel-body">
+                                             @using (Ajax.BeginForm("ReportD8Save", "EightDReport", null, new AjaxOptions() { HttpMethod = "Post", OnSuccess = "Back", OnComplete = "Back" }, new { id = "form8", enctype = "multipart/form-data", @class = "form-horizontal", role = "form" }))
+                                            {
+                                                @Html.AntiForgeryToken()
+                                                @Html.HiddenFor(m => m.ReportAssignGuid)
+                                                
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <label class="col-sm-2 control-label no-padding-left" for="form-field-1-1">Participants</label>
+                                                        <div class="col-xs-9">
+                                                            @Html.TextBoxFor(m => m.ReportD8.Participants, new { @class = "form-control" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <label class="col-sm-2 control-label no-padding-left" for="form-field-1-1">accomplished at:</label>
+                                                        <div class="col-xs-9">
+                                                            @Html.TextBoxFor(m => m.ReportD8.AccomplishedAt, new { @class = "form-control" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <label class="col-sm-1 control-label no-padding-left" for="form-field-1-1">Reuslts:</label>
+                                                        <div class="col-xs-10">
+                                                            @Html.TextAreaFor(m => m.ReportD8.Results, new { @class = "form-control" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <hr />
+
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <label class="col-sm-2 control-label no-padding-right" for="form-field-1-1">Signatures:</label>
+                                                    </div>
+                                                </div>
+
+                                                <div id="div8">
+                                                    @if (Model.ReportD8Sign.Count > 0)
+                                                    {
+                                                        foreach (var item in Model.ReportD8Sign)
+                                                        {
+                                                            <div id="div8Data_Childer_@item.Number">
+                                                            <div class="form-group">
+                                                                <div class="row">
+                                                                    <input type="hidden" name="SignatureGuid8"  value="@item.ReportD8Guid.ToString()"/>
+                                                                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1-1">Sponsor Name:</label>
+                                                                    <div class="col-xs-8 col-sm-3">
+
+                                                                        <input type="text" name="SponsorName8" class="form-control" value="@item.SponsorName" />
+                                                                        <!-- /section:plugins/date-time.datepicker -->
+                                                                    </div>
+
+                                                                    <label class="col-sm-1 control-label no-padding-right" for="form-field-1-1">Date:</label>
+                                                                    <div class="col-xs-8 col-sm-2">
+                                                                        <div class="input-group input-group-sm">
+                                                                            <input type="text" name="SignatureDate8" value="@item.SignatureDate" class="form-control date-picker" />
+                                                                            <span class="input-group-addon">
+                                                                                <i class="ace-icon fa fa-calendar"></i>
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+
+
+                                                                    <label class="col-sm-1 control-label no-padding-right" for="form-field-1-1">Signature:</label>
+                                                                    <div class="col-xs-8 col-sm-2">
+                                                                        <input type="text" name="Signature8" value="@item.Signature" class="form-control" />
+                                                                    </div>
+
+                                                                        @*<a id="@item.Number" href="#" onclick="DelDiv8_1(this)">删除</a>*@
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        }
+                                                    }
+                                                    else
+                                                    { 
+                                                        <div id="div8Data_Childer_1">
+                                                            <div class="form-group">
+                                                                <div class="row">
+                                                                    <input type="hidden" name="SignatureGuid8"  />
+                                                                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1-1">Sponsor Name:</label>
+                                                                    <div class="col-xs-8 col-sm-3">
+
+                                                                        <input type="text" name="SponsorName8" class="form-control" />
+                                                                        <!-- /section:plugins/date-time.datepicker -->
+                                                                    </div>
+
+                                                                    <label class="col-sm-1 control-label no-padding-right" for="form-field-1-1">Date:</label>
+                                                                    <div class="col-xs-8 col-sm-2">
+                                                                        <div class="input-group input-group-sm">
+                                                                            <input type="text" name="SignatureDate8" class="form-control date-picker" />
+                                                                            <span class="input-group-addon">
+                                                                                <i class="ace-icon fa fa-calendar"></i>
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+
+
+                                                                    <label class="col-sm-1 control-label no-padding-right" for="form-field-1-1">Signature:</label>
+                                                                    <div class="col-xs-8 col-sm-2">
+                                                                        <input type="text" name="Signature8" class="form-control" />
+                                                                    </div>
+
+                                                                    <a id="1" href="#" onclick="DelDiv8_1(this)">删除</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    }
+
+                                                </div>
+
+                                                <hr />
+
+                                                <div class="clearfix form-actions">
+                                                    <div class="col-md-offset-3 col-md-9">
+                                                        <button class="btn btn-info" type="button" onclick="Submitt8()">
+                                                            <i class="ace-icon fa fa-check bigger-110"></i>
+                                                            Submit
+                                                        </button>
+
+                                                        &nbsp; &nbsp; &nbsp;
+										<button class="btn" type="reset" onclick="Add8()">
+                                            <i class="ace-icon fa fa-undo bigger-110"></i>
+                                            Signature
+                                        </button>
+                                                    </div>
+                                                </div>
+
+                                             }
+
+                                             <script type="text/javascript">
+                                                 function Submitt8() {
+
+                                                     var formobj = document.getElementById("form8");
+                                                     var formdata = new FormData(formobj);
+
+                                                     $.ajax({
+                                                         type: "post",
+                                                         //dataType: "json",
+                                                         "url": "@Url.Content("~/EightDReport/ReportD8Save/")",
+                                                        data: formdata,
+                                                        processData: false,
+                                                        contentType: false,
+                                                        async: false,
+                                                        //jsonp: 'callback',
+                                                        //jsonpCallback: 'callbackReportCreate',
+                                                        success: function (data) {
+                                                            if (data.success == true) {
+                                                                alert(data.message);
+                                                            }
+                                                            else {
+                                                                alert(data.message);
+                                                            }
+                                                        },
+                                                        error: function (data) {
+                                                            alert(data.message);
+                                                        }
+                                                    });
+                                                    return flag;
+                                                }
+                                            </script>
+                                            <script type="text/javascript">
+                                                var count8 = $("#div8").children().length + 1;
+                                                function Add8() {
+                                                    var html;
+                                                    html = "<div id=\"div8Data_Childer_" + count8 + "\" >";
+
+                                                    html += "<div class=\"form-group\">";
+                                                    html += "<div class=\"row\">";
+                                                   
+                                                    html += "<input type=\"hidden\" name=\"SignatureGuid8\"  />";
+                                                    html += "<label class=\"col-sm-2 control-label no-padding-right\" for=\"form-field-1-1\">Sponsor Name:</label>";
+                                                    html += "<div class=\"col-xs-8 col-sm-3\">";
+
+                                                    html += "<input type=\"text\" name=\"SponsorName8\" class=\"form-control\" />";
+                                                    html += "</div>";
+
+                                                    html += "<label class=\"col-sm-1 control-label no-padding-right\" for=\"form-field-1-1\">Date:</label>";
+                                                    html += "<div class=\"col-xs-8 col-sm-2\">";
+                                                    html += "<div class=\"input-group input-group-sm\">";
+                                                    html += "<input type=\"text\" name=\"SignatureDate8\" class=\"form-control date-picker\" />";
+                                                    html += "<span class=\"input-group-addon\">";
+                                                    html += "<i class=\"ace-icon fa fa-calendar\"></i>";
+                                                    html += "</span>";
+                                                    html += "</div>";
+                                                    html += "</div>";
+
+                                                    html += "<label class=\"col-sm-1 control-label no-padding-right\" for=\"form-field-1-1\">Signature:</label>";
+                                                    html += "<div class=\"col-xs-8 col-sm-2\">";
+                                                    html += "<input type=\"text\" name=\"Signature8\" class=\"form-control\" />";
+                                                    html += "</div>";
+
+                                                    html += "<a id=\"" + count8 + "\" href=\"#\" onclick=\"DelDiv8_1(this)\">删除</a>";
+                                                    html += "</div>";
+                                                    html += "</div>";
+
+                                                    html += "</div>";
+
+                                                    count8 = count8 + 1;
+                                                    $("#div8").append(html);
+
+                                                    dateInit();
+                                                }
+
+                                                function DelDiv8_1(dom) {
+                                                    $("#div8Data_Childer_" + dom.id).remove();
+                                                }
+
+                                            </script>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+
+                        <div id="profile" class="tab-pane">
+                            <div class="panel-body">
+                                <form class="form-horizontal" role="form">
+
+                                    <!-- #section:elements.form -->
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <label class="col-sm-2 control-label no-padding-left" for="form-field-1-1">Team Leader*</label>
+                                            <div class="col-xs-9">
+                                                <input type="text" id="Text61" placeholder="Text Field" class="form-control" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <label class="col-sm-2 control-label no-padding-left" for="form-field-1-1">Sponsor*</label>
+                                            <div class="col-xs-9">
+                                                <input type="text" id="Text62" placeholder="Text Field" class="form-control" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <label class="col-sm-2 control-label no-padding-left" for="form-field-1-1">Additional Approver:</label>
+                                            <div class="col-xs-9">
+                                                <textarea class="form-control" id="Textarea15" placeholder="Default Text"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <label class="col-sm-2 control-label no-padding-left" for="form-field-1-1">Comments</label>
+                                            <div class="col-xs-9">
+                                                <input type="text" id="Text63" placeholder="Text Field" class="form-control" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <hr />
+
+
+                                    <div class="clearfix form-actions">
+                                        <div class="col-md-offset-3 col-md-9">
+                                            <button class="btn btn-info" type="button">
+                                                <i class="ace-icon fa fa-check bigger-110"></i>
+                                                Submit
+                                            </button>
+
+                                            &nbsp; &nbsp; &nbsp;
+										<button class="btn" type="reset">
+                                            <i class="ace-icon fa fa-undo bigger-110"></i>
+                                            Reset
+                                        </button>
+                                        </div>
+                                    </div>
+
+
+                                </form>
+                            </div>
+                        </div>
+
+
+                        <div id="dropdown1" class="tab-pane">
+                            <div class="table-responsive">
+                                <table id="sample-table-2" class="table table-striped table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Action Token</th>
+                                            <th>Approvel</th>
+                                            <th>Status</th>
+                                            <th class="hidden-480">New Status</th>
+                                            <th>
+                                                <i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>
+                                                Date/time
+                                            </th>
+                                            <th class="hidden-480">Comment</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <tr>
+                                            <td class="center">
+                                                <div class="btn-group ">
+                                                    Send Request
+                                                </div>
+                                            </td>
+
+                                            <td>
+                                                <a href="#">Zhao Xiaolan</a>
+                                            </td>
+                                            <td>New</td>
+                                            <td class="hidden-480">Pending Sponesor Approval</td>
+                                            <td>2015-01-01 13:12:29</td>
+
+                                            <td class="hidden-480">
+                                                <span class="label label-sm label-warning">Expiring</span>
+                                            </td>
+
+                                        </tr>
+
+                                        <tr>
+                                            <td class="center">
+                                                <div class="btn-group ">
+                                                    Send Request
+                                                </div>
+                                            </td>
+
+                                            <td>
+                                                <a href="#">Zhao Xiaolan</a>
+                                            </td>
+                                            <td>New</td>
+                                            <td class="hidden-480">Pending Sponesor Approval</td>
+                                            <td>2015-01-01 13:12:29</td>
+
+                                            <td class="hidden-480">
+                                                <span class="label label-sm label-warning">Expiring</span>
+                                            </td>
+
+                                        </tr>
+
+                                        <tr>
+                                            <td class="center">
+                                                <div class="btn-group ">
+                                                    Send Request
+                                                </div>
+                                            </td>
+
+                                            <td>
+                                                <a href="#">Zhao Xiaolan</a>
+                                            </td>
+                                            <td>New</td>
+                                            <td class="hidden-480">Pending Sponesor Approval</td>
+                                            <td>2015-01-01 13:12:29</td>
+
+                                            <td class="hidden-480">
+                                                <span class="label label-sm label-warning">Expiring</span>
+                                            </td>
+
+                                        </tr>
+
+                                        <tr>
+                                            <td class="center">
+                                                <div class="btn-group ">
+                                                    Send Request
+                                                </div>
+                                            </td>
+
+                                            <td>
+                                                <a href="#">Zhao Xiaolan</a>
+                                            </td>
+                                            <td>New</td>
+                                            <td class="hidden-480">Pending Sponesor Approval</td>
+                                            <td>2015-01-01 13:12:29</td>
+
+                                            <td class="hidden-480">
+                                                <span class="label label-sm label-warning">Expiring</span>
+                                            </td>
+
+                                        </tr>
+
+                                        <tr>
+                                            <td class="center">
+                                                <div class="btn-group ">
+                                                    Send Request
+                                                </div>
+                                            </td>
+
+                                            <td>
+                                                <a href="#">Zhao Xiaolan</a>
+                                            </td>
+                                            <td>New</td>
+                                            <td class="hidden-480">Pending Sponesor Approval</td>
+                                            <td>2015-01-01 13:12:29</td>
+
+                                            <td class="hidden-480">
+                                                <span class="label label-sm label-warning">Expiring</span>
+                                            </td>
+
+                                        </tr>
+
+                                        <tr>
+                                            <td class="center">
+                                                <div class="btn-group ">
+                                                    Send Request
+                                                </div>
+                                            </td>
+
+                                            <td>
+                                                <a href="#">Zhao Xiaolan</a>
+                                            </td>
+                                            <td>New</td>
+                                            <td class="hidden-480">Pending Sponesor Approval</td>
+                                            <td>2015-01-01 13:12:29</td>
+
+                                            <td class="hidden-480">
+                                                <span class="label label-sm label-warning">Expiring</span>
+                                            </td>
+
+                                        </tr>
+
+                                        <tr>
+                                            <td class="center">
+                                                <div class="btn-group ">
+                                                    Send Request
+                                                </div>
+                                            </td>
+
+                                            <td>
+                                                <a href="#">Zhao Xiaolan</a>
+                                            </td>
+                                            <td>New</td>
+                                            <td class="hidden-480">Pending Sponesor Approval</td>
+                                            <td>2015-01-01 13:12:29</td>
+
+                                            <td class="hidden-480">
+                                                <span class="label label-sm label-warning">Expiring</span>
+                                            </td>
+
+                                        </tr>
+
+                                        <tr>
+                                            <td class="center">
+                                                <div class="btn-group ">
+                                                    Send Request
+                                                </div>
+                                            </td>
+
+                                            <td>
+                                                <a href="#">Zhao Xiaolan</a>
+                                            </td>
+                                            <td>New</td>
+                                            <td class="hidden-480">Pending Sponesor Approval</td>
+                                            <td>2015-01-01 13:12:29</td>
+
+                                            <td class="hidden-480">
+                                                <span class="label label-sm label-warning">Expiring</span>
+                                            </td>
+
+                                        </tr>
+
+                                        <tr>
+                                            <td class="center">
+                                                <div class="btn-group ">
+                                                    Send Request
+                                                </div>
+                                            </td>
+
+                                            <td>
+                                                <a href="#">Zhao Xiaolan</a>
+                                            </td>
+                                            <td>New</td>
+                                            <td class="hidden-480">Pending Sponesor Approval</td>
+                                            <td>2015-01-01 13:12:29</td>
+
+                                            <td class="hidden-480">
+                                                <span class="label label-sm label-warning">Expiring</span>
+                                            </td>
+
+                                        </tr>
+
+                                        <tr>
+                                            <td class="center">
+                                                <div class="btn-group ">
+                                                    Send Request
+                                                </div>
+                                            </td>
+
+                                            <td>
+                                                <a href="#">Zhao Xiaolan</a>
+                                            </td>
+                                            <td>New</td>
+                                            <td class="hidden-480">Pending Sponesor Approval</td>
+                                            <td>2015-01-01 13:12:29</td>
+
+                                            <td class="hidden-480">
+                                                <span class="label label-sm label-warning">Expiring</span>
+                                            </td>
+
+                                        </tr>
+
+                                        <tr>
+                                            <td class="center">
+                                                <div class="btn-group ">
+                                                    Send Request
+                                                </div>
+                                            </td>
+
+                                            <td>
+                                                <a href="#">Zhao Xiaolan</a>
+                                            </td>
+                                            <td>New</td>
+                                            <td class="hidden-480">Pending Sponesor Approval</td>
+                                            <td>2015-01-01 13:12:29</td>
+
+                                            <td class="hidden-480">
+                                                <span class="label label-sm label-warning">Expiring</span>
+                                            </td>
+
+                                        </tr>
+
+                                        <tr>
+                                            <td class="center">
+                                                <div class="btn-group ">
+                                                    Send Request
+                                                </div>
+                                            </td>
+
+                                            <td>
+                                                <a href="#">Zhao Xiaolan</a>
+                                            </td>
+                                            <td>New</td>
+                                            <td class="hidden-480">Pending Sponesor Approval</td>
+                                            <td>2015-01-01 13:12:29</td>
+
+                                            <td class="hidden-480">
+                                                <span class="label label-sm label-warning">Expiring</span>
+                                            </td>
+
+                                        </tr>
+
+
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+
+                        <!-- <div id="dropdown1" class="tab-pane">
+                                    <p>Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo retro fanny pack lo-fi farm-to-table readymade.</p>
+                                </div>
+
+                                <div id="dropdown2" class="tab-pane">
+                                    <p>Trust fund seitan letterpress, keytar raw denim keffiyeh etsy art party before they sold out master cleanse gluten-free squid scenester freegan cosby sweater. Fanny pack portland seitan DIY, art party locavore wolf cliche high life echo park Austin.</p>
+                                </div>-->
+                    </div>
+                </div>
+
+                <!-- /section:elements.tab -->
+            </div>
+            <!-- /.col -->
+
+            <div class="vspace-6-sm"></div>
+
+        </div>
+    </div>
+
+    <div class="table-responsive">
+    </div>
+</div>
+
+@*<script src="../../assets/js/jquery.min.js"></script>
+<script src="../../assets/js/bootstrap.min.js"></script>*@
+
+<script src="@Url.Content("~/Contents/assets/js/date-time/bootstrap-datepicker.min.js")"></script>
+<script src="@Url.Content("~/Contents/assets/js/date-time/daterangepicker.min.js")"></script>
+
+<script src="@Url.Content("~/Contents/assets/js/date-time/bootstrap-datepicker.min.js")"></script>
+<script src="@Url.Content("~/Contents/assets/js/date-time/bootstrap-timepicker.min.js")"></script>
+<script src="@Url.Content("~/Contents/assets/js/date-time/moment.min.js")"></script>
+<script src="@Url.Content("~/Contents/assets/js/date-time/daterangepicker.min.js")"></script>
+<script src="@Url.Content("~/Contents/assets/js/date-time/bootstrap-datetimepicker.min.js")"></script>
+
+<script src="@Url.Content("~/Contents/assets/js/jquery.dataTables.min.js")"></script>
+<script src="@Url.Content("~/Contents/assets/js/jquery.dataTables.bootstrap.js")"></script>
+
+
+<script type="text/javascript">
+    jQuery(function ($) {
+
+        var oTable1 = $('#sample-table-2').dataTable({
+            bAutoWidth: false,
+            bLengthChange: false, //关闭每页显示多少条数据
+            bFilter: false, //过滤功能
+            "aoColumns": [
+              { "bSortable": false },
+              null, null, null, null,
+              { "bSortable": false }
+            ]
+        })
+
+        dateInit();
+
+        var tag_input = $('#form-field-tags');
+        try {
+            tag_input.tag(
+              {
+                  placeholder: tag_input.attr('placeholder'),
+                  //enable typeahead by specifying the source array
+                  source: ace.vars['US_STATES'],//defined in ace.js >> ace.enable_search_ahead
+                  /**
+                  //or fetch data from database, fetch those that match "query"
+                  source: function(query, process) {
+                    $.ajax({url: 'remote_source.php?q='+encodeURIComponent(query)})
+                    .done(function(result_items){
+                      process(result_items);
+                    });
+                  }
+                  */
+              }
+            );
+
+            //programmatically add a new
+            var $tag_obj = $('#form-field-tags').data('tag');
+            $tag_obj.add('Programmatically Added');
+        }
+        catch (e) {
+            //display a textarea for old IE, because it doesn't support this plugin or another one I tried!
+            tag_input.after('<textarea id="' + tag_input.attr('id') + '" name="' + tag_input.attr('name') + '" rows="3">' + tag_input.val() + '</textarea>').remove();
+            //$('#form-field-tags').autosize({append: "\n"});
+        }
+
+    });
+
+    function dateInit() {
+        //datepicker plugin
+        //link
+        $('.date-picker').datepicker({
+            autoclose: true,
+            todayHighlight: true
+        })
+        //show datepicker when clicking on the icon
+        .next().on(ace.click_event, function () {
+            $(this).prev().focus();
+        });
+
+        //or change it into a date range picker
+        $('.input-daterange').datepicker({
+            autoclose: true
+        });
+    }
+</script>
