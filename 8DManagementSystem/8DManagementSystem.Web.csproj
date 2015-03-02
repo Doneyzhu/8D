@@ -124,6 +124,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LanguageController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\ReportApproveController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\UserCenterController.cs" />
     <Compile Include="Filter\LoginFilter.cs" />
@@ -135,6 +136,7 @@
     <Compile Include="Models\MvcSiteMap.cs" />
     <Compile Include="Models\ReportAssignModel.cs" />
     <Compile Include="Models\ReportListQueryModel.cs" />
+    <Compile Include="Models\Report_WorkFlow_Log_Model.cs" />
     <Compile Include="Models\RolePermissionModel.cs" />
     <Compile Include="Models\UserLanguageModel.cs" />
     <Compile Include="Models\UserModel.cs" />
@@ -360,6 +362,8 @@
     <Content Include="Views\DataDictionary\DictionaryEdit.cshtml" />
     <Content Include="Views\EightDReport\ReportEdit.cshtml" />
     <Content Include="Views\Board\Board_User_Role_Edit.cshtml" />
+    <Content Include="Views\ReportApprove\Approve.cshtml" />
+    <Content Include="Views\ReportApprove\CancelApprove.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Web_ZH_CN.sitemap" />

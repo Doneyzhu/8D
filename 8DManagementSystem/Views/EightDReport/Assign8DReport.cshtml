@@ -29,7 +29,47 @@
     </div>
 </div>
 <script src="@Url.Content("~/Contents/assets/js/jquery.form.js")"></script>
-<script src="@Url.Content("~/Contents/assets/js/jquery.unobtrusive-ajax.min.js")"></script>
+<script src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.min.js")"></script>
+<script type="text/javascript">
+    jQuery(function ($) {
+        $("#ReportOwner").blur(function () {
+            var owner = $("#ReportOwner");
+            var jsondata = JSON.stringify({ "UserLoginNames": owner.val() });
+            checkUser(owner, jsondata);
+        });
+
+        $("#ResponsibleQE").blur(function () {
+            var owner = $("#ResponsibleQE");
+            var jsondata = JSON.stringify({ "UserLoginNames": owner.val() });
+            checkUser(owner, jsondata);
+        });
+    });
+
+    function checkUser(control, jsondata) {
+        $.ajax({
+            type: "post",
+            //contentType: "application/json",
+            dataType: "json",
+            "url": "@Url.Content("~/UserCenter/CheckUser/")",
+            data: jsondata,
+            processData: false,
+            async: false,
+            success: function (data) {
+                if (data.success == true) {
+                    control.val(data.message);
+                }
+                else {
+                    alert(data.message);
+                    control.val("");
+                }
+            },
+            error: function (data) {
+                alert(data.message);
+            }
+        });
+    }
+</script>
+
 <script type="text/javascript">
     function Submitt() {
 

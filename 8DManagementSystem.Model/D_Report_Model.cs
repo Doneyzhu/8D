@@ -19,6 +19,8 @@ namespace _8DManagementSystem.Model
         {
             ReportD2 = new D_ReportD2_Model();
             ReportD8DataModels = new List<D_ReportD8_Model>();
+            WorkFlow_Models = new List<D_WorkFlow_Model>();
+            WorkFlowLog_Models = new List<D_WorkFlowLog_Model>();
         }
 
         /// <summary>
@@ -200,10 +202,39 @@ namespace _8DManagementSystem.Model
         virtual public IList<D_ReportD8_Model> ReportD8DataModels { get; set; }
 
         /// <summary>
+        /// 相关工作流程
+        /// </summary>
+        [Bag(0, Table = "EightD_WorkFlow", OrderBy = "CreateDateTime ASC")]
+        [Key(1, Column = "ReportGuid")]
+        [OneToMany(2, ClassType = typeof(D_WorkFlow_Model))]
+        virtual public IList<D_WorkFlow_Model> WorkFlow_Models { get; set; }
+
+        /// <summary>
+        /// 相关工作流程日志
+        /// </summary>
+        [Bag(0, Table = "EightD_WorkFlowLog", OrderBy = "CreateDateTime ASC")]
+        [Key(1, Column = "ReportGuid")]
+        [OneToMany(2, ClassType = typeof(D_WorkFlowLog_Model))]
+        virtual public IList<D_WorkFlowLog_Model> WorkFlowLog_Models { get; set; }
+
+        /// <summary>
         /// 是否已删除
         /// </summary>
         [Property()]
         virtual public bool DataStatus { get; set; }
+
+        /// <summary>
+        /// ReportStatus
+        /// </summary>
+        [Property()]
+        virtual public int ReportStatus { get; set; }
+
+        /// <summary>
+        /// ReportCancelStatus
+        /// </summary>
+        [Property()]
+        virtual public int ReportCancelStatus { get; set; }
+
 
     }
 }

@@ -55,6 +55,8 @@
     <Compile Include="D_User_DAL.cs" />
     <Compile Include="DBHelper\DbSession.cs" />
     <Compile Include="DBHelper\NHibernateHelper.cs" />
+    <Compile Include="D_WorkFlowLog_DAL.cs" />
+    <Compile Include="D_WorkFlow_DAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

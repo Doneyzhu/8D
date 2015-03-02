@@ -52,5 +52,11 @@ namespace _8DManagementSystem.Model
         /// </summary>
         [Property(Type = "StringClob")]
         virtual public string Comments { get; set; }
+
+        /// <summary>
+        /// 创建时间
+        /// </summary>
+        [Property()]
+        virtual public DateTime? CreateDateTime { get; set; }
     }
 }

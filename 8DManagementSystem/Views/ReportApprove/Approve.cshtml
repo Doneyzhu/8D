@@ -1,0 +1,120 @@
+﻿@model _8DManagementSystem.Models.Report_WorkFlow_Log_Model
+
+@{
+    ViewBag.Title = "Approve";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<ol class="breadcrumb">
+    <li><a href="@Url.Content("~/Home/")">Home</a></li>
+    <li><a href="@Url.Content("~/EightDReport/")">8D Workflow</a></li>
+    <li class="active">Report Approve</li>
+</ol>
+
+
+<script src="@Url.Content("~/Scripts/jquery.form.js")"></script>
+<script type="text/javascript">
+    function Submitt(type) {
+        var flag = false;
+        alert(type);
+        debugger;
+        var formobj = document.getElementById("form0");
+
+        var item = document.createElement('div');
+        item.innerHTML = "<input type=\"hidden\" name=\"type\" value=\"" + type + "\"/>";
+
+        formobj.appendChild(item);
+
+        var formdata = new FormData(formobj);
+
+        $.ajax({
+            type: "post",
+            //dataType: "json",
+            "url": "@Url.Content("~/ReportApprove/Approve/")",
+            data: formdata,
+            processData: false,
+            contentType: false,
+            async: false,
+            success: function (data) {
+                if (data.success == true) {
+                    window.location.href ="../../EightDReport/";
+                }
+                else {
+                    alert(data.message);
+                }
+            },
+            error: function (data) {
+                alert(data.message);
+            }
+        });
+        return flag;
+    }
+
+</script>
+
+<div class="alert alert-success" role="alert">
+    Well done! You successfully read this important alert message. 这是一个DEMO
+</div>
+
+<div class="panel panel-info">
+    <div class="panel-heading">
+        @*<button type="button" class="btn btn-primary">
+          <span class="glyphicon glyphicon-plus-sign"></span>Create new user
+      </button>*@
+        <button type="button" class="btn btn-default collapsed" data-toggle="collapse" data-target="#help" aria-expanded="false" aria-controls="demo">
+            <span class="glyphicon glyphicon-question-sign"></span>Help <span class="caret"></span>
+        </button>
+    </div>
+    <div id="help" class="panel-body collapse" aria-expanded="false" style="height: 30px;">
+        <p class="lead">8D Report Edit Board ：用于编辑 8D Board</p>
+        <p><strong>Create new report:</strong> 创建8D报告Board</p>
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">Report Approve</div>
+    <div class="panel-body">
+        @using (Ajax.BeginForm("Approve", "ReportApprove", null, new AjaxOptions() { HttpMethod = "Post", OnSuccess = "Back", OnComplete = "Back" }, new { id = "form0", enctype = "multipart/form-data", @class = "form-horizontal", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(m => m.ReportGuid)
+            @Html.HiddenFor(m => m.ReportStatus)
+            <!-- #section:elements.form -->
+
+            <div class="form-group">
+                <label class="col-sm-1 control-label no-padding-right" for="form-field-1">Comments</label>
+                <div class="col-sm-11">
+                    @Html.TextAreaFor(model => model.Comment, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Comment)
+                </div>
+            </div>
+            
+            <div class="clearfix form-actions">
+                <div class="col-md-offset-4 col-md-12">
+                    <button class="btn btn-info" type="button" onclick="Submitt('1')">
+                        <i class="ace-icon fa fa-check bigger-110"></i>
+                        Approve
+                    </button>
+                    <button class="btn btn-info" type="button" onclick="Submitt('2')">
+                        <i class="ace-icon fa fa-check bigger-110"></i>
+                        Review
+                    </button>
+                    <button class="btn btn-info" type="button" onclick="Submitt('3')">
+                        <i class="ace-icon fa fa-check bigger-110"></i>
+                        Submit Review To Sponsor
+                    </button>
+                    <button class="btn btn-info" type="button" onclick="Submitt('4')">
+                        <i class="ace-icon fa fa-check bigger-110"></i>
+                        Submit Review To AA
+                    </button>
+                    <button class="btn btn-info" type="button" onclick="Submitt('5')">
+                        <i class="ace-icon fa fa-check bigger-110"></i>
+                        Reject
+                    </button>
+                </div>
+            </div>
+
+            <div class="hr hr-24"></div>
+        }
+    </div>
+</div>

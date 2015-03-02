@@ -87,6 +87,8 @@ namespace _8DManagementSystem.Models
         public ReoprtD8Model ReportD8 { get; set; }
 
         public List<ReoprtD8Data> ReportD8Sign { get; set; }
+
+        public ReportWorkFlow WorkFlow { get; set; }
     }
 
     public class ReportHeaderModel
@@ -248,7 +250,6 @@ namespace _8DManagementSystem.Models
     }
     #endregion
 
-
     #region ReoprtD5Model
     public class ReoprtD5Model
     {
@@ -315,7 +316,6 @@ namespace _8DManagementSystem.Models
 
     #endregion
 
-
     #region ReoprtD7Model
     public class ReoprtD7Model
     {
@@ -340,7 +340,6 @@ namespace _8DManagementSystem.Models
         public string Completed_On { get; set; }
     }
     #endregion
-
 
     #region ReoprtD8Model
     public class ReoprtD8Model
@@ -368,5 +367,33 @@ namespace _8DManagementSystem.Models
     }
     #endregion
 
+    #region ReportWorkFlow
+    public class ReportWorkFlow
+    {
+        /// <summary>
+        /// ID
+        /// </summary>
+        virtual public Guid EightD_WorkFlowGuid { get; set; }
 
+        /// <summary>
+        /// Team_Leader
+        /// </summary>
+        virtual public string Team_Leader { get; set; }
+
+        /// <summary>
+        /// Sponsor
+        /// </summary>
+        virtual public string Sponsor { get; set; }
+
+        /// <summary>
+        /// Additional_Approver
+        /// </summary>
+        virtual public string Additional_Approver { get; set; }
+
+        /// <summary>
+        /// Comments
+        /// </summary>
+        virtual public string Comments { get; set; }
+    }
+    #endregion
 }

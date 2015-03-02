@@ -17,9 +17,9 @@ namespace _8DManagementSystem.Model
         /// <summary>
         /// ID
         /// </summary>
-        [Id(Name = "EightD_WorkFlowGuid")]
+        [Id(Name = "EightD_WorkFlowLogGuid")]
         [Generator(1, Class = "guid")]
-        virtual public Guid EightD_WorkFlowGuid { get; set; }
+        virtual public Guid EightD_WorkFlowLogGuid { get; set; }
 
 
         /// <summary>

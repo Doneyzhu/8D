@@ -117,8 +117,8 @@ namespace _8DManagementSystem.Controllers
                                 "Action <span class=\"caret\"></span></button>" +
                             "<ul class=\"dropdown-menu\" role=\"menu\">" +
                                 "<li><a href=\"" + Url.Content("~/EightDReport/ReportEdit") + "/" + item.ReportGuid + "\"><span class=\"glyphicon glyphicon-edit\"></span> Show Detail</a></li>" +
-                                "<li><a href=\"#\"><span class=\"glyphicon glyphicon-cog\"></span> Configuration</a></li>" +
-                                "<li><a href=\"#\"><span class=\"glyphicon glyphicon-export\"></span> Export to Excel</a></li>" +
+                                "<li><a href=\"" + Url.Content("~/ReportApprove/Approve") + "/" + item.ReportGuid + "\"><span class=\"glyphicon glyphicon-cog\"></span> Approve</a></li>" +
+                                "<li><a href=\"" + Url.Content("~/ReportApprove/CancelApprove") + "/" + item.ReportGuid + "\"><span class=\"glyphicon glyphicon-export\"></span> Cancel Approve</a></li>" +
                                 "<li class=\"divider\"></li>" +
                                 "<li><a href=\"#\" id=\"" + item.ReportGuid + "\" onclick=\"del(this)\"><span class=\"glyphicon glyphicon-remove-circle\"></span> Remove</a></li>" +
                             "</ul></div>"),
@@ -236,12 +236,14 @@ namespace _8DManagementSystem.Controllers
             model.ReportD5 = new ReoprtD5Model();
             model.ReportD6 = new ReoprtD6Model();
             model.ReportD7 = new ReoprtD7Model();
+            model.WorkFlow = new ReportWorkFlow();
 
             if (Id.HasValue)
             {
                 Model.D_Report_Model dataModel = NhSession.Get<Model.D_Report_Model>(Id.Value);
                 if (dataModel != null)
                 {
+                    #region MyRegion
                     #region 表头
                     model.ReportAssignGuid = dataModel.ReportGuid;
                     model.ReportTitle = dataModel.ReportTitle;
@@ -344,6 +346,16 @@ namespace _8DManagementSystem.Controllers
                         model.ReportD8Sign.Add(sign);
                     }
                     #endregion
+                    #endregion
+
+                    if (dataModel.WorkFlow_Models.Count > 0)
+                    {
+                        model.WorkFlow.EightD_WorkFlowGuid = dataModel.WorkFlow_Models[0].EightD_WorkFlowGuid;
+                        model.WorkFlow.Additional_Approver = dataModel.WorkFlow_Models[0].Additional_Approver;
+                        model.WorkFlow.Comments = dataModel.WorkFlow_Models[0].Comments;
+                        model.WorkFlow.Sponsor = dataModel.WorkFlow_Models[0].Sponsor;
+                        model.WorkFlow.Team_Leader = dataModel.WorkFlow_Models[0].Team_Leader;
+                    }
                 }
 
             }
@@ -931,6 +943,124 @@ namespace _8DManagementSystem.Controllers
             }
         }
         #endregion
+
+        #region ReportWF
+        public ActionResult ReportWF_Save(ReportAssignModel model)
+        {
+            bool success = false;
+
+            try
+            {
+                Model.D_Report_Model dataModel = null;
+                if (model.ReportAssignGuid == Guid.Empty)
+                {
+                    return Json(new { success = success, message = "请先创建Report主体" });
+                }
+                else
+                {
+                    dataModel = new DAL.D_Report_DAL().GetModel(model.ReportAssignGuid);
+
+                    if (dataModel != null)
+                    {
+
+                        Model.D_WorkFlow_Model wfModel = new DAL.D_WorkFlow_DAL().GetModel(model.WorkFlow.EightD_WorkFlowGuid);
+                        if (wfModel == null)
+                            wfModel = new Model.D_WorkFlow_Model();
+
+                        wfModel.Additional_Approver = model.WorkFlow.Additional_Approver;
+                        wfModel.Comments = model.WorkFlow.Comments;
+                        wfModel.Sponsor = model.WorkFlow.Sponsor;
+                        wfModel.Team_Leader = model.WorkFlow.Team_Leader;
+
+                        dataModel.WorkFlow_Models.Add(wfModel);
+
+                        success = new DAL.D_Report_DAL().Save(dataModel);
+
+                        return Json(new { success = success, message = "成功" }, JsonRequestBehavior.AllowGet);
+                    }
+                    else
+                    {
+                        return Json(new { success = success, message = "报表已经不存在" });
+                    }
+
+
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = success, message = ex.Message });
+            }
+        }
+        #endregion
+
+
+
+        [LoginFilter()]
+        public ActionResult WFLog_List()
+        {
+            #region 查询条件
+            int page = !string.IsNullOrEmpty(Request.QueryString["iDisplayStart"]) ? int.Parse(Request.QueryString["iDisplayStart"]) : 0;
+            int rowCount = !string.IsNullOrEmpty(Request.QueryString["iDisplayLength"]) ? int.Parse(Request.QueryString["iDisplayLength"]) : 2;
+            String jsondata = HttpUtility.UrlDecode(Request.Params[0], System.Text.Encoding.UTF8);
+
+            int sEcho = 0;
+            int startCount = 0;
+
+            string reportGuid = string.Empty;
+
+            JArray jsonarray = Newtonsoft.Json.JsonConvert.DeserializeObject<JArray>(jsondata);
+
+            for (int i = 0; i < jsonarray.Count; i++) //从传递参数里面选出待用的参数  
+            {
+                JObject jobj = (JObject)jsonarray[i];
+                if (jobj.Property("name").Value.ToString().Equals("sEcho"))
+                    sEcho = jobj.Property("value").Value.EToInt();
+
+                if (jobj.Property("name").Value.ToString().Equals("iDisplayStart"))
+                    startCount = jobj.Property("value").Value.EToInt();
+
+                if (jobj.Property("name").Value.ToString().Equals("iDisplayLength"))
+                    rowCount = jobj.Property("value").Value.EToInt();
+
+                if (jobj.Property("name").Value.ToString().Equals("ReportGuid"))
+                    reportGuid = jobj.Property("value").Value.EToString();
+
+            }
+            #endregion
+
+            //总条数
+            int totalCount = 0;
+
+            Model.D_Report_Model reportModel = new DAL.D_Report_DAL().GetModel(new Guid(reportGuid));
+
+            IList<Model.D_WorkFlowLog_Model> list = new DAL.D_WorkFlowLog_DAL().GetAllByPage(startCount, rowCount, reportModel, out totalCount);
+
+            int totalPage = totalCount % rowCount == 0 ? totalCount / rowCount : totalCount / rowCount + 1;
+
+            #region 查询的结果集赋值
+            ArrayList rows = new ArrayList();
+            foreach (var item in list)
+            {
+                rows.Add(new
+                {
+                    ID = item.EightD_WorkFlowLogGuid,
+                    Comments = item.Comments,
+                    CreateUser = item.CreateUser,
+                    OperateType = item.OperateType,
+                    Status = item.Status,
+                    //ModifyUserName = item.ModifyUserName,
+                    //ModifyDate = item.ModifyDateTime.HasValue ? item.ModifyDateTime.Value.ToString("yyyy-MM-dd") : string.Empty,
+                    CreateUserName = item.CreateUserName,
+                    CreateDate = item.CreateDateTime.HasValue ? item.CreateDateTime.Value.ToString("yyyy-MM-dd") : string.Empty
+                });
+            }
+            #endregion
+
+            return Json(new { sEcho = sEcho, iTotalRecords = totalCount, iTotalDisplayRecords = totalCount, aaData = rows }, JsonRequestBehavior.AllowGet);
+
+
+
+        }
 
     }
 }

@@ -139,6 +139,11 @@ namespace _8DManagementSystem.DAL
         }
 
 
-
+        public IList<D_User_Model> GetUserByUserLoginName(List<string> UserLoginName)
+        {
+            ICriteria ic = NhSession.CreateCriteria(typeof(D_User_Model));
+            ic.Add(Restrictions.In("UserLoginName", UserLoginName));
+            return ic.List<D_User_Model>();
+        }
     }
 }

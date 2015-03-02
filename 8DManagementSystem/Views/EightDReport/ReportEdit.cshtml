@@ -11,9 +11,13 @@
     <li class="active">Edit Report</li>
 </ol>
 
-<script src="@Url.Content("~/Scripts/jquery.form.js")"></script>
+@*<script src="@Url.Content("~/Scripts/jquery.form.js")"></script>*@
+<script src="@Url.Content("~/Contents/assets/js/jquery.form.js")"></script>
+<script src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.min.js")"></script>
 <script type="text/javascript">
     function Submitt0() {
+        var flag = false;
+
         var formobj = document.getElementById("form0");
         var formdata = new FormData(formobj);
 
@@ -45,6 +49,7 @@
     function Submitt1() {
         var formobj = document.getElementById("form1");
         var formdata = new FormData(formobj);
+        var flag = false;
 
         $.ajax({
             type: "post",
@@ -74,7 +79,7 @@
     function Submitt2() {
         var formobj = document.getElementById("form2");
         var formdata = new FormData(formobj);
-
+        var flag = false;
         $.ajax({
             type: "post",
             //dataType: "json",
@@ -321,17 +326,11 @@
                                                 <hr />
 
                                                 <div class="clearfix form-actions">
-                                                    <div class="col-md-offset-3 col-md-9">
+                                                    <div class="col-md-offset-11 col-md-12">
                                                         <button class="btn btn-info" type="button" onclick="Submitt0()">
                                                             <i class="ace-icon fa fa-check bigger-110"></i>
                                                             Submit
                                                         </button>
-
-                                                        &nbsp; &nbsp; &nbsp;
-										<button class="btn" type="reset">
-                                            <i class="ace-icon fa fa-undo bigger-110"></i>
-                                            Reset
-                                        </button>
                                                     </div>
                                                 </div>
 
@@ -381,10 +380,10 @@
 
                                                 <div class="form-group">
                                                     <div class="row">
-                                                        <div class="col-xs-12 col-lg-12">
-                                                            <label class="col-sm-1 control-label no-padding-right" for="form-field-1-1">Coordinator</label>
+                                                        <div class="col-xs-12 col-lg-6">
+                                                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1-1">Coordinator</label>
 
-                                                            <div class="col-sm-5">
+                                                            <div class="col-sm-9">
                                                                 @Html.TextBoxFor(model => model.ReportD1.Coordinator, new { @class = "form-control" })
                                                                 @Html.ValidationMessageFor(model => model.ReportD1.Coordinator)
                                                             </div>
@@ -392,37 +391,83 @@
                                                     </div>
                                                 </div>
 
-
                                                 <div class="form-group">
-                                                    <label class="col-sm-3 control-label no-padding-right" for="form-field-tags">Team Member</label>
+                                                    <div class="row">
+                                                        <div class="col-xs-12 col-lg-12">
+                                                            <label class="col-sm-2 control-label no-padding-right" for="form-field-1-1">Team Member</label>
 
-                                                    <div class="col-sm-9">
-                                                        <!-- #section:plugins/input.tag-input -->
-                                                        <div class="inline">
-                                                            <input type="text" name="tags" id="form-field-tags" value="Tag Input Control" placeholder="Enter tags ..." />
+                                                            <div class="col-sm-10">
+                                                                @Html.TextBoxFor(model => model.ReportD1.Team_Member, new { @class = "form-control" })
+                                                                @Html.ValidationMessageFor(model => model.ReportD1.Team_Member)
+                                                            </div>
                                                         </div>
-
-                                                        <!-- /section:plugins/input.tag-input -->
                                                     </div>
                                                 </div>
 
                                                 <hr />
 
                                                 <div class="clearfix form-actions">
-                                                    <div class="col-md-offset-3 col-md-9">
+                                                    <div class="col-md-offset-11 col-md-12">
                                                         <button class="btn btn-info" type="button" onclick="Submitt1()">
                                                             <i class="ace-icon fa fa-check bigger-110"></i>
                                                             Submit
                                                         </button>
-
-                                                        &nbsp; &nbsp; &nbsp;
-										<button class="btn" type="reset">
-                                            <i class="ace-icon fa fa-undo bigger-110"></i>
-                                            Reset
-                                        </button>
                                                     </div>
                                                 </div>
                                             }
+
+                                            <script type="text/javascript">
+                                                jQuery(function ($) {
+                                                    $("#ReportD1_Team_Leader").blur(function () {
+                                                        var owner = $("#ReportD1_Team_Leader");
+                                                        var jsondata = JSON.stringify({ "UserLoginNames": owner.val() });
+                                                        checkUser(owner, jsondata);
+                                                    });
+
+                                                    $("#ReportD1_Sponaor").blur(function () {
+                                                        var owner = $("#ReportD1_Sponaor");
+                                                        var jsondata = JSON.stringify({ "UserLoginNames": owner.val() });
+                                                        checkUser(owner, jsondata);
+                                                    });
+
+                                                    $("#ReportD1_Coordinator").blur(function () {
+                                                        var owner = $("#ReportD1_Coordinator");
+                                                        var jsondata = JSON.stringify({ "UserLoginNames": owner.val() });
+                                                        checkUser(owner, jsondata);
+                                                    });
+
+                                                    $("#ReportD1_Team_Member").blur(function () {
+                                                        var owner = $("#ReportD1_Team_Member");
+                                                        var jsondata = JSON.stringify({ "UserLoginNames": owner.val() });
+                                                        checkUser(owner, jsondata);
+                                                    });
+
+                                                });
+
+                                                function checkUser(control, jsondata) {
+                                                    $.ajax({
+                                                        type: "post",
+                                                        //contentType: "application/json",
+                                                        dataType: "json",
+                                                        "url": "@Url.Content("~/UserCenter/CheckUser/")",
+                                                        data: jsondata,
+                                                        processData: false,
+                                                        async: false,
+                                                        success: function (data) {
+                                                            if (data.success == true) {
+                                                                control.val(data.message);
+                                                            }
+                                                            else {
+                                                                alert(data.message);
+                                                                control.val("");
+                                                            }
+                                                        },
+                                                        error: function (data) {
+                                                            alert(data.message);
+                                                        }
+                                                    });
+                                                }
+                                            </script>
                                         </div>
                                     </div>
                                 </div>
@@ -496,17 +541,11 @@
                                                 <hr />
 
                                                 <div class="clearfix form-actions">
-                                                    <div class="col-md-offset-3 col-md-9">
+                                                    <div class="col-md-offset-11 col-md-12">
                                                         <button class="btn btn-info" type="button" onclick="Submitt2()">
                                                             <i class="ace-icon fa fa-check bigger-110"></i>
                                                             Submit
                                                         </button>
-
-                                                        &nbsp; &nbsp; &nbsp;
-										<button class="btn" type="reset">
-                                            <i class="ace-icon fa fa-undo bigger-110"></i>
-                                            Reset
-                                        </button>
                                                     </div>
                                                 </div>
                                             }
@@ -621,17 +660,17 @@
                                                 <hr />
 
                                                 <div class="clearfix form-actions">
-                                                    <div class="col-md-offset-3 col-md-9">
-                                                        <button class="btn btn-info" type="button" onclick="Submitt3()">
-                                                            <i class="ace-icon fa fa-check bigger-110"></i>
-                                                            Submit
-                                                        </button>
+                                                    <div class="col-md-offset-10 col-md-12">
 
+                                                        <button class="btn" type="reset" onclick="Add3()">
+                                                            <i class="ace-icon fa fa-undo bigger-110"></i>
+                                                            Add
+                                                        </button>
                                                         &nbsp; &nbsp; &nbsp;
-										<button class="btn" type="reset" onclick="Add3()">
-                                            <i class="ace-icon fa fa-undo bigger-110"></i>
-                                            Add
-                                        </button>
+                                                         <button class="btn btn-info" type="button" onclick="Submitt3()">
+                                                             <i class="ace-icon fa fa-check bigger-110"></i>
+                                                             Submit
+                                                         </button>
                                                     </div>
                                                 </div>
                                             }
@@ -973,23 +1012,22 @@
                                                 <hr />
                                                 
                                                 <div class="clearfix form-actions">
-                                                    <div class="col-md-offset-3 col-md-9">
-                                                        <button class="btn btn-info" type="button" onclick="Submitt4()">
-                                                            <i class="ace-icon fa fa-check bigger-110"></i>
-                                                            Submit
-                                                        </button>
+                                                    <div class="col-md-offset-5 col-md-12">
 
-                                                        &nbsp; &nbsp; &nbsp;
-										<button class="btn" type="reset" onclick="Add4_1()">
-                                            <i class="ace-icon fa fa-undo bigger-110"></i>
-                                            Add D4 RC (Occurrence)
-                                        </button>
+                                                        <button class="btn" type="reset" onclick="Add4_1()">
+                                                            <i class="ace-icon fa fa-undo bigger-110"></i>
+                                                            Add D4 RC (Occurrence)
+                                                        </button>
                                                         &nbsp; &nbsp; &nbsp;
 										<button class="btn" type="reset" onclick="Add4_2()">
                                             <i class="ace-icon fa fa-undo bigger-110"></i>
                                             Add D4 RC (Non-Detection)
                                         </button>
-
+                                                        &nbsp; &nbsp; &nbsp;
+                                                        <button class="btn btn-info" type="button" onclick="Submitt4()">
+                                                            <i class="ace-icon fa fa-check bigger-110"></i>
+                                                            Submit
+                                                        </button>
                                                     </div>
                                                 </div>
                                             }
@@ -1204,17 +1242,17 @@
                                                 </div>
                                                 
                                                 <div class="clearfix form-actions">
-                                                    <div class="col-md-offset-3 col-md-9">
+                                                    <div class="col-md-offset-8 col-md-12">
+
+                                                        <button class="btn" type="reset" onclick="Add5()">
+                                                            <i class="ace-icon fa fa-undo bigger-110"></i>
+                                                            Add D5 Corrective actions
+                                                        </button>
+                                                        &nbsp; &nbsp; &nbsp;
                                                         <button class="btn btn-info" type="button" onclick="Submitt5()">
                                                             <i class="ace-icon fa fa-check bigger-110"></i>
                                                             Submit
                                                         </button>
-
-                                                        &nbsp; &nbsp; &nbsp;
-										<button class="btn" type="reset" onclick="Add5()">
-                                            <i class="ace-icon fa fa-undo bigger-110"></i>
-                                            Add D5 Corrective actions
-                                        </button>
                                                     </div>
                                                 </div>
 
@@ -1610,28 +1648,26 @@
                                                 <hr />
 
                                                 <div class="clearfix form-actions">
-                                                    <div class="col-md-offset-1 col-md-12">
+                                                    <div class="col-md-offset-2 col-md-12">
+                                                        <button class="btn" type="reset" onclick="Add6_1()">
+                                                            <i class="ace-icon fa fa-undo bigger-110"></i>
+                                                            D6 Introduction corrective action
+                                                        </button>
+                                                        &nbsp; &nbsp; &nbsp;
+										                <button class="btn" type="reset" onclick="Add6_2()">
+                                                            <i class="ace-icon fa fa-undo bigger-110"></i>
+                                                            D6 Validation action
+                                                        </button>
+                                                        &nbsp; &nbsp; &nbsp;
+										                <button class="btn" type="reset" onclick="Add6_3()">
+                                                            <i class="ace-icon fa fa-undo bigger-110"></i>
+                                                            D6 Removal containment  action
+                                                        </button>
+                                                        &nbsp; &nbsp; &nbsp;
                                                         <button class="btn btn-info" type="button" onclick="Submitt6()">
                                                             <i class="ace-icon fa fa-check bigger-110"></i>
                                                             Submit
                                                         </button>
-
-                                                        &nbsp; &nbsp; &nbsp;
-										<button class="btn" type="reset" onclick="Add6_1()">
-                                            <i class="ace-icon fa fa-undo bigger-110"></i>
-                                            D6 Introduction corrective action
-                                        </button>
-                                                        &nbsp; &nbsp; &nbsp;
-										<button class="btn" type="reset" onclick="Add6_2()">
-                                            <i class="ace-icon fa fa-undo bigger-110"></i>
-                                            D6 Validation action
-                                        </button>
-                                                        &nbsp; &nbsp; &nbsp;
-										<button class="btn" type="reset" onclick="Add6_3()">
-                                            <i class="ace-icon fa fa-undo bigger-110"></i>
-                                            D6 Removal containment  action
-                                        </button>
-
                                                     </div>
                                                 </div>
                                                 
@@ -1966,17 +2002,17 @@
                                                 <hr />
 
                                                 <div class="clearfix form-actions">
-                                                    <div class="col-md-offset-3 col-md-9">
+                                                    <div class="col-md-offset-8 col-md-12">
+
+                                                        <button class="btn" type="reset" onclick="Add7()">
+                                                            <i class="ace-icon fa fa-undo bigger-110"></i>
+                                                            Add D7 Preventive Action
+                                                        </button>
+                                                        &nbsp; &nbsp; &nbsp;
                                                         <button class="btn btn-info" type="button" onclick="Submitt7()">
                                                             <i class="ace-icon fa fa-check bigger-110"></i>
                                                             Submit
                                                         </button>
-
-                                                        &nbsp; &nbsp; &nbsp;
-										<button class="btn" type="reset" onclick="Add7()">
-                                            <i class="ace-icon fa fa-undo bigger-110"></i>
-                                            Add D7 Preventive Action
-                                        </button>
                                                     </div>
                                                 </div>
 
@@ -2204,17 +2240,17 @@
                                                 <hr />
 
                                                 <div class="clearfix form-actions">
-                                                    <div class="col-md-offset-3 col-md-9">
-                                                        <button class="btn btn-info" type="button" onclick="Submitt8()">
-                                                            <i class="ace-icon fa fa-check bigger-110"></i>
-                                                            Submit
-                                                        </button>
+                                                    <div class="col-md-offset-9 col-md-12">
 
+                                                        <button class="btn" type="reset" onclick="Add8()">
+                                                            <i class="ace-icon fa fa-undo bigger-110"></i>
+                                                            Signature
+                                                        </button>
                                                         &nbsp; &nbsp; &nbsp;
-										<button class="btn" type="reset" onclick="Add8()">
-                                            <i class="ace-icon fa fa-undo bigger-110"></i>
-                                            Signature
-                                        </button>
+                                                         <button class="btn btn-info" type="button" onclick="Submitt8()">
+                                                             <i class="ace-icon fa fa-check bigger-110"></i>
+                                                             Submit
+                                                         </button>
                                                     </div>
                                                 </div>
 
@@ -2313,14 +2349,17 @@
 
                         <div id="profile" class="tab-pane">
                             <div class="panel-body">
-                                <form class="form-horizontal" role="form">
-
+                                @using (Ajax.BeginForm("ReportWF_Save", "EightDReport", null, new AjaxOptions() { HttpMethod = "Post", OnSuccess = "Back", OnComplete = "Back" }, new { id = "formwf", enctype = "multipart/form-data", @class = "form-horizontal", role = "form" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    @Html.HiddenFor(m => m.ReportAssignGuid)
+                                    @Html.HiddenFor(m => m.WorkFlow.EightD_WorkFlowGuid)
                                     <!-- #section:elements.form -->
                                     <div class="form-group">
                                         <div class="row">
                                             <label class="col-sm-2 control-label no-padding-left" for="form-field-1-1">Team Leader*</label>
                                             <div class="col-xs-9">
-                                                <input type="text" id="Text61" placeholder="Text Field" class="form-control" />
+                                                @Html.TextBoxFor(m => m.WorkFlow.Team_Leader, new { @class = "form-control" })
                                             </div>
                                         </div>
                                     </div>
@@ -2329,7 +2368,7 @@
                                         <div class="row">
                                             <label class="col-sm-2 control-label no-padding-left" for="form-field-1-1">Sponsor*</label>
                                             <div class="col-xs-9">
-                                                <input type="text" id="Text62" placeholder="Text Field" class="form-control" />
+                                                @Html.TextBoxFor(m => m.WorkFlow.Sponsor, new { @class = "form-control" })
                                             </div>
                                         </div>
                                     </div>
@@ -2338,7 +2377,7 @@
                                         <div class="row">
                                             <label class="col-sm-2 control-label no-padding-left" for="form-field-1-1">Additional Approver:</label>
                                             <div class="col-xs-9">
-                                                <textarea class="form-control" id="Textarea15" placeholder="Default Text"></textarea>
+                                                @Html.TextAreaFor(m => m.WorkFlow.Additional_Approver, new { @class = "form-control" })
                                             </div>
                                         </div>
                                     </div>
@@ -2347,7 +2386,7 @@
                                         <div class="row">
                                             <label class="col-sm-2 control-label no-padding-left" for="form-field-1-1">Comments</label>
                                             <div class="col-xs-9">
-                                                <input type="text" id="Text63" placeholder="Text Field" class="form-control" />
+                                                @Html.TextBoxFor(m => m.WorkFlow.Comments, new { @class = "form-control" })
                                             </div>
                                         </div>
                                     </div>
@@ -2356,298 +2395,215 @@
 
 
                                     <div class="clearfix form-actions">
-                                        <div class="col-md-offset-3 col-md-9">
-                                            <button class="btn btn-info" type="button">
+                                        <div class="col-md-offset-10 col-md-12">
+                                            <button class="btn btn-info" type="button" onclick="Submittwf()">
                                                 <i class="ace-icon fa fa-check bigger-110"></i>
                                                 Submit
                                             </button>
 
-                                            &nbsp; &nbsp; &nbsp;
-										<button class="btn" type="reset">
-                                            <i class="ace-icon fa fa-undo bigger-110"></i>
-                                            Reset
-                                        </button>
                                         </div>
                                     </div>
+                                }
+                                <script type="text/javascript">
+                                    function Submittwf() {
+                                        var flag = false;
 
+                                        var formobj = document.getElementById("formwf");
+                                        var formdata = new FormData(formobj);
 
-                                </form>
+                                        $.ajax({
+                                            type: "post",
+                                            //dataType: "json",
+                                            "url": "@Url.Content("~/EightDReport/ReportWF_Save/")",
+                                            data: formdata,
+                                            processData: false,
+                                            contentType: false,
+                                            async: false,
+                                            //jsonp: 'callback',
+                                            //jsonpCallback: 'callbackReportCreate',
+                                            success: function (data) {
+                                                if (data.success == true) {
+                                                    alert(data.message);
+                                                }
+                                                else {
+                                                    alert(data.message);
+                                                }
+                                            },
+                                            error: function (data) {
+                                                alert(data.message);
+                                            }
+                                        });
+                                        return flag;
+                                    }
+
+                                </script>
+                                <script type="text/javascript">
+                                    jQuery(function ($) {
+                                        $("#WorkFlow_Team_Leader").blur(function () {
+                                            var owner = $("#WorkFlow_Team_Leader");
+                                            var jsondata = JSON.stringify({ "UserLoginNames": owner.val() });
+                                            checkUser(owner, jsondata);
+                                        });
+
+                                        $("#WorkFlow_Sponsor").blur(function () {
+                                            var owner = $("#WorkFlow_Sponsor");
+                                            var jsondata = JSON.stringify({ "UserLoginNames": owner.val() });
+                                            checkUser(owner, jsondata);
+                                        });
+
+                                        $("#WorkFlow_Additional_Approver").blur(function () {
+                                            var owner = $("#WorkFlow_Additional_Approver");
+                                            var jsondata = JSON.stringify({ "UserLoginNames": owner.val() });
+                                            checkUser(owner, jsondata);
+                                        });
+
+                                    });
+
+                                    function checkUser(control, jsondata) {
+                                        $.ajax({
+                                            type: "post",
+                                            //contentType: "application/json",
+                                            dataType: "json",
+                                            "url": "@Url.Content("~/UserCenter/CheckUser/")",
+                                            data: jsondata,
+                                            processData: false,
+                                            async: false,
+                                            success: function (data) {
+                                                if (data.success == true) {
+                                                    control.val(data.message);
+                                                }
+                                                else {
+                                                    alert(data.message);
+                                                    control.val("");
+                                                }
+                                            },
+                                            error: function (data) {
+                                                alert(data.message);
+                                            }
+                                        });
+                                    }
+                                </script>
+
                             </div>
                         </div>
 
 
                         <div id="dropdown1" class="tab-pane">
+
                             <div class="table-responsive">
-                                <table id="sample-table-2" class="table table-striped table-bordered table-hover">
+                                <table id="gridTable" class="table table-striped table-bordered table-hover">
                                     <thead>
                                         <tr>
-                                            <th>Action Token</th>
-                                            <th>Approvel</th>
                                             <th>Status</th>
-                                            <th class="hidden-480">New Status</th>
-                                            <th>
-                                                <i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>
-                                                Date/time
-                                            </th>
-                                            <th class="hidden-480">Comment</th>
+                                            <th>Operation Type</th>
+                                            <th>Create User Name</th>
+                                            <th>Create DateTime</th>
+                                            <th>Comments</th>
                                         </tr>
                                     </thead>
-
-                                    <tbody>
-                                        <tr>
-                                            <td class="center">
-                                                <div class="btn-group ">
-                                                    Send Request
-                                                </div>
-                                            </td>
-
-                                            <td>
-                                                <a href="#">Zhao Xiaolan</a>
-                                            </td>
-                                            <td>New</td>
-                                            <td class="hidden-480">Pending Sponesor Approval</td>
-                                            <td>2015-01-01 13:12:29</td>
-
-                                            <td class="hidden-480">
-                                                <span class="label label-sm label-warning">Expiring</span>
-                                            </td>
-
-                                        </tr>
-
-                                        <tr>
-                                            <td class="center">
-                                                <div class="btn-group ">
-                                                    Send Request
-                                                </div>
-                                            </td>
-
-                                            <td>
-                                                <a href="#">Zhao Xiaolan</a>
-                                            </td>
-                                            <td>New</td>
-                                            <td class="hidden-480">Pending Sponesor Approval</td>
-                                            <td>2015-01-01 13:12:29</td>
-
-                                            <td class="hidden-480">
-                                                <span class="label label-sm label-warning">Expiring</span>
-                                            </td>
-
-                                        </tr>
-
-                                        <tr>
-                                            <td class="center">
-                                                <div class="btn-group ">
-                                                    Send Request
-                                                </div>
-                                            </td>
-
-                                            <td>
-                                                <a href="#">Zhao Xiaolan</a>
-                                            </td>
-                                            <td>New</td>
-                                            <td class="hidden-480">Pending Sponesor Approval</td>
-                                            <td>2015-01-01 13:12:29</td>
-
-                                            <td class="hidden-480">
-                                                <span class="label label-sm label-warning">Expiring</span>
-                                            </td>
-
-                                        </tr>
-
-                                        <tr>
-                                            <td class="center">
-                                                <div class="btn-group ">
-                                                    Send Request
-                                                </div>
-                                            </td>
-
-                                            <td>
-                                                <a href="#">Zhao Xiaolan</a>
-                                            </td>
-                                            <td>New</td>
-                                            <td class="hidden-480">Pending Sponesor Approval</td>
-                                            <td>2015-01-01 13:12:29</td>
-
-                                            <td class="hidden-480">
-                                                <span class="label label-sm label-warning">Expiring</span>
-                                            </td>
-
-                                        </tr>
-
-                                        <tr>
-                                            <td class="center">
-                                                <div class="btn-group ">
-                                                    Send Request
-                                                </div>
-                                            </td>
-
-                                            <td>
-                                                <a href="#">Zhao Xiaolan</a>
-                                            </td>
-                                            <td>New</td>
-                                            <td class="hidden-480">Pending Sponesor Approval</td>
-                                            <td>2015-01-01 13:12:29</td>
-
-                                            <td class="hidden-480">
-                                                <span class="label label-sm label-warning">Expiring</span>
-                                            </td>
-
-                                        </tr>
-
-                                        <tr>
-                                            <td class="center">
-                                                <div class="btn-group ">
-                                                    Send Request
-                                                </div>
-                                            </td>
-
-                                            <td>
-                                                <a href="#">Zhao Xiaolan</a>
-                                            </td>
-                                            <td>New</td>
-                                            <td class="hidden-480">Pending Sponesor Approval</td>
-                                            <td>2015-01-01 13:12:29</td>
-
-                                            <td class="hidden-480">
-                                                <span class="label label-sm label-warning">Expiring</span>
-                                            </td>
-
-                                        </tr>
-
-                                        <tr>
-                                            <td class="center">
-                                                <div class="btn-group ">
-                                                    Send Request
-                                                </div>
-                                            </td>
-
-                                            <td>
-                                                <a href="#">Zhao Xiaolan</a>
-                                            </td>
-                                            <td>New</td>
-                                            <td class="hidden-480">Pending Sponesor Approval</td>
-                                            <td>2015-01-01 13:12:29</td>
-
-                                            <td class="hidden-480">
-                                                <span class="label label-sm label-warning">Expiring</span>
-                                            </td>
-
-                                        </tr>
-
-                                        <tr>
-                                            <td class="center">
-                                                <div class="btn-group ">
-                                                    Send Request
-                                                </div>
-                                            </td>
-
-                                            <td>
-                                                <a href="#">Zhao Xiaolan</a>
-                                            </td>
-                                            <td>New</td>
-                                            <td class="hidden-480">Pending Sponesor Approval</td>
-                                            <td>2015-01-01 13:12:29</td>
-
-                                            <td class="hidden-480">
-                                                <span class="label label-sm label-warning">Expiring</span>
-                                            </td>
-
-                                        </tr>
-
-                                        <tr>
-                                            <td class="center">
-                                                <div class="btn-group ">
-                                                    Send Request
-                                                </div>
-                                            </td>
-
-                                            <td>
-                                                <a href="#">Zhao Xiaolan</a>
-                                            </td>
-                                            <td>New</td>
-                                            <td class="hidden-480">Pending Sponesor Approval</td>
-                                            <td>2015-01-01 13:12:29</td>
-
-                                            <td class="hidden-480">
-                                                <span class="label label-sm label-warning">Expiring</span>
-                                            </td>
-
-                                        </tr>
-
-                                        <tr>
-                                            <td class="center">
-                                                <div class="btn-group ">
-                                                    Send Request
-                                                </div>
-                                            </td>
-
-                                            <td>
-                                                <a href="#">Zhao Xiaolan</a>
-                                            </td>
-                                            <td>New</td>
-                                            <td class="hidden-480">Pending Sponesor Approval</td>
-                                            <td>2015-01-01 13:12:29</td>
-
-                                            <td class="hidden-480">
-                                                <span class="label label-sm label-warning">Expiring</span>
-                                            </td>
-
-                                        </tr>
-
-                                        <tr>
-                                            <td class="center">
-                                                <div class="btn-group ">
-                                                    Send Request
-                                                </div>
-                                            </td>
-
-                                            <td>
-                                                <a href="#">Zhao Xiaolan</a>
-                                            </td>
-                                            <td>New</td>
-                                            <td class="hidden-480">Pending Sponesor Approval</td>
-                                            <td>2015-01-01 13:12:29</td>
-
-                                            <td class="hidden-480">
-                                                <span class="label label-sm label-warning">Expiring</span>
-                                            </td>
-
-                                        </tr>
-
-                                        <tr>
-                                            <td class="center">
-                                                <div class="btn-group ">
-                                                    Send Request
-                                                </div>
-                                            </td>
-
-                                            <td>
-                                                <a href="#">Zhao Xiaolan</a>
-                                            </td>
-                                            <td>New</td>
-                                            <td class="hidden-480">Pending Sponesor Approval</td>
-                                            <td>2015-01-01 13:12:29</td>
-
-                                            <td class="hidden-480">
-                                                <span class="label label-sm label-warning">Expiring</span>
-                                            </td>
-
-                                        </tr>
-
-
-                                    </tbody>
                                 </table>
 
                             </div>
+
+                            <div id="grid-pager" class="panel-footer text-center"></div>
+
+                            <script src="~/Contents/assets/js/jquery.dataTables.min.js"></script>
+                            <script src="~/Contents/assets/js/jquery.dataTables.bootstrap.js"></script>
+                            <script src="~/Contents/assets/js/bootbox.min.js"></script>
+                            <script src="~/Contents/assets/js/fnReloadAjax.js"></script>
+                            <script type="text/javascript">
+
+                                jQuery(function ($) {
+
+                                    gridTable.dataTable({
+                                        "iDisplayStart": 0, //从第几条开始
+                                        "iDisplayLength": 3,//每页显示10条数据
+
+                                        //"oLanguage": {//下面是一些汉语翻译
+                                        //    "sUrl": "/Content/assets/js/language/jquery.dataTable.cn.js"
+                                        //},
+
+                                        "bLengthChange": false, //关闭每页显示多少条数据
+                                        "bPaginate": true, //翻页功能
+                                        "bFilter": false, //过滤功能
+                                        "bAutoWidth": true,//自动宽度
+                                        "bInfo": true,//页脚信息
+                                        "bProcessing": true,
+                                        "bServerSide": true,
+                                        "sServerMethod": "POST",
+                                        "sAjaxSource": "@Url.Content("~/EightDReport/WFLog_List")",
+
+                                        "aoColumns": [
+                                                          //{
+                                                          //    "mDataProp": "ID",
+                                                          //    "bSearchable": false,
+                                                          //    "bSortable": false,
+                                                          //    "fnRender": function (oObj) {
+                                                          //        //return '<a href=\"Details/' + oObj.aData[0] + '\">查看</a>';
+                                                          //        return '<div class="btn-group ">' +
+                                                          //      '<button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown">' +
+                                                          //          'Action <span class="caret"></span></button>' +
+                                                          //      '<ul class="dropdown-menu" role="menu">' +
+                                                          //          '<li><a href="#" onclick="javascript:edit(this)"><span class="glyphicon glyphicon-edit"></span>Edit</a></li>' +
+                                                          //          '<li><a href="#"><span class="glyphicon glyphicon-cog"></span>Configuration</a></li>' +
+                                                          //          '<li><a href="#"><span class="glyphicon glyphicon-export"></span>Export to Excel</a></li>' +
+                                                          //          '<li class="divider"></li>' +
+                                                          //        '<li><a href="#"><span class="glyphicon glyphicon-remove-circle"></span>Remove</a></li>' +
+                                                          //      '</ul></div>';
+                                                          //    }                           //自定义列的样式
+                                                          //},
+                                                          { "mDataProp": "Status", bSortable: false },
+                                                          { "mDataProp": "OperateType", bSortable: false },
+                                                          { "mDataProp": "CreateUserName", bSortable: false },
+                                                          { "mDataProp": "CreateDate", bSortable: false },
+                                                          { "mDataProp": "Comments", bSortable: false }
+                                                          //{ "mDataProp": "Oper", bSortable: false }
+                                                          //,{ "sDefaultContent": '' }, // sDefaultContent 如果这一列不需要填充数据用这个属性，值可以不写，起占位作用
+                                                          //{ "sDefaultContent": '', "sClass": "action" },//sClass 表示给本列加class
+                                        ],
+                                        //"sAjaxDataProp": "",
+                                        "fnServerData": retrieveData           //获取数据的处理函数
+                                        //"fnDrawCallback": function (oSettings) {
+                                        //oSettings.sAjaxSource = "@Url.Content("~/Board/BoardList")";
+                                        //alert(oSettings.sAjaxSource);
+                                        //$('#gridTable').fnClearTable(0);
+                                        //$('#gridTable').fnDraw();
+                                        //}
+                                        //,"fnServerParams": function (aoData) {
+                                        //  aoData.push({ "name": "more_data", "value": "my_value" });
+                                        //}
+
+                                    });
+
+                                });
+
+                                function retrieveData(sSource, aoData, fnCallback) {
+
+                                    //var reportGuid = encodeURIComponent($("#txtReportNo").val());
+                                    var reportGuid = $("#ReportAssignGuid").val();
+
+                                    //将客户名称加入参数数组
+                                    aoData.push({ "name": "ReportGuid", "value": reportGuid });
+
+                                    //alert(JSON.stringify(aoData));
+                                    $.ajax({
+                                        "type": "get",
+                                        "contentType": "application/json",
+                                        "url": sSource,
+                                        "dataType": "json",
+                                        "data": JSON.stringify(aoData), //以json格式传递
+                                        "success": function (data) {
+                                            //alert(data.sEcho);
+                                            fnCallback(data); //服务器端返回的对象的returnObject部分是要求的格式
+                                        }
+                                    });
+                                }
+
+
+                            </script>
                         </div>
 
-                        <!-- <div id="dropdown1" class="tab-pane">
-                                    <p>Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo retro fanny pack lo-fi farm-to-table readymade.</p>
-                                </div>
 
-                                <div id="dropdown2" class="tab-pane">
-                                    <p>Trust fund seitan letterpress, keytar raw denim keffiyeh etsy art party before they sold out master cleanse gluten-free squid scenester freegan cosby sweater. Fanny pack portland seitan DIY, art party locavore wolf cliche high life echo park Austin.</p>
-                                </div>-->
                     </div>
                 </div>
 
@@ -2681,6 +2637,8 @@
 
 
 <script type="text/javascript">
+    var gridTable = $('#gridTable');
+
     jQuery(function ($) {
 
         var oTable1 = $('#sample-table-2').dataTable({
@@ -2744,4 +2702,5 @@
             autoclose: true
         });
     }
+
 </script>

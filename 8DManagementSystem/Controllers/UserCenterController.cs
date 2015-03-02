@@ -215,5 +215,56 @@ namespace _8DManagementSystem.Controllers
             return Json(new { success = success, msg = "数据已不存在" }, JsonRequestBehavior.AllowGet);
         }
         #endregion
+
+        #region CheckUser
+        public ActionResult CheckUser()
+        {
+            bool success = false;
+            string msg = string.Empty;
+            try
+            {
+                String UserLoginNames = Server.UrlDecode((new System.IO.StreamReader(Request.InputStream)).ReadToEnd());
+                if (!string.IsNullOrEmpty(UserLoginNames))
+                {
+                    UserLoginNameClass userLogin = Newtonsoft.Json.JsonConvert.DeserializeObject<UserLoginNameClass>(UserLoginNames);
+                    if (!string.IsNullOrEmpty(userLogin.UserLoginNames))
+                    {
+                        string[] loginName = userLogin.UserLoginNames.Split(';');
+                        List<string> loginNameList = new List<string>();
+                        foreach (var item in loginName)
+                        {
+                            if (!string.IsNullOrEmpty(item))
+                            {
+                                loginNameList.Add(item);
+                            }
+                        }
+
+                        IList<Model.D_User_Model> users = new DAL.D_User_DAL().GetUserByUserLoginName(loginNameList);
+                        foreach (var item in users)
+                        {
+                            msg += item.UserLoginName + ";";
+                        }
+
+                    }
+                    success = true;
+                }
+
+
+                return Json(new { success = success, message = msg }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
+            {
+                msg = "参数错误";
+                return Json(new { success = success, message = msg }, JsonRequestBehavior.AllowGet);
+            }
+
+        }
+
+        public class UserLoginNameClass
+        {
+            public string UserLoginNames { get; set; }
+        }
+        #endregion
     }
 }
+

@@ -41,6 +41,13 @@ namespace _8DManagementSystem.DAL
                         NhSession.SaveOrUpdate(item);
                     }
                 }
+                if (model.WorkFlow_Models.Count > 0)
+                {
+                    foreach (var item in model.WorkFlow_Models)
+                    {
+                        NhSession.SaveOrUpdate(item);
+                    }
+                }
                 tran.Commit();
                 return true;
             }
@@ -98,6 +105,56 @@ namespace _8DManagementSystem.DAL
             IList<D_Report_Model> list = ic.SetFirstResult(startCount).SetMaxResults(rowCount).List<D_Report_Model>();
 
             return list;
+        }
+
+
+
+        public bool SaveWorkFlowLog(D_Report_Model model, D_WorkFlowLog_Model logModel)
+        {
+            NHibernate.ITransaction tran = NhSession.BeginTransaction();
+            try
+            {
+
+                logModel.ReportGuid = model;
+
+                NhSession.SaveOrUpdate(model.ReportD2);
+                NhSession.SaveOrUpdate(model);
+                if (model.ReportD8DataModels.Count > 0)
+                {
+                    foreach (var item in model.ReportD8DataModels)
+                    {
+                        NhSession.SaveOrUpdate(item);
+                    }
+                }
+                if (model.WorkFlow_Models.Count > 0)
+                {
+                    foreach (var item in model.WorkFlow_Models)
+                    {
+                        NhSession.SaveOrUpdate(item);
+                    }
+                }
+                if (model.WorkFlowLog_Models.Count > 0)
+                {
+                    foreach (var item in model.WorkFlowLog_Models)
+                    {
+                        NhSession.SaveOrUpdate(item);
+                    }
+                }
+
+                NhSession.SaveOrUpdate(model);
+
+                tran.Commit();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                if (!tran.WasCommitted && !tran.WasRolledBack)
+                    tran.Rollback();
+            }
         }
     }
 }
