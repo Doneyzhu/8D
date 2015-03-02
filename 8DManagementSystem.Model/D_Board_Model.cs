@@ -68,5 +68,13 @@ namespace _8DManagementSystem.Model
         /// </summary>
         [Property()]
         virtual public bool DataStatus { get; set; }
+
+        /// <summary>
+        /// 相关用户角色
+        /// </summary>
+        [Bag(0, Table = "EightD_Board_User_Role", OrderBy = "CreateDateTime ASC")]
+        [Key(1, Column = "BoardGuid")]
+        [OneToMany(2, ClassType = typeof(D_Board_User_Role_Model))]
+        virtual public IList<D_Board_User_Role_Model> Board_User_Role_Models { get; set; }
     }
 }

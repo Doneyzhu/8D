@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="D_Board_Model.cs" />
+    <Compile Include="D_Board_User_Role_Model.cs" />
     <Compile Include="D_Dictionary_Model.cs" />
     <Compile Include="D_ReportD2_Model.cs" />
     <Compile Include="D_ReportD8_Model.cs" />

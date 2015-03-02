@@ -148,16 +148,17 @@
 
                     <div class="tab-content">
                         <div id="home" class="tab-pane in active">
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">8D Report No. </label>
-                                <div class="col-sm-9">
-                                    <input type="text" readonly="" id="Text1" class="col-xs-10 col-sm-5" />
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label no-padding-right" for="form-field-1">8D Report No. </label>
+                                    <div class="col-sm-9">
+                                        <input type="text" readonly="" id="Text1" class="col-xs-10 col-sm-5" value="@Model.ReportNo" />
+                                    </div>
                                 </div>
                             </div>
 
-                            <div class="vspace-6-sm"></div>
-
                             <div id="accordion" class="accordion-style1 panel-group">
+
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
                                         <h4 class="panel-title">
@@ -2087,7 +2088,7 @@
 
                                     <div class="panel-collapse collapse" id="collapseNine">
                                         <div class="panel-body">
-                                             @using (Ajax.BeginForm("ReportD8Save", "EightDReport", null, new AjaxOptions() { HttpMethod = "Post", OnSuccess = "Back", OnComplete = "Back" }, new { id = "form8", enctype = "multipart/form-data", @class = "form-horizontal", role = "form" }))
+                                            @using (Ajax.BeginForm("ReportD8Save", "EightDReport", null, new AjaxOptions() { HttpMethod = "Post", OnSuccess = "Back", OnComplete = "Back" }, new { id = "form8", enctype = "multipart/form-data", @class = "form-horizontal", role = "form" }))
                                             {
                                                 @Html.AntiForgeryToken()
                                                 @Html.HiddenFor(m => m.ReportAssignGuid)
@@ -2131,7 +2132,7 @@
                                                     {
                                                         foreach (var item in Model.ReportD8Sign)
                                                         {
-                                                            <div id="div8Data_Childer_@item.Number">
+                                                        <div id="div8Data_Childer_@item.Number">
                                                             <div class="form-group">
                                                                 <div class="row">
                                                                     <input type="hidden" name="SignatureGuid8"  value="@item.ReportD8Guid.ToString()"/>
@@ -2158,7 +2159,7 @@
                                                                         <input type="text" name="Signature8" value="@item.Signature" class="form-control" />
                                                                     </div>
 
-                                                                        @*<a id="@item.Number" href="#" onclick="DelDiv8_1(this)">删除</a>*@
+                                                                    @*<a id="@item.Number" href="#" onclick="DelDiv8_1(this)">删除</a>*@
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -2169,7 +2170,7 @@
                                                         <div id="div8Data_Childer_1">
                                                             <div class="form-group">
                                                                 <div class="row">
-                                                                    <input type="hidden" name="SignatureGuid8"  />
+                                                                    <input type="hidden" name="SignatureGuid8" />
                                                                     <label class="col-sm-2 control-label no-padding-right" for="form-field-1-1">Sponsor Name:</label>
                                                                     <div class="col-xs-8 col-sm-3">
 
@@ -2218,18 +2219,18 @@
                                                     </div>
                                                 </div>
 
-                                             }
+                                            }
 
-                                             <script type="text/javascript">
-                                                 function Submitt8() {
+                                            <script type="text/javascript">
+                                                function Submitt8() {
 
-                                                     var formobj = document.getElementById("form8");
-                                                     var formdata = new FormData(formobj);
+                                                    var formobj = document.getElementById("form8");
+                                                    var formdata = new FormData(formobj);
 
-                                                     $.ajax({
-                                                         type: "post",
-                                                         //dataType: "json",
-                                                         "url": "@Url.Content("~/EightDReport/ReportD8Save/")",
+                                                    $.ajax({
+                                                        type: "post",
+                                                        //dataType: "json",
+                                                        "url": "@Url.Content("~/EightDReport/ReportD8Save/")",
                                                         data: formdata,
                                                         processData: false,
                                                         contentType: false,
@@ -2259,7 +2260,7 @@
 
                                                     html += "<div class=\"form-group\">";
                                                     html += "<div class=\"row\">";
-                                                   
+
                                                     html += "<input type=\"hidden\" name=\"SignatureGuid8\"  />";
                                                     html += "<label class=\"col-sm-2 control-label no-padding-right\" for=\"form-field-1-1\">Sponsor Name:</label>";
                                                     html += "<div class=\"col-xs-8 col-sm-3\">";
@@ -2306,6 +2307,9 @@
 
 
                             </div>
+
+
+
                         </div>
 
                         <div id="profile" class="tab-pane">

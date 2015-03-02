@@ -130,6 +130,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Board_User_Role_Model.cs" />
     <Compile Include="Models\DictionaryModel.cs" />
     <Compile Include="Models\MvcSiteMap.cs" />
     <Compile Include="Models\ReportAssignModel.cs" />
@@ -356,6 +357,7 @@
     <Content Include="Views\Role\Role_Permission_Edit.cshtml" />
     <Content Include="Views\DataDictionary\DictionaryEdit.cshtml" />
     <Content Include="Views\EightDReport\ReportEdit.cshtml" />
+    <Content Include="Views\Board\Board_User_Role_Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Web_ZH_CN.sitemap" />
