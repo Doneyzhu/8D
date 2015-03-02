@@ -17,7 +17,7 @@ namespace _8DManagementSystem.Filter
 
             HttpContextBase context = filterContext.HttpContext;
 
-            Model.D_User_Model user = context.Items["User"] as Model.D_User_Model;
+            Models.UserModel user = context.Items["User"] as Models.UserModel;
             if (user != null)
             {
                 accept = true;

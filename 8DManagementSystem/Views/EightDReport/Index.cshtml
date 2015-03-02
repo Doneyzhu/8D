@@ -1,12 +1,23 @@
-﻿@{
+﻿@model _8DManagementSystem.Models.ReportListQueryModel
+
+@{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@Html.HiddenFor(m => m.BoardGuids)
+
 <ol class="breadcrumb">
-    <li><a href="/8DReport/">Home</a></li>
-    <li><a href="/8DReport/Workflow">8D Workflow</a></li>
-    <li><a href="/8DReport/Workflow/MSE1">MSE1</a></li>
+    <li><a href="@Url.Content("~/Home/")">Home</a></li>
+    <li><a href="@Url.Content("~/EightDReport/")">8D Workflow</a></li>
+    @if (string.IsNullOrEmpty(Model.BoardGuids))
+    {
+        <li><a href="@Url.Content("~/EightDReport/Index/")">All</a></li>
+    }
+    else
+    {
+        <li><a href="@Url.Content("~/EightDReport/Index?" + Model.BoardGuids + "")">@Model.BoardName</a></li>
+    }
     <li class="active">8D ReportList</li>
 </ol>
 
@@ -16,9 +27,11 @@
 
 <div class="panel panel-info">
     <div class="panel-heading">
+
         <button type="button" class="btn btn-primary">
             <a href="~/EightDReport/Assign8DReport" style="color: white;"><span class="glyphicon glyphicon-plus-sign"></span>Create new report</a>
         </button>
+
         <button type="button" class="btn btn-default collapsed" data-toggle="collapse" data-target="#help" aria-expanded="false" aria-controls="demo">
             <span class="glyphicon glyphicon-question-sign"></span>Help <span class="caret"></span>
         </button>
@@ -617,10 +630,11 @@
 
         var reportNo = encodeURIComponent($("#txtReportNo").val());
         var dateCreated = $("#txtDateCreated").val();
-
+        var boardGuids = $("#BoardGuids").val();
 
         //将客户名称加入参数数组
         aoData.push({ "name": "ReportNo", "value": reportNo });
+        aoData.push({ "name": "BoardGuids", "value": boardGuids });
         aoData.push({ "name": "DateCreated", "value": dateCreated });
 
         //alert(JSON.stringify(aoData));

@@ -45,11 +45,11 @@ namespace _8DManagementSystem.Models
 
         public IEnumerable<SelectListItem> BoardSelectList { get; set; }
 
-        public void LoadBoardSelectList()
+        public void LoadBoardSelectList(List<Models.BoardModel> boards)
         {
             BoardSelectList = new List<SelectListItem>();
 
-            IList<Model.D_Board_Model> boards = new DAL.D_Board_DAL().GetAll();
+            //IList<Model.D_Board_Model> boards = new DAL.D_Board_DAL().GetAll();
 
             List<SelectListItem> lists = new List<SelectListItem>();
             foreach (var item in boards)

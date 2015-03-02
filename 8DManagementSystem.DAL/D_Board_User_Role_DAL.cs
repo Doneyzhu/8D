@@ -118,5 +118,13 @@ namespace _8DManagementSystem.DAL
 
             return list;
         }
+
+        public IList<D_Board_User_Role_Model> GetModelListByUser(D_User_Model userModel)
+        {
+            ICriteria ic = NhSession.CreateCriteria(typeof(D_Board_User_Role_Model));;
+            ic.Add(Restrictions.Eq("UserGuid", userModel));
+            //IList<D_Board_User_Role_Model> list = ic.List<D_Board_User_Role_Model>();
+            return ic.List<D_Board_User_Role_Model>();
+        }
     }
 }

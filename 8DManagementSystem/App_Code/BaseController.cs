@@ -11,7 +11,7 @@ namespace _8DManagementSystem
     public class BaseController : Controller
     {
         //登录用户
-        public Model.D_User_Model UserView { get; set; }
+        public Models.UserModel UserView { get; set; }
 
         public NHibernate.ISession NhSession
         {
@@ -47,7 +47,7 @@ namespace _8DManagementSystem
 
                             bool result = UserLogin(memberName, memberPassword, keeping == "1");
                             #region 用户登录
-                            Model.D_User_Model model = new DAL.D_User_DAL().GetUserByUserLoginName(memberName);
+                            //Model.D_User_Model model = new DAL.D_User_DAL().GetUserByUserLoginName(memberName);
                             //if (model != null)
                             //{
                             //    if (new DAL.D_User_DAL().PassWordMD5(memberPassword).Equals(model.PassWord.ToLower()))
@@ -73,7 +73,7 @@ namespace _8DManagementSystem
             {
                 HttpContextWrite(filterContext, ex.Message);
             }
- 
+
             HttpContext.Items["User"] = UserView;
         }
 
@@ -121,7 +121,27 @@ namespace _8DManagementSystem
             {
                 if (userDAL.PassWordMD5(loginPwd).Equals(model.PassWord.ToLower()))
                 {
-                    UserView = model;
+                    Models.UserModel userModel = new Models.UserModel();
+                    userModel.UserGuid = model.UserGuid;
+                    userModel.UserLoginName = model.UserLoginName;
+                    userModel.UserName = model.UserName;
+                    userModel.Languages = model.Languages;
+                    userModel.IsAdmin = model.IsAdmin;
+
+                    IList<Model.D_Board_User_Role_Model> list = new DAL.D_Board_User_Role_DAL().GetModelListByUser(model);
+                    foreach (var item in list)
+                    {
+                        if (!userModel.Boards.Exists(m => m.BoardGuid == item.BoardGuid.BoardGuid))
+                        {
+                            Models.BoardModel board = new Models.BoardModel();
+                            board.BoardGuid = item.BoardGuid.BoardGuid;
+                            board.BoardName = item.BoardGuid.BoardName;
+                            userModel.Boards.Add(board);
+                        }
+                    }
+
+                    UserView = userModel;
+
                     ViewBag.UserView = UserView;
 
                     if (Request.Cookies["LoginCookie"] == null)

@@ -38,19 +38,72 @@ namespace _8DManagementSystem.Model
         [Description("Approve")]
         Approve = 3,
         /// <summary>
-        /// 评论
-        /// </summary>
-        [Description("Comment")]
-        Comment = 4,
-        /// <summary>
         /// 回顾
         /// </summary>
         [Description("Review")]
-        Review = 5,
+        Review = 4,
         /// <summary>
         /// 结束
         /// </summary>
         [Description("Completed")]
-        Completed = 6,
+        Completed = 5,
+        /// <summary>
+        /// SubmitReview
+        /// </summary>
+        [Description("SubmitReview")]
+        SubmitReview = 6,
+        /// <summary>
+        /// Reject
+        /// </summary>
+        [Description("Reject")]
+        Reject = 7,
+    }
+
+    public enum ReportStatusEnum
+    {
+        /// <summary>
+        /// TeamLeader
+        /// </summary>
+        [Description("TeamLeader")]
+        TeamLeader = 1,
+        /// <summary>
+        /// Sponsor
+        /// </summary>
+        [Description("Sponsor")]
+        Sponsor = 2,
+        /// <summary>
+        /// Approve
+        /// </summary>
+        [Description("Approve")]
+        Approve = 3,
+        /// <summary>
+        /// Completed
+        /// </summary>
+        [Description("Completed")]
+        Completed = 4,
+    }
+
+    public enum ReportCancelStatusEnum
+    {
+        /// <summary>
+        /// TeamLeader
+        /// </summary>
+        [Description("TeamLeader")]
+        TeamLeader = 1,
+        /// <summary>
+        /// QE
+        /// </summary>
+        [Description("QE")]
+        QE = 2,
+        /// <summary>
+        /// Sponsor
+        /// </summary>
+        [Description("Sponsor")]
+        Sponsor = 3,
+        /// <summary>
+        /// Completed
+        /// </summary>
+        [Description("Completed")]
+        Completed = 4,
     }
 }

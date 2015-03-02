@@ -134,8 +134,10 @@
     <Compile Include="Models\DictionaryModel.cs" />
     <Compile Include="Models\MvcSiteMap.cs" />
     <Compile Include="Models\ReportAssignModel.cs" />
+    <Compile Include="Models\ReportListQueryModel.cs" />
     <Compile Include="Models\RolePermissionModel.cs" />
     <Compile Include="Models\UserLanguageModel.cs" />
+    <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

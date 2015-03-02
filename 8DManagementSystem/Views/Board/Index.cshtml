@@ -3,8 +3,8 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <ol class="breadcrumb">
-    <li><a href="/8DReport/">Home</a></li>
-    <li><a href="/8DReport/Workflow">Administration</a></li>
+    <li><a href="@Url.Content("~/Home/")">Home</a></li>
+    <li><a href="#">Administration</a></li>
     <li class="active">Board</li>
 </ol>
 
@@ -124,102 +124,102 @@
             "sServerMethod": "POST",
             "sAjaxSource": "@Url.Content("~/Board/BoardList")",
 
-      "aoColumns": [
-                        //{
-                        //    "mDataProp": "ID",
-                        //    "bSearchable": false,
-                        //    "bSortable": false,
-                        //    "fnRender": function (oObj) {
-                        //        //return '<a href=\"Details/' + oObj.aData[0] + '\">查看</a>';
-                        //        return '<div class="btn-group ">' +
-                        //      '<button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown">' +
-                        //          'Action <span class="caret"></span></button>' +
-                        //      '<ul class="dropdown-menu" role="menu">' +
-                        //          '<li><a href="#" onclick="javascript:edit(this)"><span class="glyphicon glyphicon-edit"></span>Edit</a></li>' +
-                        //          '<li><a href="#"><span class="glyphicon glyphicon-cog"></span>Configuration</a></li>' +
-                        //          '<li><a href="#"><span class="glyphicon glyphicon-export"></span>Export to Excel</a></li>' +
-                        //          '<li class="divider"></li>' +
-                        //        '<li><a href="#"><span class="glyphicon glyphicon-remove-circle"></span>Remove</a></li>' +
-                        //      '</ul></div>';
-                        //    }                           //自定义列的样式
-                        //},
-                        { "mDataProp": "Operation", bSortable: false },
-                        { "mDataProp": "BoardName", bSortable: false },
-                        { "mDataProp": "ModifyUserName", bSortable: false },
-                        { "mDataProp": "ModifyDate", bSortable: false },
-                        { "mDataProp": "CreateUserName", bSortable: false },
-                        //{ "mDataProp": "OpUserName", bSortable: false },
-                        { "mDataProp": "CreateDate", bSortable: false }
-                        //{ "mDataProp": "Oper", bSortable: false }
-                        //,{ "sDefaultContent": '' }, // sDefaultContent 如果这一列不需要填充数据用这个属性，值可以不写，起占位作用
-                        //{ "sDefaultContent": '', "sClass": "action" },//sClass 表示给本列加class
-      ],
+            "aoColumns": [
+                              //{
+                              //    "mDataProp": "ID",
+                              //    "bSearchable": false,
+                              //    "bSortable": false,
+                              //    "fnRender": function (oObj) {
+                              //        //return '<a href=\"Details/' + oObj.aData[0] + '\">查看</a>';
+                              //        return '<div class="btn-group ">' +
+                              //      '<button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown">' +
+                              //          'Action <span class="caret"></span></button>' +
+                              //      '<ul class="dropdown-menu" role="menu">' +
+                              //          '<li><a href="#" onclick="javascript:edit(this)"><span class="glyphicon glyphicon-edit"></span>Edit</a></li>' +
+                              //          '<li><a href="#"><span class="glyphicon glyphicon-cog"></span>Configuration</a></li>' +
+                              //          '<li><a href="#"><span class="glyphicon glyphicon-export"></span>Export to Excel</a></li>' +
+                              //          '<li class="divider"></li>' +
+                              //        '<li><a href="#"><span class="glyphicon glyphicon-remove-circle"></span>Remove</a></li>' +
+                              //      '</ul></div>';
+                              //    }                           //自定义列的样式
+                              //},
+                              { "mDataProp": "Operation", bSortable: false },
+                              { "mDataProp": "BoardName", bSortable: false },
+                              { "mDataProp": "ModifyUserName", bSortable: false },
+                              { "mDataProp": "ModifyDate", bSortable: false },
+                              { "mDataProp": "CreateUserName", bSortable: false },
+                              //{ "mDataProp": "OpUserName", bSortable: false },
+                              { "mDataProp": "CreateDate", bSortable: false }
+                              //{ "mDataProp": "Oper", bSortable: false }
+                              //,{ "sDefaultContent": '' }, // sDefaultContent 如果这一列不需要填充数据用这个属性，值可以不写，起占位作用
+                              //{ "sDefaultContent": '', "sClass": "action" },//sClass 表示给本列加class
+            ],
 
-        //"sAjaxDataProp": "",
-      "fnServerData": retrieveData           //获取数据的处理函数
-        //"fnDrawCallback": function (oSettings) {
-        //oSettings.sAjaxSource = "@Url.Content("~/Board/BoardList")";
-        //alert(oSettings.sAjaxSource);
-        //$('#gridTable').fnClearTable(0);
-        //$('#gridTable').fnDraw();
-        //}
-        //,"fnServerParams": function (aoData) {
-        //  aoData.push({ "name": "more_data", "value": "my_value" });
-        //}
+            //"sAjaxDataProp": "",
+            "fnServerData": retrieveData           //获取数据的处理函数
+            //"fnDrawCallback": function (oSettings) {
+            //oSettings.sAjaxSource = "@Url.Content("~/Board/BoardList")";
+            //alert(oSettings.sAjaxSource);
+            //$('#gridTable').fnClearTable(0);
+            //$('#gridTable').fnDraw();
+            //}
+            //,"fnServerParams": function (aoData) {
+            //  aoData.push({ "name": "more_data", "value": "my_value" });
+            //}
+        });
+
+        $("#btnQuery").click(function () {
+            gridTable.fnReloadAjax();
+        });
+
     });
 
-      $("#btnQuery").click(function () {
-          gridTable.fnReloadAjax();
-      });
+    function retrieveData(sSource, aoData, fnCallback) {
 
-  });
-
-  function retrieveData(sSource, aoData, fnCallback) {
-
-      var boardName = encodeURIComponent($("#txtBoardName").val());
-      var dateCreated = $("#txtDateCreated").val();
+        var boardName = encodeURIComponent($("#txtBoardName").val());
+        var dateCreated = $("#txtDateCreated").val();
 
 
-      //将客户名称加入参数数组
-      aoData.push({ "name": "BoardName", "value": boardName });
-      aoData.push({ "name": "DateCreated", "value": dateCreated });
+        //将客户名称加入参数数组
+        aoData.push({ "name": "BoardName", "value": boardName });
+        aoData.push({ "name": "DateCreated", "value": dateCreated });
 
-      //alert(JSON.stringify(aoData));
-      $.ajax({
-          "type": "get",
-          "contentType": "application/json",
-          "url": sSource,
+        //alert(JSON.stringify(aoData));
+        $.ajax({
+            "type": "get",
+            "contentType": "application/json",
+            "url": sSource,
+            "dataType": "json",
+            "data": JSON.stringify(aoData), //以json格式传递
+            "success": function (data) {
+                //alert(data.sEcho);
+                fnCallback(data); //服务器端返回的对象的returnObject部分是要求的格式
+            }
+        });
+    }
+
+    function del(e) {
+        $.ajax({
+            "type": "get",
+            "contentType": "application/json",
+            data: { id: e.id },
+            "url": "@Url.Content("~/Board/BoardDel")",
           "dataType": "json",
-          "data": JSON.stringify(aoData), //以json格式传递
-          "success": function (data) {
-              //alert(data.sEcho);
-              fnCallback(data); //服务器端返回的对象的returnObject部分是要求的格式
+          "async": false,
+          "success": function (response) {
+              if (response.success == true) {
+                  alert("删除数据成功！");
+                  gridTable.fnReloadAjax();
+              }
+              else
+                  alert(response.msg);
           }
       });
   }
 
-  function del(e) {
-      $.ajax({
-          "type": "get",
-          "contentType": "application/json",
-          data: { id: e.id },
-          "url": "@Url.Content("~/Board/BoardDel")",
-      "dataType": "json",
-      "async": false,
-      "success": function (response) {
-          if (response.success == true) {
-              alert("删除数据成功！");
-              gridTable.fnReloadAjax();
-          }
-          else
-              alert(response.msg);
-      }
-    });
+  function edit(e) {
+      var _url = "@Url.Content("~/Board/BoardEdit/")";
+    window.location.href = _url + e;
 }
-
-function edit(e) {
-    var _url = "@Url.Content("~/Board/BoardEdit/")";
-      window.location.href = _url + e;
-  }
 
 </script>

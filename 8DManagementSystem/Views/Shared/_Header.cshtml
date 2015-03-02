@@ -12,40 +12,44 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li class=""><a href="#">Home</a></li>
-                <li class="dropdown ">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">8D Workflow <span class="caret"></span></a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li><a href="~/EightDReport">ALL</a></li>
-                        <li><a href="html/8D/8DReportList.html">MSE1</a></li>
-                        <li><a href="#">MSE2</a></li>
-                        <li><a href="#">MSE3</a></li>
-                        <li><a href="#">MSE8</a></li>
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reports <span class="caret"></span></a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li><a href="#">Report1</a></li>
-                        <li><a href="#">Report2</a></li>
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Administration<span class="caret"></span></a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li class="dropdown-header">User center</li>
-                        <li><a href="@Url.Content("~/UserCenter/")">Users</a></li>
-                        <li><a href="@Url.Content("~/Board/")">8D Board Manage</a></li>
-                        <li><a href="@Url.Content("~/Role/")">Roles Manage</a></li>
-                        @*<li><a href="@Url.Content("~/Department/")">Departments</a></li>*@
-                        <li class="divider"></li>
-                        <li class="dropdown-header">Configuration</li>
-                        @*<li><a href="#">Enumerations</a></li>*@
-                        <li><a href="@Url.Content("~/DataDictionary/")">Dictionary</a></li>
-                        <li><a href="@Url.Content("~/Language/")">Languages</a></li>
-                        <li><a href="#">Settings</a></li>
-                    </ul>
-                </li>
+                <li class=""><a href="@Url.Content("~/Home/")">Home</a></li>
+                @if (ViewBag.UserView != null)
+                { 
+                    <li class="dropdown ">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">8D Workflow <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="@Url.Content("~/EightDReport/")">ALL</a></li>
+                            @if (ViewBag.UserView.Boards.Count > 0)
+                            {
+                                foreach (var item in ViewBag.UserView.Boards)
+                                {
+                                <li><a href="@Url.Content("~/EightDReport/Index?" + item.BoardGuid + "")">@item.BoardName</a></li>  
+                                }
+                            }
+                        </ul>
+                    </li>
+
+                            if (ViewBag.UserView.IsAdmin)
+                            {
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Administration<span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li class="dropdown-header">User center</li>
+                            <li><a href="@Url.Content("~/UserCenter/")">Users</a></li>
+                            <li><a href="@Url.Content("~/Board/")">8D Board Manage</a></li>
+                            <li><a href="@Url.Content("~/Role/")">Roles Manage</a></li>
+                            @*<li><a href="@Url.Content("~/Department/")">Departments</a></li>*@
+                            <li class="divider"></li>
+                            <li class="dropdown-header">Configuration</li>
+                            @*<li><a href="#">Enumerations</a></li>*@
+                            <li><a href="@Url.Content("~/DataDictionary/")">Dictionary</a></li>
+                            @*<li><a href="@Url.Content("~/Language/")">Languages</a></li>*@
+                            <li><a href="#">Settings</a></li>
+                        </ul>
+                    </li>
+                            }
+
+                }
                 <li><a href="#contact">Help</a></li>
             </ul>
             <ul class="navbar-right nav navbar-nav">

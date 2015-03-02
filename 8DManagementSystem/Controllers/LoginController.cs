@@ -27,10 +27,13 @@ namespace _8DManagementSystem.Controllers
         {
             bool success = false;
             bool keeping = false;
-            if (Request.Cookies["LoginCookies"] != null)
+            string requestUrl = Request.UrlReferrer.OriginalString;
+            
+            if (Request.Cookies["LoginCookie"] != null)
             {
+                requestUrl = Url.Action("Index", "Home");
                 success = true;
-                return Json(new { success = success, message = "成功" }, JsonRequestBehavior.AllowGet);
+                return Json(new { success = success, url = requestUrl, message = "成功" }, JsonRequestBehavior.AllowGet);
             }
 
             if (!string.IsNullOrEmpty(Request.Form["loginName"]) && !string.IsNullOrEmpty(Request.Form["passWord"]))
@@ -45,7 +48,7 @@ namespace _8DManagementSystem.Controllers
 
                 success = UserLogin(userName.Trim(), pwd, keeping);
 
-                string requestUrl = Request.UrlReferrer.OriginalString;
+                
                 if (requestUrl.Contains("?"))
                 {
                     requestUrl = requestUrl.Substring(requestUrl.IndexOf("?") + 1, requestUrl.Length - requestUrl.IndexOf("?") - 1);

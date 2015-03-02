@@ -5,9 +5,8 @@
 }
 
 <ol class="breadcrumb">
-    <li><a href="/8DReport/">Home</a></li>
-    <li><a href="/8DReport/Workflow">8D Workflow</a></li>
-    <li><a href="/8DReport/Workflow/MSE1">MSE1</a></li>
+    <li><a href="@Url.Content("~/Home/")">Home</a></li>
+    <li><a href="@Url.Content("~/EightDReport/")">8D Workflow</a></li>
     <li class="active">Assign 8D Report</li>
 </ol>
 
@@ -34,7 +33,6 @@
 <script type="text/javascript">
     function Submitt() {
 
-
         var formobj = document.getElementById("form0");
         var formdata = new FormData(formobj);
 
@@ -51,7 +49,7 @@
             success: function (data) {
                 if (data.success == true) {
                     flag = true;
-                    var url = "../../DataDictionary";
+                    var url = "../../EightDReport/";
                     //alert(url);
                     window.location.href = url;
                 }

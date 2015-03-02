@@ -64,11 +64,24 @@ namespace _8DManagementSystem.DAL
         /// <param name="createDate"></param>
         /// <param name="totalCount"></param>
         /// <returns></returns>
-        public IList<D_Report_Model> GetAllByPage(int startCount, int rowCount, Model.D_Board_Model boardName, string reportNo, string createDate, out int totalCount)
+        public IList<D_Report_Model> GetAllByPage(int startCount, int rowCount, List<Model.D_Board_Model> boardModel, string reportNo, string createDate, out int totalCount)
         {
             ICriteria ic = NhSession.CreateCriteria(typeof(D_Report_Model));
-            if (boardName != null)
-                ic.Add(Restrictions.Eq("ReportBoardGuid", boardName));
+            if (boardModel != null)
+            {
+                if (boardModel.Count > 0)
+                {
+                    ic.Add(Restrictions.In("ReportBoardGuid", boardModel));
+                }
+                else
+                {
+                    ic.Add(Restrictions.IsNull("ReportBoardGuid"));
+                }
+            }
+            else
+            {
+                ic.Add(Restrictions.IsNull("ReportBoardGuid"));
+            }
 
             if (!string.IsNullOrEmpty(reportNo))
                 ic.Add(Restrictions.Like("ReportNo", reportNo, MatchMode.Anywhere));

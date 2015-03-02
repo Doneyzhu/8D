@@ -18,11 +18,23 @@ namespace _8DManagementSystem.Controllers
         [LoginFilter()]
         public ActionResult Index()
         {
+            Models.ReportListQueryModel model = new ReportListQueryModel();
+            string boardId = Request.QueryString.Count == 0 ? string.Empty : Request.QueryString[0].ToString();
+            if (!string.IsNullOrEmpty(boardId))
+            {
+                if (UserView.Boards.Exists(m => m.BoardGuid.ToString() == boardId))
+                {
+                    model.BoardGuids += boardId;
+                    model.BoardName = UserView.Boards.Find(m => m.BoardGuid.ToString() == boardId).BoardName;
+                }
+                else
+                    model.BoardGuids = string.Empty;
+            }
 
-            return View();
+            return View(model);
         }
 
-
+        [LoginFilter()]
         public ActionResult ReportList()
         {
             #region 查询条件
@@ -36,6 +48,7 @@ namespace _8DManagementSystem.Controllers
             string reportNo = string.Empty;
             string dicType = string.Empty;
             string dateCreated = string.Empty;
+            string boardGuids = string.Empty;
 
             JArray jsonarray = Newtonsoft.Json.JsonConvert.DeserializeObject<JArray>(jsondata);
 
@@ -54,8 +67,8 @@ namespace _8DManagementSystem.Controllers
                 if (jobj.Property("name").Value.ToString().Equals("ReportNo"))
                     reportNo = jobj.Property("value").Value.EToString();
 
-                //if (jobj.Property("name").Value.ToString().Equals("DicType"))
-                //    dicType = jobj.Property("value").Value.EToString();
+                if (jobj.Property("name").Value.ToString().Equals("BoardGuids"))
+                    boardGuids = jobj.Property("value").Value.EToString();
 
                 if (jobj.Property("name").Value.ToString().Equals("DateCreated"))
                     dateCreated = jobj.Property("value").Value.EToString();
@@ -63,10 +76,33 @@ namespace _8DManagementSystem.Controllers
             }
             #endregion
 
+            List<Model.D_Board_Model> boardModels = new List<Model.D_Board_Model>();
+            if (!string.IsNullOrEmpty(boardGuids))
+            {
+                string[] boards = boardGuids.Split(',');
+                foreach (var item in boards)
+                {
+                    if (!string.IsNullOrEmpty(item))
+                    {
+                        Model.D_Board_Model board = new DAL.D_Board_DAL().GetModel(new Guid(item));
+                        boardModels.Add(board);
+                    }
+
+                }
+            }
+            else
+            {
+                foreach (var item in UserView.Boards)
+                {
+                    Model.D_Board_Model board = new DAL.D_Board_DAL().GetModel(item.BoardGuid);
+                    boardModels.Add(board);
+                }
+
+            }
             //总条数
             int totalCount = 0;
 
-            IList<Model.D_Report_Model> list = new DAL.D_Report_DAL().GetAllByPage(startCount, rowCount, null, reportNo, dateCreated, out totalCount);
+            IList<Model.D_Report_Model> list = new DAL.D_Report_DAL().GetAllByPage(startCount, rowCount, boardModels, reportNo, dateCreated, out totalCount);
 
             int totalPage = totalCount % rowCount == 0 ? totalCount / rowCount : totalCount / rowCount + 1;
 
@@ -112,7 +148,7 @@ namespace _8DManagementSystem.Controllers
         public ActionResult Assign8DReport(Guid? Id)
         {
             ReportAssignModel model = new ReportAssignModel();
-            model.LoadBoardSelectList();
+            model.LoadBoardSelectList(UserView.Boards);
             model.LoadReportTypeSelectList();
 
             if (Id.HasValue)
@@ -190,7 +226,7 @@ namespace _8DManagementSystem.Controllers
         {
 
             ReportAssignModel model = new ReportAssignModel();
-            model.LoadBoardSelectList();
+            model.LoadBoardSelectList(UserView.Boards);
             model.LoadReportTypeSelectList();
             model.ReportHeader = new ReportHeaderModel();
             model.ReportD1 = new ReoprtD1Model();
