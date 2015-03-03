@@ -183,6 +183,7 @@ namespace _8DManagementSystem.Models
     public class ReoprtD3Data
     {
         public int Number { get; set; }
+        public string Remark { get; set; }
         public string Responsible { get; set; }
         public string Introduced { get; set; }
         public string Effectinve { get; set; }

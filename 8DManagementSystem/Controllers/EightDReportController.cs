@@ -284,6 +284,9 @@ namespace _8DManagementSystem.Controllers
                         model.ReportD2.Bosch_Description = dataModel.ReportD2.Bosch_Description;
                         model.ReportD2.Customer_Complaint = dataModel.ReportD2.Customer_Complaint;
                         model.ReportD2.No_of_complaint_parts = dataModel.ReportD2.No_of_complaint_parts;
+
+                        model.ReportD2.End_of_D2_Date = dataModel.ReportD2.End_of_D2_Date.HasValue ? dataModel.ReportD2.End_of_D2_Date.Value.ToString("dd/MM/yyyy") : "";
+
                     }
                     #endregion
 
@@ -485,6 +488,10 @@ namespace _8DManagementSystem.Controllers
                         else
                             dataModel.ReportD2.Manufacturing_Date = Convert.ToDateTime(model.ReportD2.Manufacturing_Date);
                         dataModel.ReportD2.No_of_complaint_parts = model.ReportD2.No_of_complaint_parts;
+                        if (string.IsNullOrEmpty(model.ReportD2.End_of_D2_Date))
+                            dataModel.ReportD2.End_of_D2_Date = null;
+                        else
+                            dataModel.ReportD2.End_of_D2_Date = Convert.ToDateTime(model.ReportD2.End_of_D2_Date);
 
                         success = new DAL.D_Report_DAL().Save(dataModel);
 
@@ -524,10 +531,14 @@ namespace _8DManagementSystem.Controllers
                         string responsible = Request.Form["responsible"].ToString();
                         string introduced = Request.Form["introduced"].ToString();
                         string effectinve = Request.Form["effectinve"].ToString();
+                        string remark = Request.Form["remark"].ToString();
                         string[] Responsible = responsible.Split(',');
                         string[] Introduced = introduced.Split(',');
                         string[] Effectinve = effectinve.Split(',');
+                        string[] Remark = remark.Split(',');
                         Models.ReoprtD3Model resportD3Model = new ReoprtD3Model();
+                        resportD3Model.ResponsibleMain = model.ReportD3.ResponsibleMain;
+                        resportD3Model.MeasureDate = model.ReportD3.MeasureDate;
 
                         for (int i = 0; i < Responsible.Length; i++)
                         {
@@ -536,6 +547,7 @@ namespace _8DManagementSystem.Controllers
                             data.Responsible = Responsible[i];
                             data.Introduced = Introduced[i];
                             data.Effectinve = Effectinve[i];
+                            data.Remark = Remark[i];
                             resportD3Model.D3DataList.Add(data);
                         }
 
