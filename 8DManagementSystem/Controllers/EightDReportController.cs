@@ -8,6 +8,7 @@ using _8DManagementSystem.Models;
 using _8DManagementSystem.Common;
 using Newtonsoft.Json.Linq;
 using System.Collections;
+using _8DManagementSystem.Model;
 
 namespace _8DManagementSystem.Controllers
 {
@@ -110,17 +111,37 @@ namespace _8DManagementSystem.Controllers
             ArrayList rows = new ArrayList();
             foreach (var item in list)
             {
+                string detail = "<li><a href=\"" + Url.Content("~/EightDReport/ReportEdit") + "/" + item.ReportGuid + "\"><span class=\"glyphicon glyphicon-edit\"></span> Show Detail</a></li>";
+                string approve = string.Empty;
+                string cancelApprove = string.Empty;
+                string remove = "<li><a href=\"#\" id=\"" + item.ReportGuid + "\" onclick=\"del(this)\"><span class=\"glyphicon glyphicon-remove-circle\"></span> Remove</a></li>";
+                if (item.ReportStatus != (int)Model.ReportStatusEnum.Completed &&
+                    item.ReportStatus != 0)
+                {
+                    approve = "<li><a href=\"" + Url.Content("~/ReportApprove/Approve") + "/" + item.ReportGuid + "\"><span class=\"glyphicon glyphicon-cog\"></span> Approve</a></li>";
+                    detail = string.Empty;
+                    remove = string.Empty;
+                }
+
+
+                if (item.ReportCancelStatus != (int)Model.ReportCancelStatusEnum.Completed &&
+                    item.ReportCancelStatus != 0)
+                {
+                    cancelApprove = "<li><a href=\"" + Url.Content("~/ReportApprove/CancelApprove") + "/" + item.ReportGuid + "\"><span class=\"glyphicon glyphicon-export\"></span> Cancel Approve</a></li>";
+                    detail = string.Empty;
+                    remove = string.Empty;
+                }
+
+
                 rows.Add(new
                 {
                     Operation = string.Format("<div class=\"btn-group\">" +
                             "<button type=\"button\" class=\"btn btn-sm btn-primary dropdown-toggle\" data-toggle=\"dropdown\" aria-expanded=\"false\">" +
                                 "Action <span class=\"caret\"></span></button>" +
                             "<ul class=\"dropdown-menu\" role=\"menu\">" +
-                                "<li><a href=\"" + Url.Content("~/EightDReport/ReportEdit") + "/" + item.ReportGuid + "\"><span class=\"glyphicon glyphicon-edit\"></span> Show Detail</a></li>" +
-                                "<li><a href=\"" + Url.Content("~/ReportApprove/Approve") + "/" + item.ReportGuid + "\"><span class=\"glyphicon glyphicon-cog\"></span> Approve</a></li>" +
-                                "<li><a href=\"" + Url.Content("~/ReportApprove/CancelApprove") + "/" + item.ReportGuid + "\"><span class=\"glyphicon glyphicon-export\"></span> Cancel Approve</a></li>" +
+                            detail + approve + cancelApprove +
                                 "<li class=\"divider\"></li>" +
-                                "<li><a href=\"#\" id=\"" + item.ReportGuid + "\" onclick=\"del(this)\"><span class=\"glyphicon glyphicon-remove-circle\"></span> Remove</a></li>" +
+                                 remove +
                             "</ul></div>"),
                     ID = item.ReportGuid,
                     ReportTitle = item.ReportTitle,
@@ -270,10 +291,24 @@ namespace _8DManagementSystem.Controllers
                     #endregion
 
                     #region ReportD1
-                    model.ReportD1.Team_Leader = dataModel.Team_Leader;
-                    model.ReportD1.Sponaor = dataModel.Sponaor;
+                    if (!string.IsNullOrEmpty(dataModel.Team_Leader))
+                        model.ReportD1.Team_Leader = Newtonsoft.Json.JsonConvert.DeserializeObject<Models.D_User>(dataModel.Team_Leader).UserLoginName;
+
+                    if (!string.IsNullOrEmpty(dataModel.Sponaor))
+                        model.ReportD1.Sponaor = Newtonsoft.Json.JsonConvert.DeserializeObject<Models.D_User>(dataModel.Sponaor).UserLoginName;
+
+
                     model.ReportD1.Coordinator = dataModel.Coordinator;
-                    model.ReportD1.Team_Member = dataModel.Team_Member;
+                    if (!string.IsNullOrEmpty(dataModel.Team_Member))
+                    {
+                        List<Models.D_User> users = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Models.D_User>>(dataModel.Team_Member);
+                        foreach (var item in users)
+                        {
+                            model.ReportD1.Team_Member += item.UserLoginName + ";";
+                        }
+                        model.ReportD1.Team_Member = model.ReportD1.Team_Member.TrimEnd(';');
+                    }
+
                     #endregion
 
                     #region ReportD2
@@ -354,11 +389,24 @@ namespace _8DManagementSystem.Controllers
                     if (dataModel.WorkFlow_Models.Count > 0)
                     {
                         model.WorkFlow.EightD_WorkFlowGuid = dataModel.WorkFlow_Models[0].EightD_WorkFlowGuid;
-                        model.WorkFlow.Additional_Approver = dataModel.WorkFlow_Models[0].Additional_Approver;
+                        if (!string.IsNullOrEmpty(dataModel.WorkFlow_Models[0].Additional_Approver))
+                        {
+                            List<Models.D_User> users = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Models.D_User>>(dataModel.WorkFlow_Models[0].Additional_Approver);
+                            foreach (var item in users)
+                            {
+                                model.WorkFlow.Additional_Approver += item.UserLoginName + ";";
+                            }
+                            model.WorkFlow.Additional_Approver = model.WorkFlow.Additional_Approver.TrimEnd(';');
+
+                        }
+
                         model.WorkFlow.Comments = dataModel.WorkFlow_Models[0].Comments;
                         model.WorkFlow.Sponsor = dataModel.WorkFlow_Models[0].Sponsor;
                         model.WorkFlow.Team_Leader = dataModel.WorkFlow_Models[0].Team_Leader;
                     }
+
+                    model.ReportStatus = dataModel.ReportStatus;
+                    model.ReportCancelStatus = dataModel.ReportCancelStatus;
                 }
 
             }
@@ -436,10 +484,75 @@ namespace _8DManagementSystem.Controllers
 
                     if (dataModel != null)
                     {
-                        dataModel.Team_Leader = model.ReportD1.Team_Leader;
-                        dataModel.Sponaor = model.ReportD1.Sponaor;
+
+                        if (!string.IsNullOrEmpty(model.ReportD1.Team_Leader))
+                        {
+                            string[] leaderLoginName = model.ReportD1.Team_Leader.TrimEnd(';').Split(';');
+                            if (leaderLoginName.Count() > 1)
+                            {
+                                return Json(new { success = success, message = "Team_Leader 只能是一个人！" });
+                            }
+                            Model.D_User_Model leader = new DAL.D_User_DAL().GetUserByUserLoginName(model.ReportD1.Team_Leader.TrimEnd(';'));
+
+                            D_User user = new D_User();
+                            user.UserGuid = leader.UserGuid;
+                            user.UserLoginName = leader.UserLoginName;
+                            user.UserName = leader.UserName;
+                            dataModel.Team_Leader = Newtonsoft.Json.JsonConvert.SerializeObject(user);
+
+                        }
+                        else
+                        {
+                            dataModel.Team_Leader = model.ReportD1.Team_Leader;
+                        }
+
+                        if (!string.IsNullOrEmpty(model.ReportD1.Sponaor))
+                        {
+                            string[] loginName = model.ReportD1.Sponaor.TrimEnd(';').Split(';');
+                            if (loginName.Count() > 1)
+                            {
+                                return Json(new { success = success, message = "Sponaor 只能是一个人！" });
+                            }
+                            Model.D_User_Model sponaor = new DAL.D_User_DAL().GetUserByUserLoginName(model.ReportD1.Sponaor.TrimEnd(';'));
+
+                            D_User user = new D_User();
+                            user.UserGuid = sponaor.UserGuid;
+                            user.UserLoginName = sponaor.UserLoginName;
+                            user.UserName = sponaor.UserName;
+                            dataModel.Sponaor = Newtonsoft.Json.JsonConvert.SerializeObject(user);
+                        }
+                        else
+                        {
+                            dataModel.Sponaor = model.ReportD1.Sponaor;
+                        }
+
                         dataModel.Coordinator = model.ReportD1.Coordinator;
-                        dataModel.Team_Member = model.ReportD1.Team_Member;
+
+                        if (!string.IsNullOrEmpty(model.ReportD1.Team_Member))
+                        {
+                            string[] loginName = model.ReportD1.Team_Member.TrimEnd(';').Split(';');
+
+                            List<D_User> userList = new List<D_User>();
+                            foreach (var item in loginName)
+                            {
+                                if (!string.IsNullOrEmpty(item))
+                                {
+                                    Model.D_User_Model member = new DAL.D_User_DAL().GetUserByUserLoginName(item);
+                                    D_User user = new D_User();
+                                    user.UserGuid = member.UserGuid;
+                                    user.UserLoginName = member.UserLoginName;
+                                    user.UserName = member.UserName;
+                                    userList.Add(user);
+                                }
+                            }
+                            dataModel.Team_Member = Newtonsoft.Json.JsonConvert.SerializeObject(userList);
+
+                        }
+                        else
+                        {
+                            dataModel.Team_Member = model.ReportD1.Team_Member;
+                        }
+
 
                         success = new DAL.D_Report_DAL().Save(dataModel);
 
@@ -979,7 +1092,31 @@ namespace _8DManagementSystem.Controllers
                         if (wfModel == null)
                             wfModel = new Model.D_WorkFlow_Model();
 
-                        wfModel.Additional_Approver = model.WorkFlow.Additional_Approver;
+                        if (!string.IsNullOrEmpty(model.WorkFlow.Additional_Approver))
+                        {
+                            string[] loginName = model.WorkFlow.Additional_Approver.TrimEnd(';').Split(';');
+
+                            List<D_User> userList = new List<D_User>();
+                            foreach (var item in loginName)
+                            {
+                                if (!string.IsNullOrEmpty(item))
+                                {
+                                    Model.D_User_Model approver = new DAL.D_User_DAL().GetUserByUserLoginName(item);
+                                    D_User user = new D_User();
+                                    user.UserGuid = approver.UserGuid;
+                                    user.UserLoginName = approver.UserLoginName;
+                                    user.UserName = approver.UserName;
+                                    userList.Add(user);
+                                }
+                            }
+
+                            wfModel.Additional_Approver = Newtonsoft.Json.JsonConvert.SerializeObject(userList);
+                        }
+                        else
+                        {
+                            wfModel.Additional_Approver = model.WorkFlow.Additional_Approver;
+                        }
+
                         wfModel.Comments = model.WorkFlow.Comments;
                         wfModel.Sponsor = model.WorkFlow.Sponsor;
                         wfModel.Team_Leader = model.WorkFlow.Team_Leader;
@@ -1004,7 +1141,6 @@ namespace _8DManagementSystem.Controllers
             }
         }
         #endregion
-
 
 
         [LoginFilter()]
@@ -1073,6 +1209,123 @@ namespace _8DManagementSystem.Controllers
 
 
         }
+
+
+        #region 进入流程
+        public ActionResult SubmitReportToApprove(ReportAssignModel model)
+        {
+            bool success = false;
+
+            try
+            {
+                Model.D_Report_Model dataModel = null;
+                if (model.ReportAssignGuid == Guid.Empty)
+                {
+                    return Json(new { success = success, message = "请先创建Report主体" });
+                }
+                else
+                {
+                    dataModel = new DAL.D_Report_DAL().GetModel(model.ReportAssignGuid);
+
+                    if (dataModel != null)
+                    {
+                        if (string.IsNullOrEmpty(dataModel.Sponaor))
+                        {
+                            return Json(new { success = success, message = "请设置Sponaor" });
+                        }
+
+                        if (dataModel.WorkFlow_Models.Count == 0)
+                        {
+                            return Json(new { success = success, message = "请设置Additional_Approver" });
+                        }
+
+                        if (string.IsNullOrEmpty(dataModel.WorkFlow_Models[0].Additional_Approver))
+                        {
+                            return Json(new { success = success, message = "请设置Additional_Approver" });
+                        }
+
+                        if (dataModel.ReportStatus == 0 && dataModel.ReportCancelStatus == 0)
+                        {
+                            dataModel.ReportStatus = (int)ReportStatusEnum.TeamLeader;
+                            dataModel.CurrentStepUser = dataModel.Team_Leader;
+
+                            success = new DAL.D_Report_DAL().Save(dataModel);
+                            return Json(new { success = success, message = "成功" });
+                        }
+                        else
+                        {
+                            return Json(new { success = success, message = "本报表已在相关流程中！" });
+                        }
+
+                    }
+                    else
+                    {
+                        return Json(new { success = success, message = "报表不存在！" });
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = success, message = ex.Message });
+            }
+        }
+
+        public ActionResult SubmitReportToCancelApprove(ReportAssignModel model)
+        {
+            bool success = false;
+
+            try
+            {
+                Model.D_Report_Model dataModel = null;
+                if (model.ReportAssignGuid == Guid.Empty)
+                {
+                    return Json(new { success = success, message = "请先创建Report主体" });
+                }
+                else
+                {
+                    dataModel = new DAL.D_Report_DAL().GetModel(model.ReportAssignGuid);
+
+                    if (dataModel != null)
+                    {
+
+                        if (string.IsNullOrEmpty(dataModel.ResponsibleQE))
+                        {
+                            return Json(new { success = success, message = "请设置QE" });
+                        }
+
+                        if (string.IsNullOrEmpty(dataModel.Sponaor))
+                        {
+                            return Json(new { success = success, message = "请设置Sponaor" });
+                        }
+
+                        if (dataModel.ReportStatus == 0 && dataModel.ReportCancelStatus == 0)
+                        {
+                            dataModel.ReportCancelStatus = (int)ReportStatusEnum.TeamLeader;
+                            dataModel.CurrentStepUser = dataModel.Team_Leader;
+                            success = new DAL.D_Report_DAL().Save(dataModel);
+                            return Json(new { success = success, message = "成功" });
+                        }
+                        else
+                        {
+                            return Json(new { success = success, message = "本报表已在相关流程中！" });
+                        }
+
+                    }
+                    else
+                    {
+                        return Json(new { success = success, message = "报表不存在！" });
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = success, message = ex.Message });
+            }
+        }
+        #endregion
+
 
     }
 }

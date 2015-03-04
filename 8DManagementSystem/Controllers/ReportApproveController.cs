@@ -44,6 +44,7 @@ namespace _8DManagementSystem.Controllers
 
                 if (dataModel != null)
                 {
+
                     #region MyRegion
                     #region 表头
                     model.ReportAssignGuid = dataModel.ReportGuid;
@@ -71,10 +72,24 @@ namespace _8DManagementSystem.Controllers
                     #endregion
 
                     #region ReportD1
-                    model.ReportD1.Team_Leader = dataModel.Team_Leader;
-                    model.ReportD1.Sponaor = dataModel.Sponaor;
+                    if (!string.IsNullOrEmpty(dataModel.Team_Leader))
+                        model.ReportD1.Team_Leader = Newtonsoft.Json.JsonConvert.DeserializeObject<Models.D_User>(dataModel.Team_Leader).UserLoginName;
+
+                    if (!string.IsNullOrEmpty(dataModel.Sponaor))
+                        model.ReportD1.Sponaor = Newtonsoft.Json.JsonConvert.DeserializeObject<Models.D_User>(dataModel.Sponaor).UserLoginName;
+
+
                     model.ReportD1.Coordinator = dataModel.Coordinator;
-                    model.ReportD1.Team_Member = dataModel.Team_Member;
+                    if (!string.IsNullOrEmpty(dataModel.Team_Member))
+                    {
+                        List<Models.D_User> users = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Models.D_User>>(dataModel.Team_Member);
+                        foreach (var item in users)
+                        {
+                            model.ReportD1.Team_Member += item.UserLoginName + ";";
+                        }
+                        model.ReportD1.Team_Member = model.ReportD1.Team_Member.TrimEnd(';');
+                    }
+
                     #endregion
 
                     #region ReportD2
@@ -155,11 +170,32 @@ namespace _8DManagementSystem.Controllers
                     if (dataModel.WorkFlow_Models.Count > 0)
                     {
                         model.WorkFlow.EightD_WorkFlowGuid = dataModel.WorkFlow_Models[0].EightD_WorkFlowGuid;
-                        model.WorkFlow.Additional_Approver = dataModel.WorkFlow_Models[0].Additional_Approver;
+                        if (!string.IsNullOrEmpty(dataModel.WorkFlow_Models[0].Additional_Approver))
+                        {
+                            List<Models.D_User> users = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Models.D_User>>(dataModel.WorkFlow_Models[0].Additional_Approver);
+                            foreach (var item in users)
+                            {
+                                model.WorkFlow.Additional_Approver += item.UserLoginName + ";";
+                            }
+                            model.WorkFlow.Additional_Approver = model.WorkFlow.Additional_Approver.TrimEnd(';');
+
+                        }
+
                         model.WorkFlow.Comments = dataModel.WorkFlow_Models[0].Comments;
                         model.WorkFlow.Sponsor = dataModel.WorkFlow_Models[0].Sponsor;
                         model.WorkFlow.Team_Leader = dataModel.WorkFlow_Models[0].Team_Leader;
                     }
+
+                    model.ReportCancelStatus = dataModel.ReportCancelStatus;
+                    model.ReportStatus = dataModel.ReportStatus;
+
+                    if (!string.IsNullOrEmpty(dataModel.CurrentStepUser))
+                        model.CurrentStepUser = Newtonsoft.Json.JsonConvert.DeserializeObject<Models.D_User>(dataModel.CurrentStepUser);
+
+                    if (!string.IsNullOrEmpty(dataModel.PreStepUser))
+                        model.PreStepUser = Newtonsoft.Json.JsonConvert.DeserializeObject<Models.D_User>(dataModel.PreStepUser);
+
+                    model.PreStepType = dataModel.PreStepType;
                 }
 
                 logModel.ReportModel = model;
@@ -179,36 +215,97 @@ namespace _8DManagementSystem.Controllers
                 Model.D_Report_Model dataModel = NhSession.Get<Model.D_Report_Model>(model.ReportGuid);
                 if (dataModel != null)
                 {
+                    if (dataModel.ReportStatus == 0)
+                        return Json(new { success = success, message = "请先提交本8D Report" }, JsonRequestBehavior.AllowGet);
+
                     if (!string.IsNullOrEmpty(type))
                     {
                         Model.D_WorkFlowLog_Model logModel = new D_WorkFlowLog_Model();
                         switch (type)
                         {
                             case "1":
-                                if (dataModel.ReportStatus == (int)ReportStatusEnum.TeamLeader ||
-                                    dataModel.ReportStatus == 0)
+                                if (dataModel.ReportStatus == (int)ReportStatusEnum.TeamLeader)
+                                {
                                     dataModel.ReportStatus = (int)ReportStatusEnum.Sponsor;
+                                    dataModel.CurrentStepUser = dataModel.Sponaor;
+                                }
                                 else if (dataModel.ReportStatus == (int)ReportStatusEnum.Sponsor)
+                                {
                                     dataModel.ReportStatus = (int)ReportStatusEnum.Approve;
+
+                                    List<Models.D_User> list = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Models.D_User>>(dataModel.WorkFlow_Models[0].Additional_Approver);
+
+                                    dataModel.CurrentStepUser = Newtonsoft.Json.JsonConvert.SerializeObject(list[0]);
+                                }
                                 else if (dataModel.ReportStatus == (int)ReportStatusEnum.Approve)
+                                {
                                     dataModel.ReportStatus = (int)ReportStatusEnum.Completed;
+                                }
+                                dataModel.PreStepUser = string.Empty;
+                                dataModel.PreStepType = string.Empty;
 
                                 logModel.OperateType = "Approve";
                                 break;
                             case "2":
                                 dataModel.ReportStatus = (int)ReportStatusEnum.TeamLeader;
+                                if (model.ReportStatus == (int)ReportStatusEnum.Sponsor)
+                                {
+                                    dataModel.PreStepType = ((int)ReportStatusEnum.Sponsor).ToString();
+
+                                    dataModel.CurrentStepUser = dataModel.Team_Leader;
+
+                                    Models.D_User preStepUser = new Models.D_User();
+                                    preStepUser.UserGuid = UserView.UserGuid;
+                                    preStepUser.UserLoginName = UserView.UserLoginName;
+                                    preStepUser.UserName = UserView.UserName;
+                                    dataModel.PreStepUser = Newtonsoft.Json.JsonConvert.SerializeObject(preStepUser);
+                                }
+                                if (model.ReportStatus == (int)ReportStatusEnum.Approve)
+                                {
+                                    dataModel.PreStepType = ((int)ReportStatusEnum.Approve).ToString();
+
+                                    dataModel.CurrentStepUser = dataModel.Team_Leader;
+
+                                    Models.D_User preStepUser = new Models.D_User();
+                                    preStepUser.UserGuid = UserView.UserGuid;
+                                    preStepUser.UserLoginName = UserView.UserLoginName;
+                                    preStepUser.UserName = UserView.UserName;
+                                    dataModel.PreStepUser = Newtonsoft.Json.JsonConvert.SerializeObject(preStepUser);
+                                }
+
+
                                 logModel.OperateType = "Review";
                                 break;
                             case "3":
-                                dataModel.ReportStatus = (int)ReportStatusEnum.Sponsor;
-                                logModel.OperateType = "Submit Review To Sponsor";
+                                if (dataModel.PreStepType == ((int)ReportStatusEnum.Sponsor).ToString())
+                                {
+                                    dataModel.ReportStatus = (int)ReportStatusEnum.Sponsor;
+                                    dataModel.CurrentStepUser = dataModel.PreStepUser;
+                                    dataModel.PreStepUser = string.Empty;
+                                    dataModel.PreStepType = string.Empty;
+
+                                    logModel.OperateType = "Submit Review To Sponsor";
+                                }
+                                if (dataModel.PreStepType == ((int)ReportStatusEnum.Approve).ToString())
+                                {
+                                    dataModel.ReportStatus = (int)ReportStatusEnum.Approve;
+                                    dataModel.CurrentStepUser = dataModel.PreStepUser;
+                                    dataModel.PreStepUser = string.Empty;
+                                    dataModel.PreStepType = string.Empty;
+
+                                    logModel.OperateType = "Submit Review To AA";
+                                }
+
                                 break;
-                            case "4":
-                                dataModel.ReportStatus = (int)ReportStatusEnum.Approve;
-                                logModel.OperateType = "Submit Review To AA";
-                                break;
+                            //case "4":
+                            //    dataModel.ReportStatus = (int)ReportStatusEnum.Approve;
+                            //    logModel.OperateType = "Submit Review To AA";
+                            //    break;
                             case "5":
                                 dataModel.ReportStatus = (int)ReportStatusEnum.TeamLeader;
+                                dataModel.CurrentStepUser = dataModel.Team_Leader;
+                                dataModel.PreStepType = "";
+                                dataModel.PreStepUser = "";
                                 logModel.OperateType = "Reject";
                                 break;
 
@@ -266,6 +363,7 @@ namespace _8DManagementSystem.Controllers
 
                 if (dataModel != null)
                 {
+
                     #region MyRegion
                     #region 表头
                     model.ReportAssignGuid = dataModel.ReportGuid;
@@ -293,10 +391,24 @@ namespace _8DManagementSystem.Controllers
                     #endregion
 
                     #region ReportD1
-                    model.ReportD1.Team_Leader = dataModel.Team_Leader;
-                    model.ReportD1.Sponaor = dataModel.Sponaor;
+                    if (!string.IsNullOrEmpty(dataModel.Team_Leader))
+                        model.ReportD1.Team_Leader = Newtonsoft.Json.JsonConvert.DeserializeObject<Models.D_User>(dataModel.Team_Leader).UserLoginName;
+
+                    if (!string.IsNullOrEmpty(dataModel.Sponaor))
+                        model.ReportD1.Sponaor = Newtonsoft.Json.JsonConvert.DeserializeObject<Models.D_User>(dataModel.Sponaor).UserLoginName;
+
+
                     model.ReportD1.Coordinator = dataModel.Coordinator;
-                    model.ReportD1.Team_Member = dataModel.Team_Member;
+                    if (!string.IsNullOrEmpty(dataModel.Team_Member))
+                    {
+                        List<Models.D_User> users = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Models.D_User>>(dataModel.Team_Member);
+                        foreach (var item in users)
+                        {
+                            model.ReportD1.Team_Member += item.UserLoginName + ";";
+                        }
+                        model.ReportD1.Team_Member = model.ReportD1.Team_Member.TrimEnd(';');
+                    }
+
                     #endregion
 
                     #region ReportD2
@@ -377,11 +489,32 @@ namespace _8DManagementSystem.Controllers
                     if (dataModel.WorkFlow_Models.Count > 0)
                     {
                         model.WorkFlow.EightD_WorkFlowGuid = dataModel.WorkFlow_Models[0].EightD_WorkFlowGuid;
-                        model.WorkFlow.Additional_Approver = dataModel.WorkFlow_Models[0].Additional_Approver;
+                        if (!string.IsNullOrEmpty(dataModel.WorkFlow_Models[0].Additional_Approver))
+                        {
+                            List<Models.D_User> users = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Models.D_User>>(dataModel.WorkFlow_Models[0].Additional_Approver);
+                            foreach (var item in users)
+                            {
+                                model.WorkFlow.Additional_Approver += item.UserLoginName + ";";
+                            }
+                            model.WorkFlow.Additional_Approver = model.WorkFlow.Additional_Approver.TrimEnd(';');
+
+                        }
+
                         model.WorkFlow.Comments = dataModel.WorkFlow_Models[0].Comments;
                         model.WorkFlow.Sponsor = dataModel.WorkFlow_Models[0].Sponsor;
                         model.WorkFlow.Team_Leader = dataModel.WorkFlow_Models[0].Team_Leader;
                     }
+
+                    model.ReportCancelStatus = dataModel.ReportCancelStatus;
+                    model.ReportStatus = dataModel.ReportStatus;
+
+                    if (!string.IsNullOrEmpty(dataModel.CurrentStepUser))
+                        model.CurrentStepUser = Newtonsoft.Json.JsonConvert.DeserializeObject<Models.D_User>(dataModel.CurrentStepUser);
+
+                    if (!string.IsNullOrEmpty(dataModel.PreStepUser))
+                        model.PreStepUser = Newtonsoft.Json.JsonConvert.DeserializeObject<Models.D_User>(dataModel.PreStepUser);
+
+                    model.PreStepType = dataModel.PreStepType;
                 }
 
                 logModel.ReportModel = model;
@@ -401,19 +534,24 @@ namespace _8DManagementSystem.Controllers
                 Model.D_Report_Model dataModel = NhSession.Get<Model.D_Report_Model>(model.ReportGuid);
                 if (dataModel != null)
                 {
+                    if (dataModel.ReportCancelStatus == 0)
+                        return Json(new { success = success, message = "请先提交本8D Report" }, JsonRequestBehavior.AllowGet);
+
                     if (!string.IsNullOrEmpty(type))
                     {
                         Model.D_WorkFlowLog_Model logModel = new D_WorkFlowLog_Model();
                         switch (type)
                         {
                             case "1":
-                                if (dataModel.ReportCancelStatus == (int)ReportCancelStatusEnum.TeamLeader ||
-                                    dataModel.ReportCancelStatus == 0)
+                                if (dataModel.ReportCancelStatus == (int)ReportCancelStatusEnum.TeamLeader)
                                     dataModel.ReportCancelStatus = (int)ReportCancelStatusEnum.QE;
                                 else if (dataModel.ReportCancelStatus == (int)ReportCancelStatusEnum.QE)
                                     dataModel.ReportCancelStatus = (int)ReportCancelStatusEnum.Sponsor;
                                 else if (dataModel.ReportCancelStatus == (int)ReportStatusEnum.Sponsor)
                                     dataModel.ReportCancelStatus = (int)ReportStatusEnum.Completed;
+
+                                dataModel.PreStepUser = string.Empty;
+                                dataModel.PreStepType = string.Empty;
 
                                 logModel.OperateType = "Approve";
                                 break;

@@ -217,6 +217,55 @@ namespace _8DManagementSystem.Controllers
         #endregion
 
         #region CheckUser
+        public ActionResult CheckUserOne()
+        {
+            bool success = false;
+            string msg = string.Empty;
+            try
+            {
+                String UserLoginNames = Server.UrlDecode((new System.IO.StreamReader(Request.InputStream)).ReadToEnd());
+                if (!string.IsNullOrEmpty(UserLoginNames))
+                {
+                    UserLoginNameClass userLogin = Newtonsoft.Json.JsonConvert.DeserializeObject<UserLoginNameClass>(UserLoginNames);
+                    if (!string.IsNullOrEmpty(userLogin.UserLoginNames))
+                    {
+                        string[] loginName = userLogin.UserLoginNames.TrimEnd(';').Split(';');
+                        if (loginName.Count() > 1)
+                        {
+                            return Json(new { success = success, message = "只能有一个用户！" }, JsonRequestBehavior.AllowGet);
+                        }
+
+                        List<string> loginNameList = new List<string>();
+                        foreach (var item in loginName)
+                        {
+                            if (!string.IsNullOrEmpty(item))
+                            {
+                                loginNameList.Add(item);
+                            }
+                        }
+
+                        IList<Model.D_User_Model> users = new DAL.D_User_DAL().GetUserByUserLoginName(loginNameList);
+                        foreach (var item in users)
+                        {
+                            msg += item.UserLoginName + ";";
+                        }
+                        msg.TrimEnd(';');
+                    }
+                    success = true;
+                }
+
+
+                return Json(new { success = success, message = msg }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
+            {
+                msg = "参数错误";
+                return Json(new { success = success, message = msg }, JsonRequestBehavior.AllowGet);
+            }
+
+        }
+
+
         public ActionResult CheckUser()
         {
             bool success = false;
@@ -244,7 +293,7 @@ namespace _8DManagementSystem.Controllers
                         {
                             msg += item.UserLoginName + ";";
                         }
-
+                        msg.TrimEnd(';');
                     }
                     success = true;
                 }

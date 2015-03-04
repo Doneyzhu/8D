@@ -108,14 +108,91 @@
 
 </script>
 
+<script type="text/javascript">
+    function SubmitReportToApprove() {
+        var formobj = document.getElementById("formSubmit");
+        var formdata = new FormData(formobj);
+        var flag = false;
+        $.ajax({
+            type: "post",
+            //dataType: "json",
+            "url": "@Url.Content("~/EightDReport/SubmitReportToApprove/")",
+            data: formdata,
+            processData: false,
+            contentType: false,
+            async: false,
+            //jsonp: 'callback',
+            //jsonpCallback: 'callbackReportCreate',
+            success: function (data) {
+                if (data.success == true) {
+                    alert(data.message);
+                    window.location.href = '../EightDReport';
+                }
+                else {
+                    alert(data.message);
+                }
+            },
+            error: function (data) {
+                alert(data.message);
+            }
+        });
+        return flag;
+    }
+
+    function SubmitReportToCancelApprove() {
+        var formobj = document.getElementById("formSubmit");
+        var formdata = new FormData(formobj);
+        var flag = false;
+        $.ajax({
+            type: "post",
+            //dataType: "json",
+            "url": "@Url.Content("~/EightDReport/SubmitReportToCancelApprove/")",
+            data: formdata,
+            processData: false,
+            contentType: false,
+            async: false,
+            //jsonp: 'callback',
+            //jsonpCallback: 'callbackReportCreate',
+            success: function (data) {
+                if (data.success == true) {
+                    alert(data.message);
+                    window.location.href = '../EightDReport';
+                }
+                else {
+                    alert(data.message);
+                }
+            },
+            error: function (data) {
+                alert(data.message);
+            }
+        });
+        return flag;
+    }
+</script>
+
 <div class="panel panel-info">
     <div class="panel-heading">
-        @*<button type="button" class="btn btn-primary">
-          <span class="glyphicon glyphicon-plus-sign"></span>Create new user
-      </button>*@
-        <button type="button" class="btn btn-default collapsed" data-toggle="collapse" data-target="#help" aria-expanded="false" aria-controls="demo">
-            <span class="glyphicon glyphicon-question-sign"></span>Help <span class="caret"></span>
-        </button>
+        @using (Ajax.BeginForm("", "EightDReport", null, new AjaxOptions() { HttpMethod = "Post", OnSuccess = "Back", OnComplete = "Back" }, new { id = "formSubmit", enctype = "multipart/form-data", @class = "form-horizontal", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(m => m.ReportAssignGuid)
+            
+            <button type="button" class="btn btn-default collapsed" data-toggle="collapse" data-target="#help" aria-expanded="false" aria-controls="demo">
+                <span class="glyphicon glyphicon-question-sign"></span>Help <span class="caret"></span>
+            </button>
+            
+            if (Model.ReportStatus == 0 && Model.ReportCancelStatus == 0)
+            {
+            <button type="button" class="btn btn-primary" onclick="SubmitReportToApprove()">
+                <span class="glyphicon glyphicon-plus-sign"></span>Submit To Approve
+            </button>
+           
+            <button type="button" class="btn btn-primary" onclick="SubmitReportToCancelApprove()">
+                <span class="glyphicon glyphicon-plus-sign"></span>Submit To Cancel Approve
+            </button>
+            }
+        }
+
     </div>
     <div id="help" class="panel-body collapse" aria-expanded="false" style="height: 30px;">
         <p class="lead">8D Report Edit Board ：用于编辑 8D Board</p>
@@ -446,19 +523,19 @@
                                                     $("#ReportD1_Team_Leader").blur(function () {
                                                         var owner = $("#ReportD1_Team_Leader");
                                                         var jsondata = JSON.stringify({ "UserLoginNames": owner.val() });
-                                                        checkUser(owner, jsondata);
+                                                        checkUserOne(owner, jsondata);
                                                     });
 
                                                     $("#ReportD1_Sponaor").blur(function () {
                                                         var owner = $("#ReportD1_Sponaor");
                                                         var jsondata = JSON.stringify({ "UserLoginNames": owner.val() });
-                                                        checkUser(owner, jsondata);
+                                                        checkUserOne(owner, jsondata);
                                                     });
 
                                                     $("#ReportD1_Coordinator").blur(function () {
                                                         var owner = $("#ReportD1_Coordinator");
                                                         var jsondata = JSON.stringify({ "UserLoginNames": owner.val() });
-                                                        checkUser(owner, jsondata);
+                                                        checkUserOne(owner, jsondata);
                                                     });
 
                                                     $("#ReportD1_Team_Member").blur(function () {
@@ -468,6 +545,30 @@
                                                     });
 
                                                 });
+
+                                                function checkUserOne(control, jsondata) {
+                                                    $.ajax({
+                                                        type: "post",
+                                                        //contentType: "application/json",
+                                                        dataType: "json",
+                                                        "url": "@Url.Content("~/UserCenter/CheckUserOne/")",
+                                                        data: jsondata,
+                                                        processData: false,
+                                                        async: false,
+                                                        success: function (data) {
+                                                            if (data.success == true) {
+                                                                control.val(data.message);
+                                                            }
+                                                            else {
+                                                                alert(data.message);
+                                                                control.val("");
+                                                            }
+                                                        },
+                                                        error: function (data) {
+                                                            alert(data.message);
+                                                        }
+                                                    });
+                                                }
 
                                                 function checkUser(control, jsondata) {
                                                     $.ajax({
@@ -2208,7 +2309,8 @@
 
                                                 <div class="form-group">
                                                     <div class="row">
-                                                        <h2><label class="col-sm-12 " for="form-field-1-1">Transfer of Corrective Action(s) to other Processes Products,Locations</label></h2>
+                                                        <h2>
+                                                            <label class="col-sm-12 " for="form-field-1-1">Transfer of Corrective Action(s) to other Processes Products,Locations</label></h2>
                                                         <label class="col-sm-7 " for="form-field-1-1">Cloud the root cause affect other processes, products or sites?</label>
                                                         <div class="col-xs-3">
                                                             <label>
@@ -2594,7 +2696,7 @@
                                     @Html.HiddenFor(m => m.ReportAssignGuid)
                                     @Html.HiddenFor(m => m.WorkFlow.EightD_WorkFlowGuid)
                                     <!-- #section:elements.form -->
-                                    @*<div class="form-group">
+@*<div class="form-group">
                                         <div class="row">
                                             <label class="col-sm-2 control-label no-padding-left" for="form-field-1-1">Team Leader*</label>
                                             <div class="col-xs-9">

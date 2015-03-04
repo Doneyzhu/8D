@@ -61,4 +61,22 @@ namespace _8DManagementSystem.Models
         virtual public string BoardName { get; set; }
 
     }
+
+
+    public class D_User
+    {
+        virtual public Guid UserGuid { get; set; }
+
+        /// <summary>
+        /// 用户登录名
+        /// </summary>
+        virtual public string UserLoginName { get; set; }
+
+        /// <summary>
+        /// 用户名
+        /// </summary>
+        virtual public string UserName { get; set; }
+
+    }
+
 }

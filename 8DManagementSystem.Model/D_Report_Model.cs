@@ -136,13 +136,15 @@ namespace _8DManagementSystem.Model
         /// <summary>
         /// Team_Leader
         /// </summary>
-        [Property()]
+        [Property(Type = "StringClob")]
         virtual public string Team_Leader { get; set; }
+
         /// <summary>
         /// Sponaor
         /// </summary>
-        [Property()]
+        [Property(Type = "StringClob")]
         virtual public string Sponaor { get; set; }
+
         /// <summary>
         /// Coordinator
         /// </summary>
@@ -235,6 +237,22 @@ namespace _8DManagementSystem.Model
         [Property()]
         virtual public int ReportCancelStatus { get; set; }
 
+        /// <summary>
+        /// CurrentStepUser
+        /// </summary>
+        [Property(Type = "StringClob")]
+        virtual public string CurrentStepUser { get; set; }
 
+        /// <summary>
+        /// PreStepUser
+        /// </summary>
+        [Property(Type = "StringClob")]
+        virtual public string PreStepUser { get; set; }
+
+        /// <summary>
+        /// PreStepType
+        /// </summary>
+        [Property()]
+        virtual public string PreStepType { get; set; }
     }
 }

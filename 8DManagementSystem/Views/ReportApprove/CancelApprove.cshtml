@@ -71,6 +71,61 @@
 </div>
 
 <div class="panel panel-default">
+    <div class="panel-heading">Approve Work Flow</div>
+    <div class="panel-body">
+        <table>
+            <thead>
+                <tr>
+                    <th>[Team Leader]</th>
+                    <th></th>
+                    <th>[QE]</th>
+                    <th></th>
+                    <th>[Sponaor]</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        @if (Model.ReportModel.ReportCancelStatus == (int)_8DManagementSystem.Model.ReportCancelStatusEnum.TeamLeader)
+                        {
+                            <span style="color: red">@Model.ReportModel.ReportD1.Team_Leader</span>
+                        }
+                        else
+                        {
+                            <span>@Model.ReportModel.ReportD1.Team_Leader</span>
+                        }
+                    </td>
+                    <td>=></td>
+                    <td>
+
+                        @if (Model.ReportModel.ReportCancelStatus == (int)_8DManagementSystem.Model.ReportCancelStatusEnum.QE)
+                        {
+                            <span style="color: red">@Model.ReportModel.ResponsibleQE</span>
+                        }
+                        else
+                        {
+                            <span>@Model.ReportModel.ResponsibleQE</span>
+                        }
+                    </td>
+                    <td>=></td>
+                    <td>
+                        @if (Model.ReportModel.ReportCancelStatus == (int)_8DManagementSystem.Model.ReportCancelStatusEnum.Sponsor)
+                        {
+                            <span style="color: red">@Model.ReportModel.ReportD1.Sponaor</span>
+                        }
+                        else
+                        {
+                            <span>@Model.ReportModel.ReportD1.Sponaor</span>
+                        }
+
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="panel panel-default">
     <div class="panel-heading">Report Approve</div>
     <div class="panel-body">
         @using (Ajax.BeginForm("CancelApprove", "ReportApprove", null, new AjaxOptions() { HttpMethod = "Post", OnSuccess = "Back", OnComplete = "Back" }, new { id = "form0", enctype = "multipart/form-data", @class = "form-horizontal", role = "form" }))
@@ -94,18 +149,30 @@
                         <i class="ace-icon fa fa-check bigger-110"></i>
                         Approve
                     </button>
-                    <button class="btn btn-info" type="button" onclick="Submitt(2)">
-                        <i class="ace-icon fa fa-check bigger-110"></i>
-                        Review
-                    </button>
-                    <button class="btn btn-info" type="button" onclick="Submitt(3)">
+                    @if (Model.ReportModel.ReportCancelStatus > (int)_8DManagementSystem.Model.ReportCancelStatusEnum.TeamLeader)
+                    {
+                        <button class="btn btn-info" type="button" onclick="Submitt(2)">
+                            <i class="ace-icon fa fa-check bigger-110"></i>
+                            Review
+                        </button>
+                    }
+
+                    @if (Model.ReportModel.ReportCancelStatus == (int)_8DManagementSystem.Model.ReportCancelStatusEnum.TeamLeader
+                         && Model.ReportModel.PreStepUser != null)
+                    {
+                        <button class="btn btn-info" type="button" onclick="Submitt(3)">
+                            <i class="ace-icon fa fa-check bigger-110"></i>
+                            Submit Review
+                        </button>
+@*<button class="btn btn-info" type="button" onclick="Submitt(3)">
                         <i class="ace-icon fa fa-check bigger-110"></i>
                         Submit Review To QE
                     </button>
                     <button class="btn btn-info" type="button" onclick="Submitt(4)">
                         <i class="ace-icon fa fa-check bigger-110"></i>
                         Submit Review To Sponsor
-                    </button>
+                    </button>*@
+                    }
                     <button class="btn btn-info" type="button" onclick="Submitt(5)">
                         <i class="ace-icon fa fa-check bigger-110"></i>
                         Reject

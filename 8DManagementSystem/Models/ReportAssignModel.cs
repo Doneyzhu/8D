@@ -89,6 +89,13 @@ namespace _8DManagementSystem.Models
         public List<ReoprtD8Data> ReportD8Sign { get; set; }
 
         public ReportWorkFlow WorkFlow { get; set; }
+
+        public int ReportStatus { get; set; }
+        public int ReportCancelStatus { get; set; }
+       
+        virtual public Models.D_User CurrentStepUser { get; set; }
+        virtual public Models.D_User PreStepUser { get; set; }
+        virtual public string PreStepType { get; set; }
     }
 
     public class ReportHeaderModel
