@@ -158,11 +158,11 @@ namespace _8DManagementSystem.Controllers
                     ReportOwner = owner,
                     ResponsibleQE = qe,
                     Status = Common.EnumUtility.GetEnumDescription((Model.ReportStatusEnum)item.ReportStatus),
-                    CancelStatus = Common.EnumUtility.GetEnumDescription((Model.ReportCancelStatusEnum)item.ReportCancelStatus)
+                    CancelStatus = Common.EnumUtility.GetEnumDescription((Model.ReportCancelStatusEnum)item.ReportCancelStatus),
                     //ModifyUserName = item.ModifyUserName,
                     //ModifyDate = item.ModifyDateTime.HasValue ? item.ModifyDateTime.Value.ToString("yyyy-MM-dd") : string.Empty,
-                    //CreateUserName = item.CreateUserName,
-                    //CreateDate = item.CreateDateTime.HasValue ? item.CreateDateTime.Value.ToString("yyyy-MM-dd") : string.Empty
+                    CreateUserName = item.CreateUserName,
+                    CreateDate = item.CreateDateTime.HasValue ? item.CreateDateTime.Value.ToString("yyyy-MM-dd") : string.Empty
                 });
             }
             #endregion
