@@ -102,6 +102,7 @@ namespace _8DManagementSystem.DAL
 
             totalCount = Convert.ToInt32(pageCrit.SetProjection(Projections.RowCount()).UniqueResult());
 
+            ic.AddOrder(Order.Desc("ModifyDateTime"));
             IList<D_Report_Model> list = ic.SetFirstResult(startCount).SetMaxResults(rowCount).List<D_Report_Model>();
 
             return list;

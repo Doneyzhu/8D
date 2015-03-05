@@ -16,6 +16,7 @@ namespace _8DManagementSystem.Models
 
         public int ReportCancelStatus { get; set; }
 
-        public ReportAssignModel ReportModel { get; set; } 
+        public ReportAssignModel ReportModel { get; set; }
+
     }
 }

@@ -132,6 +132,13 @@ namespace _8DManagementSystem.Controllers
                     remove = string.Empty;
                 }
 
+                string owner = string.Empty;
+                string qe = string.Empty;
+                if (!string.IsNullOrEmpty(item.ReportOwner))
+                    owner = Newtonsoft.Json.JsonConvert.DeserializeObject<Models.D_User>(item.ReportOwner).UserLoginName;
+
+                if (!string.IsNullOrEmpty(item.ResponsibleQE))
+                    qe = Newtonsoft.Json.JsonConvert.DeserializeObject<Models.D_User>(item.ResponsibleQE).UserLoginName;
 
                 rows.Add(new
                 {
@@ -148,8 +155,10 @@ namespace _8DManagementSystem.Controllers
                     BoardName = item.ReportBoardGuid.BoardName,
                     ReportNo = item.ReportNo,
                     ReportTypeName = item.ReportTypeGuid.DicName,
-                    ReportOwner = item.ReportOwner,
-                    ResponsibleQE = item.ResponsibleQE
+                    ReportOwner = owner,
+                    ResponsibleQE = qe,
+                    Status = Common.EnumUtility.GetEnumDescription((Model.ReportStatusEnum)item.ReportStatus),
+                    CancelStatus = Common.EnumUtility.GetEnumDescription((Model.ReportCancelStatusEnum)item.ReportCancelStatus)
                     //ModifyUserName = item.ModifyUserName,
                     //ModifyDate = item.ModifyDateTime.HasValue ? item.ModifyDateTime.Value.ToString("yyyy-MM-dd") : string.Empty,
                     //CreateUserName = item.CreateUserName,
@@ -206,10 +215,10 @@ namespace _8DManagementSystem.Controllers
                 {
                     dataModel = new Model.D_Report_Model();
 
-                    //dataModel.CreateDateTime = DateTime.Now;
-                    //dataModel.DataStatus = false;
-                    //dataModel.CreateUserGuid = UserView.UserGuid;
-                    //dataModel.CreateUserName = UserView.UserName;
+                    dataModel.CreateDateTime = DateTime.Now;
+                    dataModel.DataStatus = false;
+                    dataModel.CreateUserGuid = UserView.UserGuid;
+                    dataModel.CreateUserName = UserView.UserName;
                     dataModel.ReportNo = "AE" + boardModel.BoardName + "-" + DateTime.Now.ToString("yyyyMMddHHssmmfff");
                 }
                 else
@@ -218,16 +227,48 @@ namespace _8DManagementSystem.Controllers
                 }
 
                 //dataModel.BoardName = model.BoardName;
-                //dataModel.ModifyDateTime = DateTime.Now;
-                //dataModel.ModifyUserGuid = UserView.UserGuid;
-                //dataModel.ModifyUserName = UserView.UserName;
+                dataModel.ModifyDateTime = DateTime.Now;
+                dataModel.ModifyUserGuid = UserView.UserGuid;
+                dataModel.ModifyUserName = UserView.UserName;
 
                 dataModel.ReportTitle = model.ReportTitle;
                 dataModel.ReportTypeGuid = new DAL.D_Dictionary_DAL().GetModel(new Guid(model.ReportType));
                 dataModel.ReportBoardGuid = boardModel;
-                dataModel.ReportOwner = model.ReportOwner;
-                dataModel.ResponsibleQE = model.ResponsibleQE;
+                if (string.IsNullOrEmpty(model.ReportOwner))
+                {
+                    return Json(new { success = success, message = "Report Owner不能为空！" }, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    Model.D_User_Model userModel = new DAL.D_User_DAL().GetUserByUserLoginName(model.ReportOwner.TrimEnd(';'));
+                    if (userModel == null) return Json(new { success = success, message = "用户不存在！" }, JsonRequestBehavior.AllowGet);
 
+                    D_User user = new D_User();
+                    user.Serial = 0;
+                    user.UserGuid = userModel.UserGuid;
+                    user.UserLoginName = userModel.UserLoginName;
+                    user.UserName = userModel.UserName;
+                    dataModel.ReportOwner = Newtonsoft.Json.JsonConvert.SerializeObject(user);
+                    //dataModel.ReportOwner = model.ReportOwner;
+                }
+
+                if (string.IsNullOrEmpty(model.ResponsibleQE))
+                {
+                    return Json(new { success = success, message = "Responsible QE不能为空！" }, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    Model.D_User_Model userModel = new DAL.D_User_DAL().GetUserByUserLoginName(model.ResponsibleQE.TrimEnd(';'));
+                    if (userModel == null) return Json(new { success = success, message = "用户不存在！" }, JsonRequestBehavior.AllowGet);
+
+                    D_User user = new D_User();
+                    user.Serial = 0;
+                    user.UserGuid = userModel.UserGuid;
+                    user.UserLoginName = userModel.UserLoginName;
+                    user.UserName = userModel.UserName;
+                    dataModel.ResponsibleQE = Newtonsoft.Json.JsonConvert.SerializeObject(user);
+                    //dataModel.ResponsibleQE = model.ResponsibleQE;
+                }
 
                 success = new DAL.D_Report_DAL().Save(dataModel);
                 return Json(new { success = success, message = "成功" }, JsonRequestBehavior.AllowGet);
@@ -449,6 +490,10 @@ namespace _8DManagementSystem.Controllers
                         dataModel.Supplier_No = model.ReportHeader.Supplier_No;
                         dataModel.Warranty_Descision = model.ReportHeader.Warranty_Descision;
 
+                        dataModel.ModifyDateTime = DateTime.Now;
+                        dataModel.ModifyUserGuid = UserView.UserGuid;
+                        dataModel.ModifyUserName = UserView.UserName;
+
                         success = new DAL.D_Report_DAL().Save(dataModel);
 
                         return Json(new { success = success, message = "成功" }, JsonRequestBehavior.AllowGet);
@@ -495,6 +540,7 @@ namespace _8DManagementSystem.Controllers
                             Model.D_User_Model leader = new DAL.D_User_DAL().GetUserByUserLoginName(model.ReportD1.Team_Leader.TrimEnd(';'));
 
                             D_User user = new D_User();
+                            user.Serial = 0;
                             user.UserGuid = leader.UserGuid;
                             user.UserLoginName = leader.UserLoginName;
                             user.UserName = leader.UserName;
@@ -516,6 +562,7 @@ namespace _8DManagementSystem.Controllers
                             Model.D_User_Model sponaor = new DAL.D_User_DAL().GetUserByUserLoginName(model.ReportD1.Sponaor.TrimEnd(';'));
 
                             D_User user = new D_User();
+                            user.Serial = 0;
                             user.UserGuid = sponaor.UserGuid;
                             user.UserLoginName = sponaor.UserLoginName;
                             user.UserName = sponaor.UserName;
@@ -533,18 +580,20 @@ namespace _8DManagementSystem.Controllers
                             string[] loginName = model.ReportD1.Team_Member.TrimEnd(';').Split(';');
 
                             List<D_User> userList = new List<D_User>();
-                            foreach (var item in loginName)
+                            for (int i = 0; i < loginName.Length; i++)
                             {
-                                if (!string.IsNullOrEmpty(item))
+                                if (!string.IsNullOrEmpty(loginName[i]))
                                 {
-                                    Model.D_User_Model member = new DAL.D_User_DAL().GetUserByUserLoginName(item);
+                                    Model.D_User_Model member = new DAL.D_User_DAL().GetUserByUserLoginName(loginName[i]);
                                     D_User user = new D_User();
+                                    user.Serial = i;
                                     user.UserGuid = member.UserGuid;
                                     user.UserLoginName = member.UserLoginName;
                                     user.UserName = member.UserName;
                                     userList.Add(user);
                                 }
                             }
+
                             dataModel.Team_Member = Newtonsoft.Json.JsonConvert.SerializeObject(userList);
 
                         }
@@ -553,6 +602,10 @@ namespace _8DManagementSystem.Controllers
                             dataModel.Team_Member = model.ReportD1.Team_Member;
                         }
 
+
+                        dataModel.ModifyDateTime = DateTime.Now;
+                        dataModel.ModifyUserGuid = UserView.UserGuid;
+                        dataModel.ModifyUserName = UserView.UserName;
 
                         success = new DAL.D_Report_DAL().Save(dataModel);
 
@@ -605,6 +658,11 @@ namespace _8DManagementSystem.Controllers
                             dataModel.ReportD2.End_of_D2_Date = null;
                         else
                             dataModel.ReportD2.End_of_D2_Date = Convert.ToDateTime(model.ReportD2.End_of_D2_Date);
+
+
+                        dataModel.ModifyDateTime = DateTime.Now;
+                        dataModel.ModifyUserGuid = UserView.UserGuid;
+                        dataModel.ModifyUserName = UserView.UserName;
 
                         success = new DAL.D_Report_DAL().Save(dataModel);
 
@@ -665,6 +723,10 @@ namespace _8DManagementSystem.Controllers
                         }
 
                         dataModel.ReportD3Json = Newtonsoft.Json.JsonConvert.SerializeObject(resportD3Model);
+
+                        dataModel.ModifyDateTime = DateTime.Now;
+                        dataModel.ModifyUserGuid = UserView.UserGuid;
+                        dataModel.ModifyUserName = UserView.UserName;
 
                         success = new DAL.D_Report_DAL().Save(dataModel);
 
@@ -751,9 +813,12 @@ namespace _8DManagementSystem.Controllers
                         }
                         #endregion
 
-
-
                         dataModel.ReportD4Json = Newtonsoft.Json.JsonConvert.SerializeObject(resportD4Model);
+
+
+                        dataModel.ModifyDateTime = DateTime.Now;
+                        dataModel.ModifyUserGuid = UserView.UserGuid;
+                        dataModel.ModifyUserName = UserView.UserName;
 
                         success = new DAL.D_Report_DAL().Save(dataModel);
 
@@ -808,6 +873,10 @@ namespace _8DManagementSystem.Controllers
                         }
 
                         dataModel.ReportD5Json = Newtonsoft.Json.JsonConvert.SerializeObject(resportD5Model);
+
+                        dataModel.ModifyDateTime = DateTime.Now;
+                        dataModel.ModifyUserGuid = UserView.UserGuid;
+                        dataModel.ModifyUserName = UserView.UserName;
 
                         success = new DAL.D_Report_DAL().Save(dataModel);
 
@@ -914,6 +983,10 @@ namespace _8DManagementSystem.Controllers
 
                         dataModel.ReportD6Json = Newtonsoft.Json.JsonConvert.SerializeObject(resportD6Model);
 
+                        dataModel.ModifyDateTime = DateTime.Now;
+                        dataModel.ModifyUserGuid = UserView.UserGuid;
+                        dataModel.ModifyUserName = UserView.UserName;
+
                         success = new DAL.D_Report_DAL().Save(dataModel);
 
                         return Json(new { success = success, message = "成功" }, JsonRequestBehavior.AllowGet);
@@ -974,6 +1047,10 @@ namespace _8DManagementSystem.Controllers
                         }
 
                         dataModel.ReportD7Json = Newtonsoft.Json.JsonConvert.SerializeObject(resportD7Model);
+
+                        dataModel.ModifyDateTime = DateTime.Now;
+                        dataModel.ModifyUserGuid = UserView.UserGuid;
+                        dataModel.ModifyUserName = UserView.UserName;
 
                         success = new DAL.D_Report_DAL().Save(dataModel);
 
@@ -1051,6 +1128,10 @@ namespace _8DManagementSystem.Controllers
 
                         dataModel.ReportD8Json = Newtonsoft.Json.JsonConvert.SerializeObject(resportD8Model);
 
+                        dataModel.ModifyDateTime = DateTime.Now;
+                        dataModel.ModifyUserGuid = UserView.UserGuid;
+                        dataModel.ModifyUserName = UserView.UserName;
+
                         success = new DAL.D_Report_DAL().Save(dataModel);
 
                         return Json(new { success = success, message = "成功" }, JsonRequestBehavior.AllowGet);
@@ -1097,12 +1178,13 @@ namespace _8DManagementSystem.Controllers
                             string[] loginName = model.WorkFlow.Additional_Approver.TrimEnd(';').Split(';');
 
                             List<D_User> userList = new List<D_User>();
-                            foreach (var item in loginName)
+                            for (int i = 0; i < loginName.Length; i++)
                             {
-                                if (!string.IsNullOrEmpty(item))
+                                if (!string.IsNullOrEmpty(loginName[i]))
                                 {
-                                    Model.D_User_Model approver = new DAL.D_User_DAL().GetUserByUserLoginName(item);
+                                    Model.D_User_Model approver = new DAL.D_User_DAL().GetUserByUserLoginName(loginName[i]);
                                     D_User user = new D_User();
+                                    user.Serial = i;
                                     user.UserGuid = approver.UserGuid;
                                     user.UserLoginName = approver.UserLoginName;
                                     user.UserName = approver.UserName;
@@ -1122,6 +1204,10 @@ namespace _8DManagementSystem.Controllers
                         wfModel.Team_Leader = model.WorkFlow.Team_Leader;
 
                         dataModel.WorkFlow_Models.Add(wfModel);
+
+                        dataModel.ModifyDateTime = DateTime.Now;
+                        dataModel.ModifyUserGuid = UserView.UserGuid;
+                        dataModel.ModifyUserName = UserView.UserName;
 
                         success = new DAL.D_Report_DAL().Save(dataModel);
 

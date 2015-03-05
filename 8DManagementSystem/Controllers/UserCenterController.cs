@@ -278,21 +278,24 @@ namespace _8DManagementSystem.Controllers
                     UserLoginNameClass userLogin = Newtonsoft.Json.JsonConvert.DeserializeObject<UserLoginNameClass>(UserLoginNames);
                     if (!string.IsNullOrEmpty(userLogin.UserLoginNames))
                     {
-                        string[] loginName = userLogin.UserLoginNames.Split(';');
+                        string[] loginName = userLogin.UserLoginNames.TrimEnd(',').Split(';');
                         List<string> loginNameList = new List<string>();
                         foreach (var item in loginName)
                         {
                             if (!string.IsNullOrEmpty(item))
                             {
+                                Model.D_User_Model userModel = new DAL.D_User_DAL().GetUserByUserLoginName(item);
+                                msg += userModel.UserLoginName + ";";
                                 loginNameList.Add(item);
                             }
+
                         }
 
-                        IList<Model.D_User_Model> users = new DAL.D_User_DAL().GetUserByUserLoginName(loginNameList);
-                        foreach (var item in users)
-                        {
-                            msg += item.UserLoginName + ";";
-                        }
+                        //IList<Model.D_User_Model> users = new DAL.D_User_DAL().GetUserByUserLoginName(loginNameList);
+                        //foreach (var item in users)
+                        //{
+                        //    msg += item.UserLoginName + ";";
+                        //}
                         msg.TrimEnd(';');
                     }
                     success = true;

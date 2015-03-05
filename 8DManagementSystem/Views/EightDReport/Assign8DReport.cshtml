@@ -35,22 +35,22 @@
         $("#ReportOwner").blur(function () {
             var owner = $("#ReportOwner");
             var jsondata = JSON.stringify({ "UserLoginNames": owner.val() });
-            checkUser(owner, jsondata);
+            checkUserOne(owner, jsondata);
         });
 
         $("#ResponsibleQE").blur(function () {
             var owner = $("#ResponsibleQE");
             var jsondata = JSON.stringify({ "UserLoginNames": owner.val() });
-            checkUser(owner, jsondata);
+            checkUserOne(owner, jsondata);
         });
     });
 
-    function checkUser(control, jsondata) {
+    function checkUserOne(control, jsondata) {
         $.ajax({
             type: "post",
             //contentType: "application/json",
             dataType: "json",
-            "url": "@Url.Content("~/UserCenter/CheckUser/")",
+            "url": "@Url.Content("~/UserCenter/CheckUserOne/")",
             data: jsondata,
             processData: false,
             async: false,

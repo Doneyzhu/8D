@@ -65,6 +65,8 @@ namespace _8DManagementSystem.Models
 
     public class D_User
     {
+        virtual public int Serial { get; set; }
+
         virtual public Guid UserGuid { get; set; }
 
         /// <summary>

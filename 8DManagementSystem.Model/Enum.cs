@@ -61,6 +61,12 @@ namespace _8DManagementSystem.Model
 
     public enum ReportStatusEnum
     {
+
+        /// <summary>
+        /// New
+        /// </summary>
+        [Description("New")]
+        New = 0,
         /// <summary>
         /// TeamLeader
         /// </summary>
@@ -85,6 +91,11 @@ namespace _8DManagementSystem.Model
 
     public enum ReportCancelStatusEnum
     {
+        /// <summary>
+        /// New
+        /// </summary>
+        [Description("New")]
+        New = 0,
         /// <summary>
         /// TeamLeader
         /// </summary>

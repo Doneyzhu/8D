@@ -76,7 +76,7 @@
 
             </div>
 
-            <button type="button" class="btn btn-default btn-sm" data-toggle="collapse" data-target="#options" aria-expanded="true" aria-controls="demo">
+            @*<button type="button" class="btn btn-default btn-sm" data-toggle="collapse" data-target="#options" aria-expanded="true" aria-controls="demo">
                 Options <span class="caret"></span>
             </button>
             <div id="options" class="collapse" style="padding: 10px;">
@@ -90,10 +90,10 @@
                         </select>
                     </div>
                 </div>
-            </div>
+            </div>*@
 
-            <button type="button" class="btn btn-sm btn-success"><span class="glyphicon glyphicon-ok"></span>Apply</button>
-            <button type="button" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-remove"></span>Cancel</button>
+            <button id="btnQuery" type="button" class="btn btn-sm btn-success"><span class="glyphicon glyphicon-ok"></span>Apply</button>
+            @*<button type="button" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-remove"></span>Cancel</button>*@
         </form>
     </div>
 
@@ -109,6 +109,7 @@
                     <th>Report Owner</th>
                     <th>Responsible QE</th>
                     <th>Status</th>
+                    <th>CancelStatus</th>
                 </tr>
             </thead>
         </table>
@@ -559,7 +560,7 @@
 
         gridTable.dataTable({
             "iDisplayStart": 0, //从第几条开始
-            "iDisplayLength": 3,//每页显示10条数据
+            "iDisplayLength": 10,//每页显示10条数据
 
             //"oLanguage": {//下面是一些汉语翻译
             //    "sUrl": "/Content/assets/js/language/jquery.dataTable.cn.js"
@@ -601,7 +602,8 @@
                               { "mDataProp": "ReportTypeName", bSortable: false },
                               { "mDataProp": "ReportOwner", bSortable: false },
                               { "mDataProp": "ResponsibleQE", bSortable: false },
-                              { "mDataProp": "ResponsibleQE", bSortable: false }
+                              { "mDataProp": "Status", bSortable: false },
+                              { "mDataProp": "CancelStatus", bSortable: false }
                               //{ "mDataProp": "Oper", bSortable: false }
                               //,{ "sDefaultContent": '' }, // sDefaultContent 如果这一列不需要填充数据用这个属性，值可以不写，起占位作用
                               //{ "sDefaultContent": '', "sClass": "action" },//sClass 表示给本列加class

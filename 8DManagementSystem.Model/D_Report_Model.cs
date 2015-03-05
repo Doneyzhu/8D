@@ -52,13 +52,13 @@ namespace _8DManagementSystem.Model
         /// <summary>
         /// 报表名称
         /// </summary>
-        [Property()]
+        [Property(Type = "StringClob")]
         virtual public string ReportOwner { get; set; }
 
         /// <summary>
         /// 报表名称
         /// </summary>
-        [Property()]
+        [Property(Type = "StringClob")]
         virtual public string ResponsibleQE { get; set; }
 
         /// <summary>
@@ -254,5 +254,43 @@ namespace _8DManagementSystem.Model
         /// </summary>
         [Property()]
         virtual public string PreStepType { get; set; }
+
+
+        /// <summary>
+        /// 创建人GUID
+        /// </summary>
+        [Property()]
+        virtual public Guid CreateUserGuid { get; set; }
+
+        /// <summary>
+        /// 创建时间
+        /// </summary>
+        [Property()]
+        virtual public DateTime? CreateDateTime { get; set; }
+
+        /// <summary>
+        /// 创建人名字
+        /// </summary>
+        [Property()]
+        virtual public string CreateUserName { get; set; }
+
+        /// <summary>
+        /// 修改人用户GUID
+        /// </summary>
+        [Property()]
+        virtual public Guid ModifyUserGuid { get; set; }
+
+        /// <summary>
+        /// 修改时间
+        /// </summary>
+        [Property()]
+        virtual public DateTime? ModifyDateTime { get; set; }
+
+        /// <summary>
+        /// 修改人用户名字
+        /// </summary>
+        [Property()]
+        virtual public string ModifyUserName { get; set; }
+
     }
 }
